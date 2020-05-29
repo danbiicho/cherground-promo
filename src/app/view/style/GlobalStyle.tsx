@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -55,6 +55,8 @@ const GlobalStyle = createGlobalStyle`
         src:url('/src/app/view/font/NanumSquareEB.woff') format('woff'),
             url('/src/app/view/font/NanumSquareEB.ttf') format('truetype') 
     }
+
+
 
     body {
         font-family: NanumSquare, sans-serif;

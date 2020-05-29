@@ -2,8 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import InputBox from "../widgets/InputBox";
 
+//받아야하는 prop의 타입을 정해줄 땐 이렇게 해준다.
+//widget에 둬도 된다.
+
 interface SignupCompProps {
-  headerTxt: string; 
+  headerTxt: string;
   descTxt: string;
 }
 
@@ -18,10 +21,9 @@ const SignupComp: React.FunctionComponent<SignupCompProps> = (props) => {
         <HeadingArea>{headerTxt}</HeadingArea>
         <Desc>{descTxt}</Desc>
         <InputBoxCont>
-          <InputBox />
-          <InputBox />
-          <InputBox />
-          <InputBox />
+          <InputBox placeholderTxt={"이름"} />
+          <InputBox placeholderTxt={"연락처"} />
+          <InputBox placeholderTxt={"기본 배송지"} />
         </InputBoxCont>
       </SignupCompCont>
     </SignupCompWrapper>

@@ -1,10 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-const InputBox: React.FunctionComponent = (props) => {
+interface InputBoxProps {
+  placeholderTxt: string;
+}
+
+const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
   return (
     <FormTagInput>
-      <InputCont type="text" placeholder={"placeholder"} isValid={true} />
+      <InputCont
+        type="text"
+        placeholder={props.placeholderTxt}
+        isValid={true}
+      />
     </FormTagInput>
   );
 };

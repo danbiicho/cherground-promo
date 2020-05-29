@@ -62,7 +62,7 @@ const GlobalStyle = createGlobalStyle`
         font-family: NanumSquare, sans-serif;
         margin: 0px;
         box-sizing: border-box;
-        background: #1f263e;
+        /* background: #1f263e; */
     }
 
     :root {

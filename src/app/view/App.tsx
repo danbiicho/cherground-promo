@@ -4,6 +4,7 @@ import { Route, BrowserRouter, Switch } from "react-router-dom";
 import GlobalStyle from "app/view/style/GlobalStyle";
 import Button from "../view/Button";
 //import { View, Widget } from "app/view";
+import InputBox from "./widgets/InputBox";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -26,6 +27,7 @@ const App: React.FunctionComponent = () => {
                     <Route path="/wholesale/detail" exact component={View.WholesaleDetailView} /> */}
         {/* <Route path="/setting" exact component={View.RetailSettingView} />
           <Route path="/user" exact component={View.UserSettingView} /> */}
+        <Route exact path="/test" component={InputBox} />
       </Switch>
       {/* </Suspense> */}
     </BrowserRouter>

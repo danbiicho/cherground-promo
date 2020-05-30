@@ -5,13 +5,11 @@ const Button = (props) => {
   const isActive = props.isActive;
 
   return (
+    // 버튼 하나로 하는 방법
     <>
       <PrimaryCTA disabled={false}>
         <PrimaryCTAText isActive={isActive}>CTA</PrimaryCTAText>
       </PrimaryCTA>
-      <SecondaryCTA disabled={true}>
-        <SecondaryCTAText isActive={isActive}>CTA</SecondaryCTAText>
-      </SecondaryCTA>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { User } from "domain/entity";
 
-export interface UserRepository {
+export interface UserApi {
   getUser(): User[];
 }

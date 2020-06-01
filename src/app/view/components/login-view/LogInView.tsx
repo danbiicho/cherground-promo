@@ -3,8 +3,17 @@ import styled from "styled-components";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import InputBox from "app/view/widgets/InputBox";
 import Button from "app/view/widgets/Button";
+import { UserViewModel } from "app/view-model";
+import container from "injector";
 
 const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
+  const viewModel: UserViewModel = container.get<UserViewModel>(
+    "UserViewModel"
+  );
+
+  const user = viewModel.displayUser();
+  console.log(viewModel.displayUser());
+
   const goSignUpView = () => {
     props.history.push(`/signup`);
   };

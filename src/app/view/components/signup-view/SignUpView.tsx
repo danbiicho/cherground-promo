@@ -29,6 +29,9 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
 
   const userNameCheckHandler = (e) => {
     setUserName(e.target.value);
+    if (!e.target.value) {
+      console.log("이름을 입력해주세요");
+    }
   };
 
   const userValidateHandler = (e) => {
@@ -104,7 +107,6 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
         headerTxt={"회원가입"}
         descTxt={"아래 정보를 입력하고 회원가입을 진행하세요."}
         userNameCheckHandler={userNameCheckHandler}
-        userValidateHandler={userValidateHandler}
       />
     ),
     2: (

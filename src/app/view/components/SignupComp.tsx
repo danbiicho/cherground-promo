@@ -13,6 +13,13 @@ interface SignupCompProps {
   descTxt: string;
 }
 
+// const boxInfoCompiler = {
+//   "login": (<InputBoxCont>
+//      <InputBox placeholderTxt={"아이디"} />
+//      <InputBox placeholderTxt={"비밀번호"} />
+//   </InputBoxCont>)
+// }
+
 const SignupComp: React.FunctionComponent<SignupCompProps> = (props) => {
   const { headerTxt, descTxt, match, matchId } = props;
   console.log(props.headerTxt);

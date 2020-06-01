@@ -18,8 +18,8 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
         headerTxt={"회원가입"}
         descTxt={"아래 정보를 입력하고 회원가입을 진행하세요."}
       />
-      <Button buttonName={"primary"} buttonText={"회원가입"} />
-      <Button buttonName={"whiteBtn"} buttonText={"로그인"} />
+      <Button buttonName={"primary"} buttonText={"로그인"} />
+      <Button buttonName={"whiteBtn"} buttonText={"회원가입"} />
       <Link to={`/signup/${matchId}`}>
         <LoginCheckDiv>
           이미 계정이 있나요?<LoginTxt>로그인</LoginTxt>

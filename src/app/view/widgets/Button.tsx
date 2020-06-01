@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
 
-// interface Buttonprops {
-//   isAbled: boolean;
-//   buttonName: string;
-// }
+interface Buttonprops {
+  isAbled?: boolean;
+  buttonName: string;
+  buttonText: string;
+}
 
-const Button = (props) => {
+const Button: React.FunctionComponent<Buttonprops> = (props) => {
   return (
     // 버튼 하나로 하는 방법
-    <CTAButton isAbled={true} buttonName={"primary"}>
-      <ButtonText buttonName={"primary"}>CTA</ButtonText>
+    <CTAButton isAbled={true} buttonName={props.buttonName}>
+      <ButtonText buttonName={props.buttonName}>{props.buttonText}</ButtonText>
     </CTAButton>
   );
 };
@@ -26,6 +27,7 @@ const CTAButton = styled.button<{ isAbled: boolean; buttonName: string }>`
         : "#ffffff"
       : "#dfdfdf"};
   display: flex;
+  text-align: center;
   justify-content: center;
   border: ${(props) =>
     props.buttonName === "primary" ? "0" : "1px solid #1f263e"};
@@ -34,11 +36,9 @@ const CTAButton = styled.button<{ isAbled: boolean; buttonName: string }>`
 `;
 
 const ButtonText = styled.p<{ buttonName: string }>`
-  width: 31px;
-  height: 18px;
-  font-family: NanumSquare_acEB;
+  font-family: NanumSquare;
   font-size: 16px;
-  font-weight: normal;
+  font-weight: 400;
   font-stretch: normal;
   font-style: normal;
   line-height: normal;

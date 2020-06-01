@@ -12,6 +12,9 @@ import Button from "app/view/widgets/Button";
 const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
   const [stageIdx, setStageIdx] = useState(1);
   const [userName, setUserName] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [userPw, setUserPw] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
   const loginHandler = () => {
     props.history.push("/signin");
@@ -24,8 +27,73 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
     }
   };
 
-  const memorizeUserName = (e) => {
+  const userNameCheckHandler = (e) => {
     setUserName(e.target.value);
+  };
+
+  const userValidateHandler = (e) => {
+    const IDPWCheck = /^[a-zA-Z0-9]{4,12}$/;
+    const EmailCheck = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+    if (e.target.name) {
+      let { name } = e.target;
+
+      switch (name) {
+        case "userName":
+          setUserName(e.target.value);
+          break;
+        case "userPw":
+          setUserPw(e.target.value);
+          break;
+        case "userEmail":
+          setUserEmail(e.target.value);
+          break;
+      }
+    }
+
+    if (!e.target.value) {
+      if (!userName) {
+        console.log("이름을 입력해주세요");
+      }
+
+      if (!userEmail) {
+        console.log("이메일을 입력해주세요");
+      }
+
+      if (!userPw) {
+        console.log("비밀번호를 입력해주세요");
+      }
+
+      return false;
+    } else {
+      if (
+        !validationCheckHandler(
+          EmailCheck,
+          userEmail,
+          "적합하지 않은 이메일 형식입니다."
+        )
+      ) {
+        return false;
+      }
+
+      if (
+        !validationCheckHandler(
+          IDPWCheck,
+          userPw,
+          "패스워드는 4~12자의 영문 대소문자와 숫자로만 입력"
+        )
+      ) {
+        return false;
+      }
+    }
+  };
+
+  const validationCheckHandler = (expression, value, message) => {
+    if (expression.test(value)) {
+      return true;
+    }
+    setErrorMsg(message);
+    console.log(message);
   };
 
   const signupStage = {
@@ -35,7 +103,8 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
         matchId={stageIdx}
         headerTxt={"회원가입"}
         descTxt={"아래 정보를 입력하고 회원가입을 진행하세요."}
-        userNameHandler={memorizeUserName}
+        userNameCheckHandler={userNameCheckHandler}
+        userValidateHandler={userValidateHandler}
       />
     ),
     2: (
@@ -44,7 +113,7 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
         matchId={stageIdx}
         headerTxt={`${userName}님 환영합니다.`}
         descTxt={"아래 정보를 입력하고 회원가입을 완료하세요."}
-        userNameHandler={memorizeUserName}
+        userValidateHandler={userValidateHandler}
       />
     ),
     3: (
@@ -53,7 +122,7 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
         matchId={stageIdx}
         headerTxt={`${userName}님 환영합니다.`}
         descTxt={"아래 정보를 입력하고 회원가입을 진행하세요."}
-        userNameHandler={memorizeUserName}
+        userValidateHandler={userValidateHandler}
       />
     ),
   };
@@ -63,7 +132,7 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
       {signupStage[stageIdx]}
       <Button
         onClick={nextBtnClickHandler}
-        buttonName={"primary"}
+        buttonName={"PRIMARY"}
         buttonText={"다음"}
       />
       <LoginCheckCont>

@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 interface InputBoxProps {
   placeholderTxt: string;
-  userNameHandler?: (parameter: any) => string;
+  userNameCheckHandler?: (parameter: any) => void;
+  userValidateHandler: (parameter: any) => boolean;
+  name: "userName" | "userPw" | "userId" | "userEmail";
 }
 
 const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
@@ -30,8 +32,13 @@ const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
         onFocus={(e) => onFocusHandler(e)}
         onBlur={(e) => onBlurHandler(e)}
         onChange={(e) => {
-          props.userNameHandler(e);
+          if (props.userNameCheckHandler) {
+            props.userNameCheckHandler(e);
+          } else {
+            props.userValidateHandler(e);
+          }
         }}
+        name={props.name}
       />
     </FormTagInput>
   );

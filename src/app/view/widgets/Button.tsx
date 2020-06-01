@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-// interface Buttonprops {
-//   isAbled: boolean;
-//   buttonName: string;
-// }
+interface Buttonprops {
+  isAbled: boolean;
+  buttonName: string;
+  buttonText: string;
+}
 
-const Button = (props) => {
+const Button: React = (props) => {
   return (
     // 버튼 하나로 하는 방법
     <CTAButton isAbled={true} buttonName={"primary"}>
@@ -34,8 +35,6 @@ const CTAButton = styled.button<{ isAbled: boolean; buttonName: string }>`
 `;
 
 const ButtonText = styled.p<{ buttonName: string }>`
-  width: 31px;
-  height: 18px;
   font-family: NanumSquare_acEB;
   font-size: 16px;
   font-weight: normal;

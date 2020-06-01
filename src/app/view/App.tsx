@@ -6,7 +6,7 @@ import Button from "./widgets/Button";
 //import { View, Widget } from "app/view";
 import InputBox from "./widgets/InputBox";
 import SignUpView from "app/view/components/signup-view/SignUpView";
-//LogInView from "app/view/components/login-view/LogInView";
+import SignupComp from "./components/SignupComp";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -29,9 +29,9 @@ const App: React.FunctionComponent = () => {
         {/* <Route path="/setting" exact component={View.RetailSettingView} />
           <Route path="/user" exact component={View.UserSettingView} /> */}
         <Route exact path="/test" component={InputBox} />
+        <Route exact path="/signup" component={SignUpView} />
+        <Route exact path="/signup/:matchId" component={SignupComp} />
         <Route path="/button" exact component={Button} />
-        <Route path="/buttontest" exact component={LogInView} />
-        <Route exact path="/test2" component={SignUpView} />
       </Switch>
       {/* </Suspense> */}
     </BrowserRouter>

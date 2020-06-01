@@ -3,20 +3,52 @@ import styled from "styled-components";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import InputBox from "app/view/widgets/InputBox";
 import Button from "app/view/widgets/Button";
+import { UserViewModel } from "app/view-model";
+import container from "injector";
 
 const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
+  const viewModel: UserViewModel = container.get<UserViewModel>(
+    "UserViewModel"
+  );
+
+  const user = viewModel.displayUser();
+  console.log(viewModel.displayUser());
+
   const goSignUpView = () => {
     props.history.push(`/signup`);
+  };
+
+  const userValidateHandler = (e) => {
+    console.log(e.target.value);
+    if (!e.target.value) {
+      console.log("아이디와 비밀번호를 확인해주세요");
+    }
+    return false;
+  };
+
+  const loginHandler = () => {
+    props.history.push(`/`);
   };
 
   return (
     <LogInViewWrapper>
       <LogInViewContainer>
         <HeaderTxt>로그인</HeaderTxt>
-        <InputBox placeholderTxt={"아이디"} />
-        <InputBox placeholderTxt={"비밀번호"} />
+        <InputBox
+          placeholderTxt={"아이디"}
+          userValidateHandler={userValidateHandler}
+        />
+        <InputBox
+          placeholderTxt={"비밀번호"}
+          userValidateHandler={userValidateHandler}
+        />
         <PasswordFind>비밀번호 찾기</PasswordFind>
-        <Button isEnable buttonName={"PRIMARY"} buttonText={"로그인"} />
+        <Button
+          isEnable
+          buttonName={"PRIMARY"}
+          buttonText={"로그인"}
+          onClick={loginHandler}
+        />
         <Button
           isEnable
           buttonName={"SECONDARY"}

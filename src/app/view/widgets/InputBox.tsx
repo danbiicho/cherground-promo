@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 interface InputBoxProps {
@@ -7,12 +7,28 @@ interface InputBoxProps {
 }
 
 const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
+  const [isValid, setIsValid] = useState("default");
+
+  const onBlurHandler = (e) => {
+    if (!e.target.value) {
+      setIsValid("isNotValid");
+    } else {
+      setIsValid("default");
+    }
+  };
+
+  const onFocusHandler = (e) => {
+    setIsValid("isValid");
+  };
+
   return (
     <FormTagInput>
       <InputCont
         type="text"
         placeholder={props.placeholderTxt}
-        isValid={true}
+        isValid={isValid}
+        onFocus={(e) => onFocusHandler(e)}
+        onBlur={(e) => onBlurHandler(e)}
         onChange={(e) => {
           props.userNameHandler(e);
         }}
@@ -25,7 +41,7 @@ const FormTagInput = styled.form`
   margin-bottom: 16px;
 `;
 
-const InputCont = styled.input<{ isValid: boolean }>`
+const InputCont = styled.input<{ isValid: string }>`
   width: 420px;
   height: 48px;
   border-radius: 2px;
@@ -35,12 +51,17 @@ const InputCont = styled.input<{ isValid: boolean }>`
   font-size: 16px;
   color: #000000;
   border: none;
-
-  :focus {
-    outline: none;
-    border-bottom: ${(props) =>
-      !props.isValid ? "2px solid #ec0000" : "2px solid #1e1e1e"};
-  }
+  border-bottom: ${(props) => {
+    if (props.isValid === "isValid") {
+      return "2px solid #1e1e1e";
+    } else if (props.isValid === "isNotValid") {
+      return "2px solid #ec0000";
+    } else if (props.isValid === "default") {
+      return "none";
+    } else {
+      return;
+    }
+  }};
 
   &::placeholder {
     font-family: NanumSquare;

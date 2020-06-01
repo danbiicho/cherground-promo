@@ -18,7 +18,7 @@ const App: React.FunctionComponent = () => {
         <Route exact path="/test" component={InputBox} />
         <Route path="/button" exact component={Button} />
         <Route path="/buttontest" exact component={LogInView} />
-        <Route exact path="/test2" component={SignUpView} />
+        <Route exact path="/signup" component={SignUpView} />
       </Switch>
       {/* </Suspense> */}
     </BrowserRouter>

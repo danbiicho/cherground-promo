@@ -96,7 +96,7 @@ const GlobalStyle = createGlobalStyle`
         display: none;
     }
 
-    input:: placeholder {
+    input::placeholder {
         color: #b9bbc1;
         font-weight: normal;
     }

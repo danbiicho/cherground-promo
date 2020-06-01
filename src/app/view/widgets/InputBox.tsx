@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 interface InputBoxProps {
   placeholderTxt: string;
+  userNameHandler?: (parameter: any) => string;
 }
 
 const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
@@ -12,6 +13,9 @@ const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
         type="text"
         placeholder={props.placeholderTxt}
         isValid={true}
+        onChange={(e) => {
+          props.userNameHandler(e);
+        }}
       />
     </FormTagInput>
   );

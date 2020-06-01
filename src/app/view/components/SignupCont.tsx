@@ -11,7 +11,8 @@ interface SignupContProps {
   matchId: number;
   headerTxt: string;
   descTxt: string;
-  userNameHandler: (parameter: any) => string;
+  userNameCheckHandler?: (parameter: any) => void;
+  userValidateHandler: (parameter: any) => boolean;
 }
 
 const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
@@ -38,11 +39,29 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
               return (
                 <InputBox
                   placeholderTxt={title}
-                  userNameHandler={props.userNameHandler}
+                  userNameCheckHandler={props.userNameCheckHandler}
+                  userValidateHandler={props.userValidateHandler}
+                  name={"userName"}
+                />
+              );
+            } else if (idx === 1) {
+              return (
+                <InputBox
+                  placeholderTxt={title}
+                  userValidateHandler={props.userValidateHandler}
+                  name={"userEmail"}
+                />
+              );
+            } else if (idx === 2 || idx === 3) {
+              return (
+                <InputBox
+                  placeholderTxt={title}
+                  userValidateHandler={props.userValidateHandler}
+                  name={"userPw"}
                 />
               );
             } else {
-              return <InputBox placeholderTxt={title} />;
+              return;
             }
           })}
         </InputBoxCont>

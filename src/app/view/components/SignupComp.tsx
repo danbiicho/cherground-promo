@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import InputBox from "../widgets/InputBox";
 
@@ -6,14 +7,15 @@ import InputBox from "../widgets/InputBox";
 //widget에 둬도 된다.
 
 interface SignupCompProps {
+  match: any;
+  matchId: number;
   headerTxt: string;
   descTxt: string;
 }
 
 const SignupComp: React.FunctionComponent<SignupCompProps> = (props) => {
-  console.log(props);
-
-  const { headerTxt, descTxt } = props;
+  const { headerTxt, descTxt, match, matchId } = props;
+  console.log(props.headerTxt);
 
   return (
     <SignupCompWrapper>

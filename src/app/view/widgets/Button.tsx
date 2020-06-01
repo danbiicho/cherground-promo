@@ -10,7 +10,6 @@ interface Buttonprops {
 
 const Button: React.FunctionComponent<Buttonprops> = (props) => {
   return (
-    // 버튼 하나로 하는 방법
     <CTAButton
       isEnable={true}
       buttonName={props.buttonName}
@@ -40,7 +39,6 @@ const CTAButton = styled.button<{ isEnable: boolean; buttonName: string }>`
         ? "0"
         : "1px solid #1f263e"
       : "0"};
-  /* props.buttonName === "PRIMARY" ? "0" : "1px solid #1f263e"}; */
   outline: 0;
   margin-bottom: 20px;
   font-family: NanumSquare;
@@ -56,7 +54,6 @@ const CTAButton = styled.button<{ isEnable: boolean; buttonName: string }>`
         ? "#ffffff"
         : "#1f263e"
       : "#ffffff"};
-  /* (props.buttonName === "PRIMARY" ? "#ffffff" : "#1f263e")}; */
 `;
 
 export default Button;

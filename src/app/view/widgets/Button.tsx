@@ -5,12 +5,17 @@ interface Buttonprops {
   isAbled?: boolean;
   buttonName: string;
   buttonText: string;
+  onClick?: () => void;
 }
 
 const Button: React.FunctionComponent<Buttonprops> = (props) => {
   return (
     // 버튼 하나로 하는 방법
-    <CTAButton isAbled={true} buttonName={props.buttonName}>
+    <CTAButton
+      isAbled={true}
+      buttonName={props.buttonName}
+      onClick={props.onClick}
+    >
       <ButtonText buttonName={props.buttonName}>{props.buttonText}</ButtonText>
     </CTAButton>
   );

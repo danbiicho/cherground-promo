@@ -12,7 +12,7 @@ interface SignupContProps {
   headerTxt: string;
   descTxt: string;
   userNameCheckHandler?: (parameter: any) => void;
-  userValidateHandler: (parameter: any) => boolean;
+  userValidateHandler: (parameter: any) => any;
 }
 
 const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {

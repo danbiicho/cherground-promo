@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-const LoginView = () => {};
+const LogInView = () => {};
 
-export default LoginView;
+export default LogInView;

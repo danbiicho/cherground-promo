@@ -2,7 +2,7 @@ import "reflect-metadata";
 import React, { Suspense } from "react";
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import GlobalStyle from "app/view/style/GlobalStyle";
-import Button from "../view/Button";
+import Button from "./widgets/Button";
 //import { View, Widget } from "app/view";
 import InputBox from "./widgets/InputBox";
 
@@ -12,7 +12,6 @@ const App: React.FunctionComponent = () => {
       <GlobalStyle />
       {/* <Suspense fallback={<Widget.Modal.DataLoading />}> */}
       <Switch>
-        <Route path="/" exact component={Button} />
         {/* <Route path="/dashboard" exact component={View.DashboardView} />
           <Route path="/sign-up" exact component={View.SignUpView} />
           <Route path="/register" exact component={View.RegisterView} />
@@ -28,6 +27,7 @@ const App: React.FunctionComponent = () => {
         {/* <Route path="/setting" exact component={View.RetailSettingView} />
           <Route path="/user" exact component={View.UserSettingView} /> */}
         <Route exact path="/test" component={InputBox} />
+        <Route path="/button" exact component={Button} />
       </Switch>
       {/* </Suspense> */}
     </BrowserRouter>

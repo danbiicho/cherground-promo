@@ -5,6 +5,8 @@ import GlobalStyle from "app/view/style/GlobalStyle";
 import Button from "./widgets/Button";
 //import { View, Widget } from "app/view";
 import InputBox from "./widgets/InputBox";
+import SignUpView from "app/view/components/signup-view/SignUpView";
+//LogInView from "app/view/components/login-view/LogInView";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -28,6 +30,8 @@ const App: React.FunctionComponent = () => {
           <Route path="/user" exact component={View.UserSettingView} /> */}
         <Route exact path="/test" component={InputBox} />
         <Route path="/button" exact component={Button} />
+        <Route path="/buttontest" exact component={LogInView} />
+        <Route exact path="/test2" component={SignUpView} />
       </Switch>
       {/* </Suspense> */}
     </BrowserRouter>

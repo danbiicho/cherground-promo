@@ -1,16 +1,25 @@
 import React from "react";
 import styled from "styled-components";
-import { RouteComponentProps } from "react-router-dom";
 
-const InputBox: React.FunctionComponent<RouteComponentProps> = (props) => {
+interface InputBoxProps {
+  placeholderTxt: string;
+}
+
+const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
   return (
     <FormTagInput>
-      <InputCont type="text" placeholder="placeholder" isValid={true} />
+      <InputCont
+        type="text"
+        placeholder={props.placeholderTxt}
+        isValid={true}
+      />
     </FormTagInput>
   );
 };
 
-const FormTagInput = styled.form``;
+const FormTagInput = styled.form`
+  margin-bottom: 16px;
+`;
 
 const InputCont = styled.input<{ isValid: boolean }>`
   width: 420px;

@@ -5,7 +5,7 @@ interface InputBoxProps {
   placeholderTxt: string;
   userNameCheckHandler?: (parameter: any) => void;
   userValidateHandler: (parameter: any) => any;
-  name: "userName" | "userPw" | "userId" | "userEmail";
+  name: "userName" | "userPw" | "userId" | "userEmail" | "userPwCheck";
 }
 
 const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {

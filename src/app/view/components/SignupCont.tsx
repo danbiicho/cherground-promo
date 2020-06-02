@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext, useCallback } from "react";
 import styled from "styled-components";
 import InputBox from "../widgets/InputBox";
+import UserDispatch from "app/view/components/practice-SignUp/SignUpViewPr";
 
 //받아야하는 prop의 타입을 정해줄 땐 이렇게 해준다.
 //widget에 둬도 된다.
@@ -15,6 +16,8 @@ interface SignupContProps {
 }
 
 const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
+  const dispatch = useContext(UserDispatch);
+
   const { matchId } = props;
   let boxIndexes: string[] = [];
 
@@ -26,6 +29,15 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
     }
     return boxIndexes;
   };
+
+  //확인용
+  const checkDispatchItems = useCallback((e) => {
+    const { value } = e.target;
+    dispatch({
+      type: "NAME_CHECK",
+      value,
+    });
+  }, []);
 
   return (
     <SignupContWrapper>
@@ -40,7 +52,7 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
                   placeholderTxt={title}
                   userNameCheckHandler={props.userNameCheckHandler}
                   userValidateHandler={props.userValidateHandler}
-                  name={"userName"}
+                  name={"name"}
                 />
               );
             } else if (idx === 1) {
@@ -48,7 +60,7 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
                 <InputBox
                   placeholderTxt={title}
                   userValidateHandler={props.userValidateHandler}
-                  name={"userEmail"}
+                  name={"email"}
                 />
               );
             } else if (idx === 2) {
@@ -56,7 +68,7 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
                 <InputBox
                   placeholderTxt={title}
                   userValidateHandler={props.userValidateHandler}
-                  name={"userPw"}
+                  name={"password"}
                 />
               );
             } else if (idx === 3) {
@@ -64,7 +76,7 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
                 <InputBox
                   placeholderTxt={title}
                   userValidateHandler={props.userValidateHandler}
-                  name={"userPwCheck"}
+                  name={"passwordCheck"}
                 />
               );
             } else {

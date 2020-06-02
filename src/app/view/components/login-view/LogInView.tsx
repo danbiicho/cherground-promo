@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import InputBox from "app/view/widgets/InputBox";
@@ -11,23 +11,39 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     "UserViewModel"
   );
 
+  const [userName, setUserName] = useState("");
+  const [userPw, setUserPw] = useState("");
+
   const user = viewModel.displayUser();
-  console.log(viewModel.displayUser());
+  //console.log(viewModel.displayUser());
 
   const goSignUpView = () => {
     props.history.push(`/signup`);
   };
 
   const userValidateHandler = (e) => {
-    console.log(e.target.value);
     if (!e.target.value) {
-      console.log("아이디와 비밀번호를 확인해주세요");
+      console.log("아이디와 비밀번호를 입력 해주세요");
     }
     return false;
   };
 
-  const loginHandler = () => {
-    props.history.push(`/`);
+  const userNameCheckHandler = (e) => {
+    setUserName(e.target.value);
+    console.log("UserName", userName);
+  };
+
+  const userPasswordCheckHandler = (e) => {
+    setUserPw(e.target.value);
+    console.log("bbb", userPw);
+  };
+
+  const loginHandler = (e) => {
+    if (userName === user[0].id && userPw === user[0].password) {
+      props.history.push(`/`);
+    } else {
+      console.log("아이디와 비밀번호를 확인해주세요");
+    }
   };
 
   return (
@@ -36,11 +52,13 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
         <HeaderTxt>로그인</HeaderTxt>
         <InputBox
           placeholderTxt={"아이디"}
-          userValidateHandler={userValidateHandler}
+          //userValidateHandler={userValidateHandler}
+          userNameCheckHandler={userNameCheckHandler}
         />
         <InputBox
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
+          userPasswordCheckHandler={userPasswordCheckHandler}
         />
         <PasswordFind>비밀번호 찾기</PasswordFind>
         <Button

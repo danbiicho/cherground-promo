@@ -3,6 +3,7 @@ import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import SignUpCont from "app/view/components/SignupCont";
 import styled from "styled-components";
 import Button from "app/view/widgets/Button";
+import { IndexAttachment } from "aws-sdk/clients/clouddirectory";
 
 //Router comp 받기 (페이지 맨 첫번째 뷰에는)
 //SignupCont와 View따로 안 합쳐도 된다.
@@ -10,14 +11,13 @@ import Button from "app/view/widgets/Button";
 //Wrapper > Cont > Box
 
 const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
-  // const [stageStatus, setStageStatus] = useState<
-  //   "usernamecheck" | "usernamecheck" | "usernamecheck"
-  // >("usernamecheck");
+  const [stageStatus, setStageStatus] = useState<
+    "usernamecheck" | "usernamecheck" | "usernamecheck"
+  >("usernamecheck");
   const [stageIdx, setStageIdx] = useState<any>(1);
   const [userName, setUserName] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [userPw, setUserPw] = useState("");
-  const [userPwCheck, setUserPwCheck] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
   const loginHandler = () => {
@@ -52,9 +52,6 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
         case "userPw":
           setUserPw(e.target.value);
           break;
-        case "userPwCheck":
-          setUserPwCheck(e.target.value);
-          break;
         case "userEmail":
           setUserEmail(e.target.value);
           break;
@@ -63,15 +60,15 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
 
     if (!e.target.value) {
       if (!userName) {
-        setErrorMsg("이름을 입력해주세요");
+        console.log("이름을 입력해주세요");
       }
 
       if (!userEmail) {
-        setErrorMsg("이메일을 입력해주세요");
+        console.log("이메일을 입력해주세요");
       }
 
       if (!userPw) {
-        setErrorMsg("비밀번호를 입력해주세요");
+        console.log("비밀번호를 입력해주세요");
       }
 
       return false;
@@ -84,8 +81,6 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
         )
       ) {
         return false;
-      } else {
-        setErrorMsg("");
       }
 
       if (
@@ -96,15 +91,6 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
         )
       ) {
         return false;
-      } else {
-        setErrorMsg("");
-      }
-
-      if (userPw !== userPwCheck) {
-        setErrorMsg("비밀번호가 일치하지 않습니다.");
-        return false;
-      } else {
-        setErrorMsg("");
       }
     }
   };
@@ -181,8 +167,6 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
       />
       )} */}
       {signupStage[stageIdx]}
-
-      <ErrorMsg hasError={errorMsg}>{errorMsg}</ErrorMsg>
       <Button
         onClick={nextBtnClickHandler}
         buttonName={"PRIMARY"}
@@ -214,17 +198,7 @@ const SignupViewWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const ErrorMsg = styled.div`
-  display: ${(props) => (props.hasError ? "block" : "none")};
-  width: 420px;
-  height: fit-content;
-  font-size: 14px;
-  color: #fd0000;
-  font-family: NanumSquare;
-  font-weight: 400;
-  margin-top: 12px;
-  margin-bottom: 33px;
-`;
+
 const LoginCheckCont = styled.div`
   width: 420px;
   height: fit-content;

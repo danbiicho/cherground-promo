@@ -1,5 +1,4 @@
 import React from "react";
-import { Link, RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import InputBox from "../widgets/InputBox";
 
@@ -8,16 +7,16 @@ import InputBox from "../widgets/InputBox";
 
 interface SignupContProps {
   match: any;
-  matchId: number;
+  matchId: any;
   headerTxt: string;
   descTxt: string;
   userNameCheckHandler?: (parameter: any) => void;
-  userValidateHandler: (parameter: any) => any;
+  userValidateHandler?: (parameter: any) => any;
 }
 
 const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
   const { matchId } = props;
-  let boxIndexes = [];
+  let boxIndexes: string[] = [];
 
   const checkBoxIndex = (matchId) => {
     if (matchId === 1) {
@@ -52,12 +51,20 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
                   name={"userEmail"}
                 />
               );
-            } else if (idx === 2 || idx === 3) {
+            } else if (idx === 2) {
               return (
                 <InputBox
                   placeholderTxt={title}
                   userValidateHandler={props.userValidateHandler}
                   name={"userPw"}
+                />
+              );
+            } else if (idx === 3) {
+              return (
+                <InputBox
+                  placeholderTxt={title}
+                  userValidateHandler={props.userValidateHandler}
+                  name={"userPwCheck"}
                 />
               );
             } else {

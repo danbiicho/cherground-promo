@@ -12,16 +12,16 @@ interface SignupContProps {
   headerTxt: string;
   descTxt: string;
   userNameCheckHandler?: (parameter: any) => void;
-  userValidateHandler?: (parameter: any) => any;
+  userValidateHandler: (parameter: any) => boolean | undefined;
 }
 
 const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
-  const dispatch = useContext(UserDispatch);
+  //const dispatch = useContext(UserDispatch);
 
   const { matchId } = props;
-  let boxIndexes: string[] = [];
 
-  const checkBoxIndex = (matchId) => {
+  const checkBoxIndex = (matchId: any) => {
+    let boxIndexes: string[] = [];
     if (matchId === 1) {
       boxIndexes = ["이름", "연락처", "기본 배송지"];
     } else if (matchId >= 2) {
@@ -31,13 +31,13 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
   };
 
   //확인용
-  const checkDispatchItems = useCallback((e) => {
-    const { value } = e.target;
-    dispatch({
-      type: "NAME_CHECK",
-      value,
-    });
-  }, []);
+  // const checkDispatchItems = useCallback((e) => {
+  //   const { value } = e.target;
+  //   dispatch({
+  //     type: "NAME_CHECK",
+  //     value,
+  //   });
+  // }, []);
 
   return (
     <SignupContWrapper>

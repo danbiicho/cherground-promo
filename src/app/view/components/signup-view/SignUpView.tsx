@@ -25,7 +25,7 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
   };
 
   const nextBtnClickHandler = () => {
-    setStageIdx((stageIdx) => (stageIdx += 1));
+    setStageIdx((stageIdx: any) => (stageIdx += 1));
     if (stageIdx >= 3) {
       props.history.push("/");
     }
@@ -121,69 +121,31 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
     console.log(message);
   };
 
-  const signupStage = {
-    1: (
-      <SignUpCont
-        match={props.match}
-        matchId={stageIdx}
-        headerTxt={"회원가입"}
-        descTxt={"아래 정보를 입력하고 회원가입을 진행하세요."}
-        userNameCheckHandler={(e) => userNameCheckHandler(e)}
-      />
-    ),
-    2: (
-      <SignUpCont
-        match={props.match}
-        matchId={stageIdx}
-        headerTxt={`${userName}님 환영합니다.`}
-        descTxt={"아래 정보를 입력하고 회원가입을 완료하세요."}
-        userValidateHandler={(e) => userValidateHandler(e)}
-      />
-    ),
-    3: (
-      <SignUpCont
-        match={props.match}
-        matchId={stageIdx}
-        headerTxt={`${userName}님 환영합니다.`}
-        descTxt={"아래 정보를 입력하고 회원가입을 진행하세요."}
-        userValidateHandler={(e) => userValidateHandler(e)}
-      />
-    ),
+  const txtProps: any = {
+    headerTxt: {
+      1: "회원가입",
+      2: `${name}님 환영합니다.`,
+    },
+    descTxt: {
+      1: "아래 정보를 입력하고 회원가입을 진행하세요.",
+      2: "아래 정보를 입력하고 회원가입을 완료하세요.",
+    },
   };
 
   return (
     <SignupViewWrapper>
-      {/* {stageStatus === "usernamecheck" && (
-        <SignUpCont
+      <SignUpCont
         match={props.match}
         matchId={stageIdx}
-        headerTxt={`${userName}님 환영합니다.`}
-        descTxt={"아래 정보를 입력하고 회원가입을 진행하세요."}
+        headerTxt={txtProps.headerTxt[stageIdx]}
+        descTxt={txtProps.descTxt[stageIdx]}
+        userNameCheckHandler={(e) => userNameCheckHandler(e)}
         userValidateHandler={(e) => userValidateHandler(e)}
       />
-      )}
-      {stageStatus === "usernamecheck" && (
-        <SignUpCont
-        match={props.match}
-        matchId={stageIdx}
-        headerTxt={`${userName}님 환영합니다.`}
-        descTxt={"아래 정보를 입력하고 회원가입을 진행하세요."}
-        userValidateHandler={(e) => userValidateHandler(e)}
-      />
-      )}
-      {stageStatus === "usernamecheck" && (
-        <SignUpCont
-        match={props.match}
-        matchId={stageIdx}
-        headerTxt={`${userName}님 환영합니다.`}
-        descTxt={"아래 정보를 입력하고 회원가입을 진행하세요."}
-        userValidateHandler={(e) => userValidateHandler(e)}
-      />
-      )} */}
-      {signupStage[stageIdx]}
 
       <ErrorMsg hasError={errorMsg}>{errorMsg}</ErrorMsg>
       <Button
+        isEnable={false}
         onClick={nextBtnClickHandler}
         buttonName={"PRIMARY"}
         buttonText={"다음"}
@@ -214,7 +176,7 @@ const SignupViewWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
-const ErrorMsg = styled.div`
+const ErrorMsg = styled.div<{ hasError: string }>`
   display: ${(props) => (props.hasError ? "block" : "none")};
   width: 420px;
   height: fit-content;

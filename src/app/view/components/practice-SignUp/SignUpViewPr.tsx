@@ -152,7 +152,7 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
 
   //props를 객체로 만들어서 index에 있는 걸 꺼내쓸수있게
 
-  const txtProps = {
+  const txtProps: any = {
     headerTxt: {
       1: "회원가입",
       2: `${name}님 환영합니다.`,
@@ -164,39 +164,40 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
   };
 
   return (
-    <UserDispatch.Provider value={dispatch}>
-      <SignupViewWrapper>
-        <SignUpCont
-          match={props.match}
-          matchId={stageIdx}
-          headerTxt={txtProps.headerTxt[stageIdx]}
-          descTxt={txtProps.descTxt[stageIdx]}
-          userNameCheckHandler={(e) => userNameCheckHandler(e)}
-          userValidateHandler={(e) => userValidateHandler(e)}
-        />
-        <ErrorMsg hasError={errorMsg}>{errorMsg}</ErrorMsg>
-        <Button
-          onClick={nextBtnClickHandler}
-          buttonName={"PRIMARY"}
-          buttonText={"다음"}
-        />
-        <LoginCheckCont>
-          이미 계정이 있나요?
-          <LoginTxt
-            onClick={() => {
-              loginHandler();
-            }}
-          >
-            로그인
-          </LoginTxt>
-        </LoginCheckCont>
-        {stageIdx === 1 && (
-          <CopyrightBox>
-            <OwnerInfo>CherGround Inc. All rights reserved.</OwnerInfo>
-          </CopyrightBox>
-        )}
-      </SignupViewWrapper>
-    </UserDispatch.Provider>
+    //<UserDispatch.Provider value={dispatch}>
+    <SignupViewWrapper>
+      <SignUpCont
+        match={props.match}
+        matchId={stageIdx}
+        headerTxt={txtProps.headerTxt[stageIdx]}
+        descTxt={txtProps.descTxt[stageIdx]}
+        userNameCheckHandler={(e) => userNameCheckHandler(e)}
+        userValidateHandler={(e) => userValidateHandler(e)}
+      />
+      <ErrorMsg hasError={errorMsg}>{errorMsg}</ErrorMsg>
+      <Button
+        isEnable={false}
+        onClick={nextBtnClickHandler}
+        buttonName={"PRIMARY"}
+        buttonText={"다음"}
+      />
+      <LoginCheckCont>
+        이미 계정이 있나요?
+        <LoginTxt
+          onClick={() => {
+            loginHandler();
+          }}
+        >
+          로그인
+        </LoginTxt>
+      </LoginCheckCont>
+      {stageIdx === 1 && (
+        <CopyrightBox>
+          <OwnerInfo>CherGround Inc. All rights reserved.</OwnerInfo>
+        </CopyrightBox>
+      )}
+    </SignupViewWrapper>
+    //</UserDispatch.Provider>
   );
 };
 
@@ -208,7 +209,7 @@ const SignupViewWrapper = styled.div`
   align-items: center;
 `;
 
-const ErrorMsg = styled.div`
+const ErrorMsg = styled.div<{ hasError: string }>`
   display: ${(props) => (props.hasError ? "block" : "none")};
   width: 420px;
   height: fit-content;

@@ -7,8 +7,10 @@ const ListBox = () => {
     <ListBoxWrapper>
       <Icon />
       <Container>
-        <ItemName>Item Name</ItemName>
-        <BrandName>Brand Name</BrandName>
+        <NameContents>
+          <ItemName>Item Name</ItemName>
+          <BrandName>Brand Name</BrandName>
+        </NameContents>
         <Contents>김셀업님의 주문이 정상적으로 입력되었습니다.</Contents>
       </Container>
       <Label status={"원부자재 선택"}></Label>
@@ -34,6 +36,10 @@ const Icon = styled.div`
 
 const Container = styled.div`
   margin-left: 24px;
+`;
+
+const NameContents = styled.div`
+  display: flex;
 `;
 
 const ItemName = styled.p`

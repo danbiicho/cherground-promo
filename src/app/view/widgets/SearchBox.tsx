@@ -2,19 +2,17 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import searchIcon from "search.png";
 
-// interface SearchBoxProps {
-//   filteringText: string[];
-//   filteredItems: string[];
-// }
-
 const SearchBox: React.FunctionComponent = (props) => {
+  const searchClickedHandler = () => {
+    alert("검색 끝");
+  };
   return (
     <SearchBoxWrapper>
       <SearchAreaCont>
         <InputArea>
           <InputText type="text" />
         </InputArea>
-        <SearchIconBox>
+        <SearchIconBox onClick={searchClickedHandler}>
           <SearchIconImg src={searchIcon} />
         </SearchIconBox>
       </SearchAreaCont>

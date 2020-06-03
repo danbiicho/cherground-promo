@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useCallback } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import reducer from "app/view/reducers/signupReducers";
-import SignUpCont from "app/view/components/SignupCont";
+import SignUpCont from "app/view/components/asset/SignupCont/SignupCont";
 import styled from "styled-components";
 import Button from "app/view/widgets/Button";
 

@@ -1,5 +1,5 @@
 import React, { useState, useReducer, useCallback } from "react";
-import { RouteComponentProps, withRouter, Link } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import reducer from "app/view/reducers/signupReducers";
 import SignUpCont from "app/view/components/SignupCont";
 import styled from "styled-components";
@@ -33,7 +33,7 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
   const { name, password, passwordCheck, email } = state.userInput;
 
   const loginHandler = () => {
-    props.history.push("/signin");
+    props.history.push("/login");
   };
 
   const nextBtnClickHandler = useCallback(() => {
@@ -251,4 +251,4 @@ const OwnerInfo = styled.p`
   margin: 20px 0 19px 128px;
 `;
 
-export default withRouter(SignUpViewPr);
+export default SignUpViewPr;

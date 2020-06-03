@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import InputBox from "app/view/widgets/InputBox";
 import Button from "app/view/widgets/Button";
 import { UserViewModel } from "app/view-model";
@@ -167,4 +167,4 @@ const CompanyInfo = styled.p`
   margin: 20px 0 19px 128px;
 `;
 
-export default withRouter(LogInView);
+export default LogInView;

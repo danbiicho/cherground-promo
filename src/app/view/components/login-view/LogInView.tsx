@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import InputBox from "app/view/widgets/InputBox";
 import Button from "app/view/widgets/Button";
 import { UserViewModel } from "app/view-model";
@@ -11,10 +11,10 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     "UserViewModel"
   );
 
-  const [userName, setUserName] = useState("");
-  const [userPw, setUserPw] = useState("");
-  const [idErrorMsg, setIdErrorMsg] = useState("");
-  const [pwErrorMsg, setPwErrorMsg] = useState("");
+  const [userName, setUserName] = useState<string>("");
+  const [userPw, setUserPw] = useState<string>("");
+  const [idErrorMsg, setIdErrorMsg] = useState<string>("");
+  const [pwErrorMsg, setPwErrorMsg] = useState<string>("");
 
   const user = viewModel.displayUser();
   //console.log(viewModel.displayUser());
@@ -120,7 +120,7 @@ const HeaderTxt = styled.p`
   margin: 0 0 40px 0;
 `;
 
-const IdErrorMsg = styled.div`
+const IdErrorMsg = styled.div<{ hasError: string }>`
   width: 420px;
   height: 16px;
   font-size: 14px;
@@ -167,4 +167,4 @@ const CompanyInfo = styled.p`
   margin: 20px 0 19px 128px;
 `;
 
-export default withRouter(LogInView);
+export default LogInView;

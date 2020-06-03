@@ -6,6 +6,7 @@ import SignUpView from "app/view/components/signup-view/SignUpView";
 import SignUpViewPr from "app/view/components/practice-SignUp/SignUpViewPr";
 import LogInView from "app/view/components/login-view/LogInView";
 import LogInViewTest from "app/view/components/login-view/LogInViewTest";
+import BoardView from "app/view/components/board-view/BoardView";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FunctionComponent = () => {
         <Route exact path="/signup" component={SignUpView} />
         <Route exact path="/test" component={SignUpViewPr} />
         <Route exact path="/logintest" component={LogInViewTest} />
+        <Route exact path="/board" component={BoardView} />
       </Switch>
     </BrowserRouter>
   );

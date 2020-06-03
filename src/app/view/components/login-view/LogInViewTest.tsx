@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { useReducer, useCallback } from "react";
 import styled from "styled-components";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import reducer from "app/view/reducers/loginReducers";
 import InputBox from "app/view/widgets/InputBox";
 import Button from "app/view/widgets/Button";
 import { UserViewModel } from "app/view-model";
 import container from "injector";
 
-const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
+const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
   const viewModel: UserViewModel = container.get<UserViewModel>(
     "UserViewModel"
   );
 
-  const [userName, setUserName] = useState("");
-  const [userPw, setUserPw] = useState("");
-  const [idErrorMsg, setIdErrorMsg] = useState("");
-  const [pwErrorMsg, setPwErrorMsg] = useState("");
+  // useReducer 사용할 때 먼저 initialize
+  const initiallUserState = {
+    userName: "",
+    userPw: "",
+    idErrorMsg: "",
+    pwErrorMsg: "",
+  };
+
+  const [state, dispatch] = useReducer(reducer, initiallUserState);
+  const { userName, userPw, idErrorMsg, pwErrorMsg } = state;
 
   const user = viewModel.displayUser();
   //console.log(viewModel.displayUser());
@@ -23,30 +30,44 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     props.history.push(`/signup`);
   };
 
-  const userValidateHandler = (e: any) => {
+  const userValidateHandler = useCallback((e) => {
     if (!e.target.value) {
       console.log("아이디와 비밀번호를 입력 해주세요");
     }
     return false;
-  };
+  }, []);
 
-  const userNameCheckHandler = (e: any) => {
-    setUserName(e.target.value);
-    console.log("UserName", userName);
-  };
+  const userNameCheckHandler = useCallback((e) => {
+    const { value } = e.target;
 
-  const userPwCheckHandler = (e: any) => {
-    setUserPw(e.target.value);
-    console.log("bbb", userPw);
-  };
+    dispatch({
+      type: "NAME_CHECK",
+      value,
+    });
+  }, []);
 
-  const loginHandler = () => {
+  const userPwCheckHandler = useCallback((e) => {
+    const { value } = e.target;
+
+    dispatch({
+      type: "PASSWORD_CHECK",
+      value,
+    });
+  }, []);
+
+  const loginHandler = useCallback((e) => {
     if (userName !== user[0].id) {
-      setIdErrorMsg("아이디가 일치하지 않습니다.");
+      dispatch({
+        type: "ADD_ID_ERROR_MSG",
+        message: "아이디가 일치하지 않습니다.",
+      });
     }
 
     if (userPw !== user[0].password) {
-      setPwErrorMsg("비밀번호가 일치하지 않습니다.");
+      dispatch({
+        type: "ADD_PW_ERROR_MSG",
+        message: "비밀번호가 일치하지 않습니다.",
+      });
     }
 
     if (userName === user[0].id && userPw === user[0].password) {
@@ -54,7 +75,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     } else {
       console.log("아이디와 비밀번호를 확인해주세요");
     }
-  };
+  }, []);
 
   return (
     <LogInViewWrapper>
@@ -167,4 +188,4 @@ const CompanyInfo = styled.p`
   margin: 20px 0 19px 128px;
 `;
 
-export default withRouter(LogInView);
+export default withRouter(LogInViewTest);

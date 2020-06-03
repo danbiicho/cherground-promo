@@ -23,24 +23,24 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     props.history.push(`/signup`);
   };
 
-  const userValidateHandler = (e) => {
+  const userValidateHandler = (e: any) => {
     if (!e.target.value) {
       console.log("아이디와 비밀번호를 입력 해주세요");
     }
     return false;
   };
 
-  const userNameCheckHandler = (e) => {
+  const userNameCheckHandler = (e: any) => {
     setUserName(e.target.value);
     console.log("UserName", userName);
   };
 
-  const userPwCheckHandler = (e) => {
+  const userPwCheckHandler = (e: any) => {
     setUserPw(e.target.value);
     console.log("bbb", userPw);
   };
 
-  const loginHandler = (e) => {
+  const loginHandler = () => {
     if (userName !== user[0].id) {
       setIdErrorMsg("아이디가 일치하지 않습니다.");
     }
@@ -64,6 +64,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
           userNameCheckHandler={userNameCheckHandler}
+          name={"userId"}
         />
 
         <IdErrorMsg hasError={idErrorMsg}>{idErrorMsg}</IdErrorMsg>
@@ -71,6 +72,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
           userPwCheckHandler={userPwCheckHandler}
+          name={"userPw"}
         />
         <PwErrorMsg hasError={pwErrorMsg}>{pwErrorMsg}</PwErrorMsg>
         <PasswordFind>비밀번호 찾기</PasswordFind>

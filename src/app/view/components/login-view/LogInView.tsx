@@ -11,10 +11,10 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     "UserViewModel"
   );
 
-  const [userName, setUserName] = useState("");
-  const [userPw, setUserPw] = useState("");
-  const [idErrorMsg, setIdErrorMsg] = useState("");
-  const [pwErrorMsg, setPwErrorMsg] = useState("");
+  const [userName, setUserName] = useState<string>("");
+  const [userPw, setUserPw] = useState<string>("");
+  const [idErrorMsg, setIdErrorMsg] = useState<string>("");
+  const [pwErrorMsg, setPwErrorMsg] = useState<string>("");
 
   const user = viewModel.displayUser();
   //console.log(viewModel.displayUser());
@@ -120,7 +120,7 @@ const HeaderTxt = styled.p`
   margin: 0 0 40px 0;
 `;
 
-const IdErrorMsg = styled.div`
+const IdErrorMsg = styled.div<{ hasError: string }>`
   width: 420px;
   height: 16px;
   font-size: 14px;

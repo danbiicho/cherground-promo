@@ -55,7 +55,7 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
     });
   }, []);
 
-  const loginHandler = useCallback((e) => {
+  const loginHandler = useCallback(() => {
     if (userName !== user[0].id) {
       dispatch({
         type: "ADD_ID_ERROR_MSG",

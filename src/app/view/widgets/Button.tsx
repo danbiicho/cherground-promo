@@ -8,19 +8,24 @@ interface Buttonprops {
   onClick: () => void;
 }
 
+interface ButtonLayoutProps {
+  isEnable: boolean;
+  buttonName: string;
+}
+
 const Button: React.FunctionComponent<Buttonprops> = (props) => {
   return (
-    <CTAButton
-      isEnable={true}
+    <ButtonLayout
+      isEnable
       buttonName={props.buttonName}
       onClick={props.onClick}
     >
       {props.buttonText}
-    </CTAButton>
+    </ButtonLayout>
   );
 };
 
-const CTAButton = styled.button<{ isEnable: boolean; buttonName: string }>`
+const ButtonLayout = styled.button<ButtonLayoutProps>`
   width: 420px;
   height: 48px;
   border-radius: 2px;
@@ -44,10 +49,6 @@ const CTAButton = styled.button<{ isEnable: boolean; buttonName: string }>`
   font-family: NanumSquare;
   font-size: 16px;
   font-weight: 600;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: normal;
-  letter-spacing: normal;
   color: ${(props) =>
     props.isEnable
       ? props.buttonName === "PRIMARY"

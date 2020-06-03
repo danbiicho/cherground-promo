@@ -1,41 +1,27 @@
 import React from "react";
-import styled from "styled-components";
+import { RouteComponentProps } from "react-router-dom";
 import DropDownBox from "app/view/widgets/DropDownBox";
 import SearchBox from "app/view/widgets/SearchBox";
 import PromotionHeader from "app/view/widgets/PromotionHeader";
+import OrderStatusViewLayout from "app/view/components/orderstatus-view/OrderStatusViewLayout";
+import TitleContLayout from "app/view/components/orderstatus-view/TitleContLayout";
+import StatusContLayout from "app/view/components/orderstatus-view/StatusContLayout";
 
-const OrderStatusView = (props) => {
+const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
+  props
+) => {
   return (
     <>
       <PromotionHeader />
-      <OrderStatusViewWrapper>
-        <TitleCont>제작 주문</TitleCont>
-        <StatusCont>
+      <OrderStatusViewLayout>
+        <TitleContLayout>제작 주문</TitleContLayout>
+        <StatusContLayout>
           <DropDownBox />
           <SearchBox />
-        </StatusCont>
-      </OrderStatusViewWrapper>
+        </StatusContLayout>
+      </OrderStatusViewLayout>
     </>
   );
 };
-
-const OrderStatusViewWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 64px;
-`;
-
-const TitleCont = styled.div`
-  width: 100vw;
-  padding: 48px 0;
-  font-family: NanumSquare;
-  font-size: 28px;
-  font-weight: 700;
-  color: #1e2640;
-`;
-
-const StatusCont = styled.div`
-  display: flex;
-`;
 
 export default OrderStatusView;

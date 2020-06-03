@@ -1,6 +1,6 @@
 import React, { useContext, useCallback } from "react";
 import styled from "styled-components";
-import InputBox from "../../widgets/InputBox";
+import InputBox from "../../../widgets/InputBox";
 import UserDispatch from "app/view/components/practice-SignUp/SignUpViewPr";
 
 //받아야하는 prop의 타입을 정해줄 땐 이렇게 해준다.

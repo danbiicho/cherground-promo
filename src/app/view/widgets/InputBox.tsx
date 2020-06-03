@@ -4,14 +4,14 @@ import styled from "styled-components";
 interface InputBoxProps {
   placeholderTxt: string;
   userNameCheckHandler?: (parameter: any) => void;
-  userValidateHandler: (parameter: any) => any;
-  name: "userName" | "userPw" | "userId" | "userEmail" | "userPwCheck";
+  userValidateHandler: (parameter: any) => boolean | undefined;
+  name: "name" | "email" | "password" | "passwordCheck";
 }
 
 const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
   const [isValid, setIsValid] = useState("default");
 
-  const onBlurHandler = (e) => {
+  const onBlurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
       setIsValid("isNotValid");
     } else {

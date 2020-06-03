@@ -4,8 +4,9 @@ import styled from "styled-components";
 interface InputBoxProps {
   placeholderTxt: string;
   userNameCheckHandler?: (parameter: any) => void;
-  userValidateHandler: (parameter: any) => boolean | undefined;
+  userPwCheckHandler?: (parameter: any) => void;
   name: "name" | "email" | "password" | "passwordCheck";
+  userValidateHandler: (parameter: any) => boolean | undefined;
 }
 
 const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
@@ -34,6 +35,9 @@ const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
         onChange={(e) => {
           if (props.userNameCheckHandler) {
             props.userNameCheckHandler(e);
+          }
+          if (props.userPwCheckHandler) {
+            props.userPwCheckHandler(e);
           } else {
             props.userValidateHandler(e);
           }

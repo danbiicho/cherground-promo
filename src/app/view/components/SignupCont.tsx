@@ -75,6 +75,7 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
               return (
                 <InputBox
                   placeholderTxt={title}
+                  userPwCheckHandler={props.userPwCheckHandler}
                   userValidateHandler={props.userValidateHandler}
                   name={"passwordCheck"}
                 />

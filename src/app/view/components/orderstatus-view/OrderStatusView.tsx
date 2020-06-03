@@ -3,16 +3,13 @@ import { RouteComponentProps } from "react-router-dom";
 import DropDownBox from "app/view/widgets/DropDownBox";
 import SearchBox from "app/view/widgets/SearchBox";
 import PromotionHeader from "app/view/widgets/PromotionHeader";
-import { OrderstatusViewLayout } from "./OrderstatusViewLayout";
+import OrderStatusViewLayout from "app/view/components/orderstatus-view/OrderStatusViewLayout";
+import TitleContLayout from "app/view/components/orderstatus-view/TitleContLayout";
+import StatusContLayout from "app/view/components/orderstatus-view/StatusContLayout";
 
 const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
-  const {
-    OrderStatusViewLayout,
-    TitleContLayout,
-    StatusContLayout,
-  } = OrderstatusViewLayout;
   return (
     <>
       <PromotionHeader />

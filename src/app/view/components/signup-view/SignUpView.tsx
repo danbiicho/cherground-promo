@@ -1,6 +1,6 @@
 import React, { useState, Key } from "react";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
-import SignUpCont from "app/view/components/SignupCont";
+import SignUpCont from "app/view/components/asset/SignupCont/SignupCont";
 import styled from "styled-components";
 import Button from "app/view/widgets/Button";
 

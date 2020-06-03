@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-// interface DropDownBoxProps {
-//   filteringText: string[];
-//   filteredItems: string[];
-// }
-
 const DropDownBox: React.FunctionComponent = (props) => {
   const [filteringText, setfilteringText] = useState<string[]>(["상태"]);
   const [filteredItems, setfilteredItems] = useState<string[]>([

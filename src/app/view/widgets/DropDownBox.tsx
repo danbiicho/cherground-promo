@@ -59,6 +59,7 @@ const DropDownBoxWrapper = styled.div<{ isChanged: boolean }>`
   border: 1px solid #dfdfdf;
   display: flex;
   justify-content: flex-start;
+  margin-right: 8px;
 `;
 
 const DropDownBoxCont = styled.div`
@@ -78,7 +79,7 @@ const ArrowCont = styled.span<{ isChanged: boolean }>`
   width: 10px;
   height: 10px;
   display: flex;
-  padding-top: ${(props) => (props.isChanged ? "3px" : "")};
+  padding-top: ${(props) => (props.isChanged ? "5px" : "")};
 `;
 
 const Arrow = styled.i<{ isChanged: boolean }>`
@@ -87,7 +88,6 @@ const Arrow = styled.i<{ isChanged: boolean }>`
   border: solid #b9bbc1;
   border-width: 0 1px 1px 0;
   display: inline-block;
-  padding: 3px;
   transform: rotate(45deg);
   transform: ${(props) => (props.isChanged ? "rotate(225deg)" : "")};
 `;

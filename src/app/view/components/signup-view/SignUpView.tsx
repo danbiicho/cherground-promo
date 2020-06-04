@@ -13,7 +13,7 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
   // const [stageStatus, setStageStatus] = useState<
   //   "usernamecheck" | "usernamecheck" | "usernamecheck"
   // >("usernamecheck");
-  const [stageIdx, setStageIdx] = useState<number>(1);
+  const [stageIdx, setStageIdx] = useState<any>(1);
   const [userName, setUserName] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [userPw, setUserPw] = useState("");
@@ -21,7 +21,7 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
   const [userEmail, setUserEmail] = useState("");
 
   const loginHandler = () => {
-    props.history.push("/login");
+    props.history.push("/signin");
   };
 
   const nextBtnClickHandler = () => {

@@ -6,6 +6,10 @@ import PromotionHeader from "app/view/widgets/PromotionHeader";
 import OrderStatusViewLayout from "app/view/components/orderstatus-view/OrderStatusViewLayout";
 import TitleContLayout from "app/view/components/orderstatus-view/TitleContLayout";
 import StatusContLayout from "app/view/components/orderstatus-view/StatusContLayout";
+import ListBox from "app/view/components/asset/listBox/ListBox";
+import Tab from "app/view/widgets/Tab";
+import TabContainerLayout from "app/view/components/orderstatus-view/TabContainerLayout";
+import OrderInputButton from "app/view/widgets/OrderInputButton";
 
 const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
@@ -15,10 +19,17 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
       <PromotionHeader />
       <OrderStatusViewLayout>
         <TitleContLayout>제작 주문</TitleContLayout>
+        <TabContainerLayout>
+          <Tab status={"진행중"} active />
+          <Tab status={"완료"} active={false} />
+        </TabContainerLayout>
         <StatusContLayout>
           <DropDownBox />
           <SearchBox />
+          <OrderInputButton />
         </StatusContLayout>
+        <ListBox />
+        <ListBox />
       </OrderStatusViewLayout>
     </>
   );

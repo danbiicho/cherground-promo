@@ -15,6 +15,10 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
   const [tabIdxChanged, setTabIdxChanged] = useState(false);
+<<<<<<< HEAD
+  const [activeTab, setactiveTab] = useState(true);
+=======
+>>>>>>> master
 
   const labelText: string[] = [
     "대기",
@@ -24,30 +28,34 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
     "제작",
     "완료",
   ];
-  // const labelText = {
-  //   pending: "대기",
-  //   textile: "원부자재 선택",
-  //   sample: "샘플 제작",
-  //   delivery: "배송",
-  //   production: "제작",
-  //   completion: "완료",
-  // };
 
   const tabChangeHandler = (status: string) => {
     setTabIdxChanged(!tabIdxChanged);
+<<<<<<< HEAD
+    setactiveTab(!activeTab);
   };
 
   const arrc = labelText.filter((item, idx) => idx <= 4);
+
+=======
+  };
+
+  const arrc = labelText.filter((item, idx) => idx <= 4);
+>>>>>>> master
   return (
     <>
       <PromotionHeader />
       <OrderStatusViewLayout>
         <TitleContLayout>제작 주문</TitleContLayout>
         <TabContainerLayout>
-          <Tab status={"진행중"} active onClickHandler={tabChangeHandler} />
+          <Tab
+            status={"진행중"}
+            active={activeTab}
+            onClickHandler={tabChangeHandler}
+          />
           <Tab
             status={"완료"}
-            active={false}
+            active={!activeTab}
             onClickHandler={tabChangeHandler}
           />
         </TabContainerLayout>

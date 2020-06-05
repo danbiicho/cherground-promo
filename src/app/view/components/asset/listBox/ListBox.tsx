@@ -2,7 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import Label from "app/view/widgets/Label";
 
-const ListBox = (props) => {
+interface Labelprops {
+  labelStatus: string;
+}
+
+const ListBox: React.FunctionComponent<Labelprops> = (props) => {
   return (
     <ListBoxWrapper>
       <Icon />

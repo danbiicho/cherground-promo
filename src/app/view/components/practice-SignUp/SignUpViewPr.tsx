@@ -19,6 +19,9 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
     stageIdx: 1,
     errorMsg: "",
     userInput: {
+      userNameVal: "",
+      phone: "",
+      shippingAddress: "",
       name: "",
       password: "",
       passwordCheck: "",
@@ -30,7 +33,15 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   const { stageIdx, errorMsg } = state;
-  const { name, password, passwordCheck, email } = state.userInput;
+  const {
+    userNameVal,
+    phone,
+    shippingAddress,
+    name,
+    password,
+    passwordCheck,
+    email,
+  } = state.userInput;
 
   const loginHandler = () => {
     props.history.push("/login");
@@ -46,18 +57,6 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
     }
   }, []);
 
-  const userNameCheckHandler = useCallback((e) => {
-    const { value } = e.target;
-
-    dispatch({
-      type: "NAME_CHECK",
-      value,
-    });
-    if (!e.target.value) {
-      console.log("이름을 입력해주세요");
-    }
-  }, []);
-
   const userValidateHandler = useCallback(
     (e) => {
       const IDPWCheck = /^[a-zA-Z0-9]{4,12}$/;
@@ -67,6 +66,27 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
         let inputName = e.target.name;
         const { value } = e.target;
         switch (inputName) {
+          case "userNameVal":
+            dispatch({
+              type: "ADD_USER_INFO",
+              inputName,
+              value,
+            });
+            break;
+          case "phone":
+            dispatch({
+              type: "ADD_USER_INFO",
+              inputName,
+              value,
+            });
+            break;
+          case "shippingAddress":
+            dispatch({
+              type: "ADD_USER_INFO",
+              inputName,
+              value,
+            });
+            break;
           case "name":
             dispatch({
               type: "ADD_USER_INFO",
@@ -92,12 +112,25 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
       }
 
       if (!e.target.value) {
-        if (!name) {
-          console.log("이름을 입력해주세요");
+        if (!userNameVal) {
+          dispatch({
+            type: "ADD_ERROR_MSG",
+            message: "이름을 입력해주세요",
+          });
         }
 
-        if (!email) {
-          console.log("이메일을 입력해주세요");
+        if (!phone) {
+          dispatch({
+            type: "ADD_ERROR_MSG",
+            message: "필수 입력 정보입니다.",
+          });
+        }
+
+        if (!shippingAddress) {
+          dispatch({
+            type: "ADD_ERROR_MSG",
+            message: "필수 입력 정보입니다.",
+          });
         }
 
         if (!password) {
@@ -155,7 +188,7 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
   const txtProps: any = {
     headerTxt: {
       1: "회원가입",
-      2: `${name}님 환영합니다.`,
+      2: `${userNameVal}님 환영합니다.`,
     },
     descTxt: {
       1: "아래 정보를 입력하고 회원가입을 진행하세요.",
@@ -171,7 +204,6 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
         matchId={stageIdx}
         headerTxt={txtProps.headerTxt[stageIdx]}
         descTxt={txtProps.descTxt[stageIdx]}
-        userNameCheckHandler={(e) => userNameCheckHandler(e)}
         userValidateHandler={(e) => userValidateHandler(e)}
       />
       <ErrorMsg hasError={errorMsg}>{errorMsg}</ErrorMsg>

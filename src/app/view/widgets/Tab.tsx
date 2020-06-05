@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 interface TabProps {
@@ -11,7 +11,7 @@ const Tab: React.FunctionComponent<TabProps> = (props) => {
   return (
     <TabLayout
       status={props.status}
-      active
+      active={props.active}
       onClick={() => props.onClickHandler(props.status)}
     >
       {props.status}

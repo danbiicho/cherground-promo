@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-const Label: React.FunctionComponent = (props) => {
+interface Labelprops {
+  labelStatus: string;
+}
+
+const Label: React.FunctionComponent<Labelprops> = (props) => {
   return (
     <LabelLayout labelStatus={props.labelStatus}>
       {props.labelStatus}
@@ -9,7 +13,7 @@ const Label: React.FunctionComponent = (props) => {
   );
 };
 
-const LabelLayout = styled.div`
+const LabelLayout = styled.div<Labelprops>`
   width: 100px;
   height: 22px;
   border-radius: 11px;

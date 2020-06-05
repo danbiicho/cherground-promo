@@ -85,7 +85,7 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
           userNameCheckHandler={userNameCheckHandler}
-          name={"userId"}
+          name={"name"}
         />
 
         <IdErrorMsg hasError={idErrorMsg}>{idErrorMsg}</IdErrorMsg>
@@ -93,7 +93,7 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
           userPwCheckHandler={userPwCheckHandler}
-          name={"userPw"}
+          name={"password"}
         />
         <PwErrorMsg hasError={pwErrorMsg}>{pwErrorMsg}</PwErrorMsg>
         <PasswordFind>비밀번호 찾기</PasswordFind>

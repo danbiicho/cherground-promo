@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 interface LabelProps {
-  status: "대기" | "원부자재 선택" | "샘플 제작" | "배송" | "제작";
+  status: "대기" | "원부자재 선택" | "샘플 제작" | "배송" | "제작" | "완료";
 }
 
 const Label: React.FunctionComponent<LabelProps> = (props) => {
@@ -19,9 +19,7 @@ const LabelLayout = styled.div<LabelProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 16px;
-  /* position: absolute;
-  right: 0; */
+  margin-bottom: 16px 128px;
   background-color: ${(props) => {
     if (props.status === "대기") {
       return "#b9bbc1";
@@ -37,6 +35,9 @@ const LabelLayout = styled.div<LabelProps>`
     }
     if (props.status === "제작") {
       return "#566be5";
+    }
+    if (props.status === "완료") {
+      return "#535454";
     }
   }};
 `;

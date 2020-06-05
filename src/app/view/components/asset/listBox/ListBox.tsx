@@ -26,7 +26,6 @@ const ListBox = () => {
 };
 
 const ListBoxWrapper = styled.div`
-  /* margin: 0 64px; */
   height: 104px;
   border-radius: 2px;
   border: solid 1px #dfdfdf;

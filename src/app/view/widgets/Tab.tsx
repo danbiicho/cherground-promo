@@ -7,18 +7,11 @@ interface TabProps {
   onClickHandler: (status: string) => void;
 }
 
-// const [activeTab, setActiveTab] = useState("0");
-
-// const activeHandler = () => {};
-
 const Tab: React.FunctionComponent<TabProps> = (props) => {
   return (
     <TabLayout
       status={props.status}
-      active={props.active}
-      // onClick={() => {
-      //   activeHandler();
-      // }}
+      active
       onClick={() => props.onClickHandler(props.status)}
     >
       {props.status}

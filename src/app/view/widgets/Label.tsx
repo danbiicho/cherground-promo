@@ -20,6 +20,8 @@ const LabelLayout = styled.div<LabelProps>`
   justify-content: center;
   align-items: center;
   margin-bottom: 16px;
+  /* position: absolute;
+  right: 0; */
   background-color: ${(props) => {
     if (props.status === "대기") {
       return "#b9bbc1";

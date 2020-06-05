@@ -26,13 +26,14 @@ const ListBox = () => {
 };
 
 const ListBoxWrapper = styled.div`
-  margin: 0 64px;
+  /* margin: 0 64px; */
   height: 104px;
   border-radius: 2px;
   border: solid 1px #dfdfdf;
   display: flex;
   align-items: center;
   position: relative;
+  margin-bottom: 8px;
 `;
 
 const Icon = styled.div`
@@ -98,7 +99,7 @@ const NameInfo = styled.p`
   height: 18px;
   font-family: NanumSquare;
   font-size: 16px;
-  text-align: right;
+  //text-align: right;
   color: #68768d;
 `;
 
@@ -115,7 +116,7 @@ const DateInfo = styled.p`
   height: 18px;
   font-family: NanumSquare;
   font-size: 16px;
-  text-align: right;
+  //text-align: right;
   color: #68768d;
 `;
 

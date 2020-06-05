@@ -142,7 +142,6 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
         matchId={stageIdx}
         headerTxt={txtProps.headerTxt[stageIdx]}
         descTxt={txtProps.descTxt[stageIdx]}
-        userNameCheckHandler={(e) => userNameCheckHandler(e)}
         userValidateHandler={(e) => userValidateHandler(e)}
       />
 

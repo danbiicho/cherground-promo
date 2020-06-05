@@ -3,9 +3,15 @@ import styled from "styled-components";
 
 interface InputBoxProps {
   placeholderTxt: string;
-  userNameCheckHandler?: (parameter: any) => void;
   userPwCheckHandler?: (parameter: any) => void;
-  name: "name" | "email" | "password" | "passwordCheck";
+  name:
+    | "userNameVal"
+    | "phone"
+    | "shippingAddress"
+    | "email"
+    | "name"
+    | "password"
+    | "passwordCheck";
   userValidateHandler: (parameter: any) => boolean | undefined;
 }
 

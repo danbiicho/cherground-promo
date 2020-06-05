@@ -14,7 +14,7 @@ import OrderInputButton from "app/view/widgets/OrderInputButton";
 const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
-  const [tabIdx, setTabIdx] = useState(0);
+  const [tabIdxChanged, setTabIdxChanged] = useState(false);
 
   const labelText: string[] = [
     "대기",
@@ -34,15 +34,10 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   // };
 
   const tabChangeHandler = (status: string) => {
-    if (status === "완료") {
-      setTabIdx(labelText.length - 1);
-    } else {
-      setTabIdx(tabIdx);
-    }
+    setTabIdxChanged(!tabIdxChanged);
   };
 
-  console.log("지금 인덱스    :", tabIdx);
-
+  const arrc = labelText.filter((item, idx) => idx <= 4);
   return (
     <>
       <PromotionHeader />
@@ -61,8 +56,8 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
           <SearchBox />
           <OrderInputButton />
         </StatusContLayout>
-        {tabIdx !== 5 && <ListBox labelStatus={labelText[0]} />}
-        {tabIdx === 5 && <ListBox labelStatus={labelText[5]} />}
+        {!tabIdxChanged && arrc.map((item) => <ListBox labelStatus={item} />)}
+        {tabIdxChanged && <ListBox labelStatus={labelText[5]} />}
       </OrderStatusViewLayout>
     </>
   );

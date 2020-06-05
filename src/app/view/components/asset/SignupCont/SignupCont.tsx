@@ -11,7 +11,6 @@ interface SignupContProps {
   matchId: any;
   headerTxt: string;
   descTxt: string;
-  userNameCheckHandler?: (parameter: any) => void;
   userValidateHandler: (parameter: any) => boolean | undefined;
 }
 
@@ -30,6 +29,26 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
     return boxIndexes;
   };
 
+  const inputBoxNameChecker = [
+    "userNameVal",
+    "phone",
+    "shippingAddress",
+    "name",
+    "email",
+    "password",
+    "passwordCheck",
+  ];
+
+  const inputSelector = (matchId: number, idx: number) => {
+    let inputBoxNames = [];
+    if (matchId === 1) {
+      inputBoxNames = inputBoxNameChecker.filter((inputName, idx) => idx <= 2);
+    } else {
+      inputBoxNames = inputBoxNameChecker.filter((inputName, idx) => idx >= 3);
+    }
+    return inputBoxNames[idx];
+  };
+
   //확인용
   // const checkDispatchItems = useCallback((e) => {
   //   const { value } = e.target;
@@ -45,45 +64,26 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
         <HeadingArea>{props.headerTxt}</HeadingArea>
         <Desc>{props.descTxt}</Desc>
         <InputBoxCont>
-          {checkBoxIndex(matchId).map((title, idx) => {
-            if (idx === 0) {
-              return (
-                <InputBox
-                  placeholderTxt={title}
-                  userNameCheckHandler={props.userNameCheckHandler}
-                  userValidateHandler={props.userValidateHandler}
-                  name={"name"}
-                />
-              );
-            } else if (idx === 1) {
+          {matchId === 1 &&
+            checkBoxIndex(matchId).map((title, idx) => {
               return (
                 <InputBox
                   placeholderTxt={title}
                   userValidateHandler={props.userValidateHandler}
-                  name={"email"}
+                  name={inputSelector(matchId, idx)}
                 />
               );
-            } else if (idx === 2) {
+            })}
+          {matchId === 2 &&
+            checkBoxIndex(matchId).map((title, idx) => {
               return (
                 <InputBox
                   placeholderTxt={title}
                   userValidateHandler={props.userValidateHandler}
-                  name={"password"}
+                  name={inputSelector(matchId, idx)}
                 />
               );
-            } else if (idx === 3) {
-              return (
-                <InputBox
-                  placeholderTxt={title}
-                  userPwCheckHandler={props.userPwCheckHandler}
-                  userValidateHandler={props.userValidateHandler}
-                  name={"passwordCheck"}
-                />
-              );
-            } else {
-              return;
-            }
-          })}
+            })}
         </InputBoxCont>
       </SignupContCont>
     </SignupContWrapper>

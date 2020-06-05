@@ -11,7 +11,7 @@ const reducer = (state, action) => {
         ...state,
         userInput: {
           ...state.userInput,
-          name: action.value,
+          userNameVal: action.value,
         },
       };
 

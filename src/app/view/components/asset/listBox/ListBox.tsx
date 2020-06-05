@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Label from "app/view/widgets/Label";
 
-const ListBox = () => {
+const ListBox = (props) => {
   return (
     <ListBoxWrapper>
       <Icon />
@@ -14,7 +14,7 @@ const ListBox = () => {
         <Contents>김셀업님의 주문이 정상적으로 입력되었습니다.</Contents>
       </Container>
       <SystemContents>
-        <Label status={"원부자재 선택"} />
+        <Label labelStatus={props.labelStatus} />
         <SystemInfo>
           <NameInfo>System</NameInfo>
           <Divider></Divider>
@@ -26,7 +26,6 @@ const ListBox = () => {
 };
 
 const ListBoxWrapper = styled.div`
-  /* margin: 0 64px; */
   height: 104px;
   border-radius: 2px;
   border: solid 1px #dfdfdf;

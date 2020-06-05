@@ -10,37 +10,52 @@ const DropDownBox: React.FunctionComponent = (props) => {
     "모두4",
     "모두5",
   ]);
-  const [filteringIdx, setfilteringIdx] = useState<number>(0);
-  const [isArrowChanged, setIsArrowChanged] = useState<boolean>(false);
+  //const [filteringIdx, setfilteringIdx] = useState<number>(0);
+  const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
 
   const itemSelectHandler = () => {
-    setfilteringIdx((filteringIdx) => (filteringIdx += 1));
+    //setfilteringIdx((filteringIdx) => (filteringIdx += 1));
   };
 
   const arrowChangeHandler = () => {
-    setIsArrowChanged(!isArrowChanged);
-    setfilteringIdx((filteringIdx) => (filteringIdx += 1));
+    setIsSelectBoxOpend(!isSelectBoxOpend);
+    //setfilteringIdx((filteringIdx) => (filteringIdx += 1));
+  };
+
+  const selectItems = (item: string, idx: number) => {
+    alert(`${item} ${idx + 1} is selected!`);
+  };
+
+  const closeBox = () => {
+    //setIsSelectBoxOpend(!isSelectBoxOpend);
+    alert("clickeddd");
   };
 
   return (
-    <DropDownBoxWrapper isChanged={isArrowChanged}>
+    <DropDownBoxWrapper isChanged={isSelectBoxOpend}>
       <DropDownBoxCont onClick={itemSelectHandler}>
-        {!isArrowChanged && (
-          <DropDownSelectors isChanged={isArrowChanged}>
+        {!isSelectBoxOpend && (
+          <DropDownSelectors isChanged={isSelectBoxOpend}>
             {filteringText[0]}:<FilteredItems>{filteredItems[0]}</FilteredItems>
           </DropDownSelectors>
         )}
-        {isArrowChanged &&
+        {isSelectBoxOpend &&
           filteredItems.map((item, idx, arr) => {
             return (
-              <DropDownSelectors isChanged={isArrowChanged}>
+              <DropDownSelectors
+                isChanged={isSelectBoxOpend}
+                onClick={() => {
+                  selectItems(item, idx);
+                }}
+                onBlur={closeBox}
+              >
                 {filteringText[0]}:<FilteredItems>{item}</FilteredItems>
               </DropDownSelectors>
             );
           })}
       </DropDownBoxCont>
-      <ArrowCont onClick={arrowChangeHandler} isChanged={isArrowChanged}>
-        <Arrow isChanged={isArrowChanged}></Arrow>
+      <ArrowCont onClick={arrowChangeHandler} isChanged={isSelectBoxOpend}>
+        <Arrow isChanged={isSelectBoxOpend}></Arrow>
       </ArrowCont>
     </DropDownBoxWrapper>
   );

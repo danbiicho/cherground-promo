@@ -7,21 +7,33 @@ const ListBox = () => {
     <ListBoxWrapper>
       <Icon />
       <Container>
-        <ItemName>Item Name</ItemName>
-        <BrandName>Brand Name</BrandName>
+        <NameContents>
+          <ItemName>Item Name</ItemName>
+          <BrandName>Brand Name</BrandName>
+        </NameContents>
         <Contents>김셀업님의 주문이 정상적으로 입력되었습니다.</Contents>
       </Container>
-      <Label status={"원부자재 선택"}></Label>
+      <SystemContents>
+        <Label status={"원부자재 선택"} />
+        <SystemInfo>
+          <NameInfo>System</NameInfo>
+          <Divider></Divider>
+          <DateInfo>2020.05.10 at 13:31</DateInfo>
+        </SystemInfo>
+      </SystemContents>
     </ListBoxWrapper>
   );
 };
 
 const ListBoxWrapper = styled.div`
-  margin: 0 64px;
+  /* margin: 0 64px; */
   height: 104px;
   border-radius: 2px;
   border: solid 1px #dfdfdf;
   display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 8px;
 `;
 
 const Icon = styled.div`
@@ -33,12 +45,17 @@ const Icon = styled.div`
 `;
 
 const Container = styled.div`
-  margin-left: 24px;
+  margin: 0 24px;
+`;
+
+const NameContents = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
 `;
 
 const ItemName = styled.p`
-  /* margin: 24px 0 12px 24px; */
-  /* width: 106px; */
+  margin: 0;
   height: 22px;
   font-family: NanumSquare;
   font-size: 20px;
@@ -46,7 +63,8 @@ const ItemName = styled.p`
 `;
 
 const BrandName = styled.p`
-  margin-right: 12px;
+  margin: 0;
+  margin-left: 12px;
   width: 68px;
   height: 13px;
   font-family: NanumSquare_acR;
@@ -55,11 +73,51 @@ const BrandName = styled.p`
 `;
 
 const Contents = styled.p`
-  /* width: 300px; */
+  margin: 0;
   height: 22px;
   font-family: NanumSquare;
   font-size: 16px;
   color: #535454;
+`;
+
+const SystemContents = styled.div`
+  position: absolute;
+  right: 24px;
+  display: block;
+  justify-content: right;
+`;
+
+const SystemInfo = styled.div`
+  height: 18px;
+  display: flex;
+  align-items: center;
+`;
+
+const NameInfo = styled.p`
+  margin: 0;
+  width: 58px;
+  height: 18px;
+  font-family: NanumSquare;
+  font-size: 16px;
+  //text-align: right;
+  color: #68768d;
+`;
+
+const Divider = styled.div`
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  margin: 0 8px;
+  background-color: #64768f;
+`;
+
+const DateInfo = styled.p`
+  width: 161px;
+  height: 18px;
+  font-family: NanumSquare;
+  font-size: 16px;
+  //text-align: right;
+  color: #68768d;
 `;
 
 export default ListBox;

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import ListBox from "app/view/components/asset/listBox/ListBox";
-import Label from "app/view/widgets/Label";
 import { RouteComponentProps } from "react-router-dom";
 
 const BoardView: React.FunctionComponent<RouteComponentProps> = (props) => {

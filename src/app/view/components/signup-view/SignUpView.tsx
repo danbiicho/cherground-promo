@@ -1,4 +1,4 @@
-import React, { useState, Key } from "react";
+import React, { useState, useRef } from "react";
 import { RouteComponentProps, withRouter, Link } from "react-router-dom";
 import SignUpCont from "app/view/components/asset/SignupCont/SignupCont";
 import styled from "styled-components";
@@ -25,6 +25,9 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
   };
 
   const nextBtnClickHandler = () => {
+    // if (inputBox.value) {
+    //   inputBox.value = "";
+    // }
     setStageIdx((stageIdx: any) => (stageIdx += 1));
     if (stageIdx >= 3) {
       props.history.push("/");

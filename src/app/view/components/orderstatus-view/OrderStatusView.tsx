@@ -15,7 +15,10 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
   const [tabIdxChanged, setTabIdxChanged] = useState(false);
+<<<<<<< HEAD
   const [activeTab, setactiveTab] = useState(true);
+=======
+>>>>>>> master
 
   const labelText: string[] = [
     "대기",
@@ -28,11 +31,17 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
 
   const tabChangeHandler = (status: string) => {
     setTabIdxChanged(!tabIdxChanged);
+<<<<<<< HEAD
     setactiveTab(!activeTab);
   };
 
   const arrc = labelText.filter((item, idx) => idx <= 4);
 
+=======
+  };
+
+  const arrc = labelText.filter((item, idx) => idx <= 4);
+>>>>>>> master
   return (
     <>
       <PromotionHeader />

@@ -4,6 +4,7 @@ import styled from "styled-components";
 interface TabProps {
   status: "진행중" | "완료";
   active: true | false;
+  onClickHandler: (status: string) => void;
 }
 
 // const [activeTab, setActiveTab] = useState("0");
@@ -18,6 +19,7 @@ const Tab: React.FunctionComponent<TabProps> = (props) => {
       // onClick={() => {
       //   activeHandler();
       // }}
+      onClick={() => props.onClickHandler(props.status)}
     >
       {props.status}
     </TabLayout>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { IndexAttachmentList } from "aws-sdk/clients/clouddirectory";
 
 interface DropDownBoxProps {
   filteringText: any;
@@ -20,7 +21,7 @@ const DropDownBox: React.FunctionComponent<DropDownBoxProps> = (props) => {
   };
 
   const closeBox = () => {
-    alert("clickeddd");
+    alert("closing box");
   };
 
   return (
@@ -39,17 +40,16 @@ const DropDownBox: React.FunctionComponent<DropDownBoxProps> = (props) => {
           <Arrow isChanged={isSelectBoxOpend}></Arrow>
         </ArrowCont>
       </DropDownBoxWrapper>
-      <DropDownBoxDfWrapper isChanged={isSelectBoxOpend}>
+      <DropDownBoxDfWrapper isChanged={isSelectBoxOpend} onBlur={closeBox}>
         <DropDownBoxCont isChanged={isSelectBoxOpend}>
           {isSelectBoxOpend &&
-            props.filteredItems.map((item, idx, arr) => {
+            props.filteredItems.map((item: string, idx: number) => {
               return (
                 <DropDownDefaultBox
                   isChanged={isSelectBoxOpend}
                   onClick={() => {
                     props.selectItems(item, idx);
                   }}
-                  onBlur={closeBox}
                 >
                   {props.filteringText[0]}:<FilteredItems>{item}</FilteredItems>
                 </DropDownDefaultBox>

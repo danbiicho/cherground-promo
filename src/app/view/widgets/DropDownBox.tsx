@@ -70,7 +70,7 @@ const TotalCont = styled.div<{ isChanged: boolean }>`
   background: #fff;
 `;
 
-const DropDownBoxWrapper = styled.div<{ onClick: boolean }>`
+const DropDownBoxWrapper = styled.div<{ onClick: () => void }>`
   width: 120px;
   padding: 12px;
   border-radius: 2px;

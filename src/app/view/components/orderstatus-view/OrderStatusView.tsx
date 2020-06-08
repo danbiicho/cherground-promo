@@ -73,12 +73,11 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
               filteringText={filteringText}
               filteredItems={filteredItems}
             />
-            <SearchBox />
             <OrderInputButton />
           </SelectionBox>
           <ListViewWrapper>
             {!tabIdxChanged &&
-              arr.map((item) => <ListBox labelStatus={item} />)}
+              arr.map((item, idx) => <ListBox labelStatus={item} key={idx} />)}
             {tabIdxChanged && <ListBox labelStatus={labelText[5]} />}
           </ListViewWrapper>
         </StatusContLayout>

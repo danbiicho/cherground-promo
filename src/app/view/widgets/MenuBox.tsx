@@ -19,7 +19,9 @@ const MenuBox: React.FunctionComponent = (props) => {
   return (
     <>
       <MenuBoxWrapper>
-        <MenuBoxText>Text</MenuBoxText>
+        <MenuBoxText>
+          <Placeholder>제작 카테고리 선택</Placeholder>
+        </MenuBoxText>
         <ArrowIcon
           src={arrowIcon}
           onClick={arrowChangeHandler}
@@ -53,6 +55,11 @@ const MenuBoxText = styled.p`
   padding: 15px 78px 15px 16px;
 `;
 
+const Placeholder = styled.span`
+  font-size: 16px;
+  color: #b9bbc1;
+`;
+
 const ArrowIcon = styled.img<{ isOpened: boolean }>`
   width: 16px;
   height: 16px;
@@ -68,8 +75,7 @@ const DropDownWrapper = styled.div<{ isOpened: boolean }>`
   border-radius: 4px;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 8px 0;
-  visibility: ${(props) => (props.isOpened ? "visible" : "hidden")};
-  z-index: 777;
+  display: ${(props) => (props.isOpened ? "block" : "none")};
   background-color: #fff;
 `;
 

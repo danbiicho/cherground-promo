@@ -15,10 +15,8 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
   const [tabIdxChanged, setTabIdxChanged] = useState(false);
-<<<<<<< HEAD
+
   const [activeTab, setactiveTab] = useState(true);
-=======
->>>>>>> master
 
   const labelText: string[] = [
     "대기",
@@ -28,20 +26,17 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
     "제작",
     "완료",
   ];
+  // 이 경우 배열 대신 객체 형태로 받는 것이 좋다.
+  // 실제 데이터 호출을 할 때는 완료인 것과 완료 아닌 것 구분 해서 온다.
+  // 완료 아닌 것 map을 돌리면서 label의 text만 들어가서 렌더링 되도록.
 
   const tabChangeHandler = (status: string) => {
     setTabIdxChanged(!tabIdxChanged);
-<<<<<<< HEAD
     setactiveTab(!activeTab);
   };
 
   const arrc = labelText.filter((item, idx) => idx <= 4);
 
-=======
-  };
-
-  const arrc = labelText.filter((item, idx) => idx <= 4);
->>>>>>> master
   return (
     <>
       <PromotionHeader />

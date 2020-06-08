@@ -5,7 +5,7 @@ import GlobalStyle from "app/view/style/GlobalStyle";
 //import SignUpView from "app/view/components/signup-view/SignUpView";
 import SignUpViewPr from "app/view/components/practice-SignUp/SignUpViewPr";
 import LogInView from "app/view/components/login-view/LogInView";
-import OrderstatusView from "app/view/components/orderstatus-view/OrderstatusView";
+import OrderstatusView from "app/view/components/orderstatus-view/OrderStatusView";
 
 const App: React.FunctionComponent = () => {
   return (

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import InputSelections from "app/view/widgets/InputSelections";
+import MenuBox from "app/view/widgets/MenuBox";
 import ClipImgPng from "cg-promotion-attach@2x.png";
 
 const OrderRequestView = () => {
@@ -19,45 +20,50 @@ const OrderRequestView = () => {
               <span style={{ marginBottom: "12px", display: "inline-block" }}>
                 카테고리*
               </span>
-              <Selections />
+              <MenuBox />
             </CategoryInputBox>
-            <DesginInputWrapper>
-              <ColorInputBox>
-                <span style={{ position: "absolute" }}>컬러*</span>
-                <InputSelections placeholderTxt={"컬러 입력"} name={"color"} />
-              </ColorInputBox>
-              <QuantityInputBox>
-                <span style={{ position: "absolute" }}>희망수량*</span>
-                <InputSelections
-                  placeholderTxt={"희망 수량 입력"}
-                  name={"quantity"}
-                />
-              </QuantityInputBox>
-            </DesginInputWrapper>
-            <SelectedTab></SelectedTab>
-            <Selections>컬러 추가</Selections>
+            <DesignSelectWrapper>
+              <DesginInputWrapper>
+                <ColorInputBox>
+                  <span style={{ position: "absolute" }}>컬러*</span>
+                  <InputSelections
+                    placeholderTxt={"컬러 입력"}
+                    name={"color"}
+                  />
+                </ColorInputBox>
+                <QuantityInputBox>
+                  <span style={{ position: "absolute" }}>희망수량*</span>
+                  <InputSelections
+                    placeholderTxt={"희망 수량 입력"}
+                    name={"quantity"}
+                  />
+                </QuantityInputBox>
+              </DesginInputWrapper>
+              <SelectedTab></SelectedTab>
+              <Selections>컬러 추가</Selections>
+              <Divider />
+              <FileUploadCont>
+                <TextBoxInput>
+                  <span>비고</span>
+                  <TextBox type="textarea" placeholder="비고 입력" />
+                </TextBoxInput>
+                <AttachingImg>
+                  <span>첨부이미지</span>
+                  <ImgCont>
+                    <ClipImg src={ClipImgPng} />
+                    <GuideMsg>Drop files here or</GuideMsg>
+                    <Label for="upload">Browse...</Label>
+                  </ImgCont>
+                  <Img type="file" id="upload" />
+                </AttachingImg>
+              </FileUploadCont>
+              <Divider />
+              <BtnCont>
+                <Cancel>취소</Cancel>
+                <Apply>접수</Apply>
+              </BtnCont>
+            </DesignSelectWrapper>
           </SelectionsCont>
-          <Divider />
-          <FileUploadCont>
-            <TextBoxInput>
-              <span>비고</span>
-              <TextBox type="textarea" placeholder="비고 입력" />
-            </TextBoxInput>
-            <AttachingImg>
-              <span>첨부이미지</span>
-              <ImgCont>
-                <ClipImg src={ClipImgPng} />
-                <GuideMsg>Drop files here or</GuideMsg>
-                <Label for="upload">Browse...</Label>
-              </ImgCont>
-              <Img type="file" id="upload" />
-            </AttachingImg>
-          </FileUploadCont>
-          <Divider />
-          <BtnCont>
-            <Cancel>취소</Cancel>
-            <Apply>접수</Apply>
-          </BtnCont>
         </OrderRequestModalLayout>
       </Overlay>
     </>
@@ -115,19 +121,25 @@ const ProgressBar = styled.span`
 `;
 
 const SelectionsCont = styled.div`
-  //width: inherit;
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
+  position: relative;
 `;
 
 const CategoryInputBox = styled.div`
   margin-bottom: 20px;
+  z-index: 777;
+`;
+
+const DesignSelectWrapper = styled.div`
+  position: absolute;
+  top: 96px;
+  z-index: 444;
 `;
 
 const DesginInputWrapper = styled.div`
   display: flex;
-  //width: inherit;
   justify-content: left;
   align-items: center;
 `;

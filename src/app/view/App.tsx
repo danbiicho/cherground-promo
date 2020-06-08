@@ -5,9 +5,7 @@ import GlobalStyle from "app/view/style/GlobalStyle";
 //import SignUpView from "app/view/components/signup-view/SignUpView";
 import SignUpViewPr from "app/view/components/practice-SignUp/SignUpViewPr";
 import LogInView from "app/view/components/login-view/LogInView";
-import orderStatusView from "app/view/components/orderstatus-view/OrderstatusView";
-import LogInViewTest from "app/view/components/login-view/LogInViewTest";
-import BoardView from "app/view/components/board-view/BoardView";
+import OrderstatusView from "app/view/components/orderstatus-view/OrderstatusView";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -17,9 +15,7 @@ const App: React.FunctionComponent = () => {
         <Route exact path="/" component={SignUpViewPr} />
         <Route path="/login" exact component={LogInView} />
         <Route exact path="/signup" component={SignUpViewPr} />
-        <Route exact path="/test" component={orderStatusView} />
-        <Route exact path="/logintest" component={LogInViewTest} />
-        <Route exact path="/board" component={BoardView} />
+        <Route exact path="/order" component={OrderstatusView} />
       </Switch>
     </BrowserRouter>
   );

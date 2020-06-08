@@ -34,6 +34,9 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
     "제작",
     "완료",
   ];
+  // 이 경우 배열 대신 객체 형태로 받는 것이 좋다.
+  // 실제 데이터 호출을 할 때는 완료인 것과 완료 아닌 것 구분 해서 온다.
+  // 완료 아닌 것 map을 돌리면서 label의 text만 들어가서 렌더링 되도록.
 
   const selectItems = (item: string, idx: number) => {
     alert(`${item} ${idx + 1} is selected!`);
@@ -44,7 +47,7 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
     setactiveTab(!activeTab);
   };
 
-  const arrc = labelText.filter((item, idx) => idx <= 4);
+  const arr = labelText.filter((item, idx) => idx <= 4);
 
   return (
     <>
@@ -75,7 +78,7 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
           </SelectionBox>
           <ListViewWrapper>
             {!tabIdxChanged &&
-              arrc.map((item) => <ListBox labelStatus={item} />)}
+              arr.map((item) => <ListBox labelStatus={item} />)}
             {tabIdxChanged && <ListBox labelStatus={labelText[5]} />}
           </ListViewWrapper>
         </StatusContLayout>

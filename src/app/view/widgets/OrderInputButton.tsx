@@ -6,6 +6,8 @@ const OrderInputButton = () => {
 };
 
 const OrderInputButtonLayout = styled.button`
+  position: absolute;
+  right: 0;
   width: 100px;
   height: 40px;
   border: 0;
@@ -14,8 +16,8 @@ const OrderInputButtonLayout = styled.button`
   color: #fff;
   font-family: NanumSquare;
   font-size: 14px;
-  position: absolute;
-  right: 64px;
+  //right: 64px;
+  margin-left: auto;
 `;
 
 export default OrderInputButton;

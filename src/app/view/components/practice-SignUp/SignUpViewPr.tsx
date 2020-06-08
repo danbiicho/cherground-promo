@@ -28,7 +28,6 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
       email: "",
     },
   };
-
   //여기서의 state는 전역이다.
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -45,6 +44,10 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
 
   const loginHandler = () => {
     props.history.push("/login");
+  };
+
+  const selectItems = (item: string, idx: number) => {
+    alert(`${item} ${idx + 1} is selected!`);
   };
 
   const nextBtnClickHandler = useCallback(() => {
@@ -65,50 +68,11 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
       if (e.target.name) {
         let inputName = e.target.name;
         const { value } = e.target;
-        switch (inputName) {
-          case "userNameVal":
-            dispatch({
-              type: "ADD_USER_INFO",
-              inputName,
-              value,
-            });
-            break;
-          case "phone":
-            dispatch({
-              type: "ADD_USER_INFO",
-              inputName,
-              value,
-            });
-            break;
-          case "shippingAddress":
-            dispatch({
-              type: "ADD_USER_INFO",
-              inputName,
-              value,
-            });
-            break;
-          case "name":
-            dispatch({
-              type: "ADD_USER_INFO",
-              inputName,
-              value,
-            });
-            break;
-          case "password":
-            dispatch({
-              type: "ADD_USER_INFO",
-              inputName,
-              value,
-            });
-            break;
-          case "email":
-            dispatch({
-              type: "ADD_USER_INFO",
-              inputName,
-              value,
-            });
-            break;
-        }
+        dispatch({
+          type: "ADD_USER_INFO",
+          inputName,
+          value,
+        });
       }
 
       if (!e.target.value) {
@@ -139,23 +103,21 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
 
         return false;
       } else {
-        if (
+        if (email) {
           !validationCheckHandler(
             EmailCheck,
             email,
             "적합하지 않은 이메일 형식입니다."
-          )
-        ) {
+          );
           return false;
         }
 
-        if (
+        if (password) {
           !validationCheckHandler(
             IDPWCheck,
             password,
             "패스워드는 4~12자의 영문 대소문자와 숫자로만 입력"
-          )
-        ) {
+          );
           return false;
         }
       }
@@ -164,7 +126,6 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
           type: "ADD_ERROR_MSG",
           message: "비밀번호가 일치하지 않습니다.",
         });
-        return false;
       }
     },
     [name, email, password]
@@ -199,6 +160,7 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
   return (
     //<UserDispatch.Provider value={dispatch}>
     <SignupViewWrapper>
+      {console.log(state)}
       <SignUpCont
         match={props.match}
         matchId={stageIdx}

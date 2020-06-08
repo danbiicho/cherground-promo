@@ -6,6 +6,7 @@ import GlobalStyle from "app/view/style/GlobalStyle";
 import SignUpViewPr from "app/view/components/practice-SignUp/SignUpViewPr";
 import LogInView from "app/view/components/login-view/LogInView";
 import OrderstatusView from "app/view/components/orderstatus-view/OrderStatusView";
+import OrderInsertView from "app/view/components/orderinsert-view/OrderInsertView";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -16,6 +17,7 @@ const App: React.FunctionComponent = () => {
         <Route path="/login" exact component={LogInView} />
         <Route exact path="/signup" component={SignUpViewPr} />
         <Route exact path="/order" component={OrderstatusView} />
+        <Route exact path="/orderinsert" component={OrderInsertView} />
       </Switch>
     </BrowserRouter>
   );

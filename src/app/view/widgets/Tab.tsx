@@ -10,7 +10,6 @@ interface TabProps {
 const Tab: React.FunctionComponent<TabProps> = (props) => {
   return (
     <TabLayout
-      status={props.status}
       active={props.active}
       onClick={() => props.onClickHandler(props.status)}
     >
@@ -19,7 +18,7 @@ const Tab: React.FunctionComponent<TabProps> = (props) => {
   );
 };
 
-const TabLayout = styled.button<TabProps>`
+const TabLayout = styled.button<{ active: boolean }>`
   width: 100px;
   height: 40px;
   font-family: NanumSquare;

@@ -31,7 +31,7 @@ const DropDownBox: React.FunctionComponent<DropDownBoxProps> = (props) => {
           onClick={itemSelectHandler}
           isChanged={isSelectBoxOpend}
         >
-          <DropDownSelectors isChanged={isSelectBoxOpend}>
+          <DropDownSelectors>
             {props.filteringText[0]}:
             <FilteredItems>{props.filteredItems[0]}</FilteredItems>
           </DropDownSelectors>
@@ -46,6 +46,7 @@ const DropDownBox: React.FunctionComponent<DropDownBoxProps> = (props) => {
             props.filteredItems.map((item: string, idx: number) => {
               return (
                 <DropDownDefaultBox
+                  key={idx}
                   isChanged={isSelectBoxOpend}
                   onClick={() => {
                     props.selectItems(item, idx);
@@ -106,8 +107,7 @@ const DropDownDefaultBox = styled.div<{ isChanged: boolean }>`
   color: #535454;
 `;
 
-const DropDownSelectors = styled.div<{ isChanged: boolean }>`
-  margin-top: ${(props) => (props.isChanged ? "2px" : "")};
+const DropDownSelectors = styled.div`
   font-family: NanumSquare;
   font-size: 14px;
   color: #535454;

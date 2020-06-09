@@ -21,7 +21,6 @@ const App: React.FunctionComponent = () => {
         <Route path="/login" exact component={LogInView} />
         <Route exact path="/signup" component={SignUpViewPr} />
         <Route exact path="/order" component={OrderstatusView} />
-        <Route exact path="/orderinsert" component={OrderInsertView} />
       </Switch>
     </BrowserRouter>
   );

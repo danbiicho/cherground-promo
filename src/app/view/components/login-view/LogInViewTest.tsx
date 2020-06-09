@@ -84,12 +84,8 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
         <InputBox
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
-<<<<<<< HEAD
           userNameCheckHandler={userNameCheckHandler}
-          name={"name"}
-=======
-          name={"userId"}
->>>>>>> master
+          name={"userNameVal"}
         />
 
         <IdErrorMsg hasError={idErrorMsg}>{idErrorMsg}</IdErrorMsg>

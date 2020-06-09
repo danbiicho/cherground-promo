@@ -1,11 +1,11 @@
 import React, { useReducer, useCallback } from "react";
-import { RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import reducer from "app/view/reducers/orderReducers";
 import InputSelections from "app/view/widgets/InputSelections";
 import MenuBox from "app/view/widgets/MenuBox";
 import ActionButton from "app/view/widgets/ActionButton";
 import ClipImgPng from "cg-promotion-attach@2x.png";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 export const OrderDispatch = React.createContext(null);
 
@@ -358,4 +358,4 @@ const BtnCont = styled.div`
   padding-right: 40px;
 `;
 
-export default OrderRequestView;
+export default withRouter(OrderRequestView);

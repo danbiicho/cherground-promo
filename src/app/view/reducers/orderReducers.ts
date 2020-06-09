@@ -1,5 +1,11 @@
 const reducer = (state: React.ComponentState, action) => {
   switch (action.type) {
+    case "NAME_INFO":
+      return {
+        ...state,
+        [action.name]: action.value,
+      };
+
     case "ADD_USER_SELECTION":
       return {
         ...state,

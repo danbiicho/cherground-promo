@@ -1,14 +1,51 @@
-import React from "react";
+import React, { useReducer, useCallback } from "react";
 import styled from "styled-components";
+import reducer from "app/view/reducers/orderReducers";
 import InputSelections from "app/view/widgets/InputSelections";
 import MenuBox from "app/view/widgets/MenuBox";
+import ActionButton from "app/view/widgets/ActionButton";
 import ClipImgPng from "cg-promotion-attach@2x.png";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+
+export const OrderDispatch = React.createContext(null);
 
 const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
-  console.log("sended ", props.location);
+  const initialState = {
+    isConfirmed: false,
+    userInput: {
+      color: "",
+      quantity: "",
+    },
+    confirmedSelections: [],
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { isConfirmed, confirmedSelections } = state;
+  const { color, quantity } = state.userInput;
+
+  const sendInputVal = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    dispatch({
+      type: "ADD_USER_SELECTION",
+      name,
+      value,
+    });
+  }, []);
+
+  const addSelectionHandler = useCallback(() => {
+    dispatch({
+      type: "CONFIRM_USER_SELECTION",
+    });
+  }, [color, quantity]);
+
+  const cancelHandler = useCallback(() => {
+    console.log("aaaa");
+  }, []);
+
+  console.log(isConfirmed);
+
   return (
     <>
       <Overlay>
@@ -16,7 +53,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
           <TitleBox>
             <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
             <ProgressBox>
-              <ProgressBar />
+              <ProgressBar stage={2} />
             </ProgressBox>
           </TitleBox>
           <SelectionsCont>
@@ -27,24 +64,39 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
               <MenuBox />
             </CategoryInputBox>
             <DesignSelectWrapper>
-              <DesginInputWrapper>
-                <ColorInputBox>
-                  <span style={{ position: "absolute" }}>컬러*</span>
-                  <InputSelections
-                    placeholderTxt={"컬러 입력"}
-                    name={"color"}
-                  />
-                </ColorInputBox>
-                <QuantityInputBox>
-                  <span style={{ position: "absolute" }}>희망수량*</span>
-                  <InputSelections
-                    placeholderTxt={"희망 수량 입력"}
-                    name={"quantity"}
-                  />
-                </QuantityInputBox>
-              </DesginInputWrapper>
-              <SelectedTab></SelectedTab>
-              <Selections>컬러 추가</Selections>
+              <OrderDispatch.Provider value={dispatch}>
+                <DesginInputWrapper>
+                  <ColorInputBox>
+                    <span style={{ position: "absolute" }}>컬러*</span>
+                    <InputSelections
+                      placeholderTxt={"컬러 입력"}
+                      name={"color"}
+                      onChangeHandler={sendInputVal}
+                      isConfirmed={isConfirmed}
+                      width={"100%"}
+                    />
+                  </ColorInputBox>
+                  <QuantityInputBox>
+                    <span style={{ position: "absolute" }}>희망수량*</span>
+                    <InputSelections
+                      placeholderTxt={"희망 수량 입력"}
+                      name={"quantity"}
+                      onChangeHandler={sendInputVal}
+                      isConfirmed={isConfirmed}
+                      width={"100%"}
+                    />
+                  </QuantityInputBox>
+                </DesginInputWrapper>
+              </OrderDispatch.Provider>
+              {confirmedSelections &&
+                confirmedSelections.map((item: any) => {
+                  return (
+                    <SelectedTab>
+                      컬러:{item.color}, 수량:{item.quantity}
+                    </SelectedTab>
+                  );
+                })}
+              <Selections onClick={addSelectionHandler}>컬러 추가</Selections>
               <Divider />
               <FileUploadCont>
                 <TextBoxInput>
@@ -63,8 +115,18 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
               </FileUploadCont>
               <Divider />
               <BtnCont>
-                <Cancel>취소</Cancel>
-                <Apply>접수</Apply>
+                <ActionButton
+                  buttonName={"SECONDARY"}
+                  isEnable={false}
+                  buttonText={"취소"}
+                  onClick={cancelHandler}
+                />
+                <ActionButton
+                  buttonName={"SECONDARY"}
+                  isEnable={false}
+                  buttonText={"접수"}
+                  onClick={cancelHandler}
+                />
               </BtnCont>
             </DesignSelectWrapper>
           </SelectionsCont>
@@ -116,9 +178,9 @@ const ProgressBox = styled.div`
   position: relative;
 `;
 
-const ProgressBar = styled.span`
+const ProgressBar = styled.span<{ stage: number }>`
   position: absolute;
-  width: 50%;
+  width: ${(props) => (props.stage === 1 ? "50%" : "100%")};
   height: 2px;
   z-index: 22;
   background-color: #50b12f;
@@ -140,6 +202,7 @@ const DesignSelectWrapper = styled.div`
   position: absolute;
   top: 96px;
   z-index: 444;
+  width: 100%;
 `;
 
 const DesginInputWrapper = styled.div`
@@ -167,6 +230,7 @@ const SelectedTab = styled.div`
 `;
 
 const Selections = styled.div`
+  cursor: pointer;
   width: 100%;
   height: auto;
   border-radius: 2px;

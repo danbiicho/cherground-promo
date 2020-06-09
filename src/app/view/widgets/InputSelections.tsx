@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useContext, useCallback } from "react";
 import styled from "styled-components";
+import { OrderDispatch } from "app/view/components/order-request-view/OrderRequestView";
 
 interface InputSelectionsProps {
   placeholderTxt: string;
   name: string;
+  onChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isConfirmed: boolean;
   width: string;
   NameCheckHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -12,7 +15,8 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
   props
 ) => {
   const [isValid, setIsValid] = useState("default");
-
+  const dispatch = useContext(OrderDispatch);
+  const formRef: React.RefObject<HTMLFormElement> | null | undefined = useRef();
   const onBlurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
       setIsValid("isNotValid");
@@ -25,10 +29,16 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
     setIsValid("isValid");
   };
 
+  if (props.isConfirmed) {
+    formRef.current.reset();
+    dispatch({
+      type: "RESET_CONFIRM_ACTION",
+    });
+  }
   return (
     <SelectionsWrapper style={{ width: props.width }}>
       <ErrorMsg isValid={isValid}>에러 메시지</ErrorMsg>
-      <FormTagInput>
+      <FormTagInput onChange={(e) => props.onChangeHandler(e)} ref={formRef}>
         <InputCont
           type="text"
           placeholder={props.placeholderTxt}

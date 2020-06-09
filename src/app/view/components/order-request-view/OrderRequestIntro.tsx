@@ -1,13 +1,43 @@
-import React from "react";
+import React, { useReducer, useCallback, useState } from "react";
 import styled from "styled-components";
-import { RouteComponentProps } from "react-router-dom";
+import reducer from "app/view/reducers/orderReducers";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import InputSelections from "app/view/widgets/InputSelections";
 import ActionButton from "app/view/widgets/ActionButton";
+
+// export const OrderDispatch = React.createContext(null);
 
 const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
-  console.log(props.location.pathname);
+  const orderState = {
+    brand: "",
+    style: "",
+  };
+
+  const [state, dispatch] = useReducer(reducer, orderState);
+  const { brand, style } = state;
+
+  const NameCheckHandler = useCallback((e) => {
+    const { value, name } = e.target;
+
+    dispatch({
+      type: "NAME_INFO",
+      name,
+      value,
+    });
+  }, []);
+
+  const cancelHandler = useCallback(() => {
+    console.log(state.style);
+  }, []);
+
+  const nextHandler = () => {
+    props.history.push({
+      pathname: "/request",
+      state: { ...state },
+    });
+  };
 
   // let introStyle = {
   //   width: "100%",
@@ -20,6 +50,8 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   //     height: "3px",
   //   };
   // }
+
+  console.log("currentState   :", state);
 
   return (
     <>
@@ -48,6 +80,7 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
                 placeholderTxt={"브랜드명 입력"}
                 name={"brand"}
                 width={"100%"}
+                NameCheckHandler={NameCheckHandler}
               />
             </BrandInputBox>
             <StyleInputBox>
@@ -56,6 +89,7 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
                 placeholderTxt={"스타일명 입력"}
                 name={"style"}
                 width={"100%"}
+                NameCheckHandler={NameCheckHandler}
               />
             </StyleInputBox>
           </TopLayout>
@@ -63,13 +97,17 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
           <BtnCont>
             <ActionButton
               buttonName={"SECONDARY"}
-              isEnable={false}
+              isEnable
               buttonText={"취소"}
+              onClick={cancelHandler}
             />
             <ActionButton
               buttonName={"PRIMARY"}
               isEnable={false}
               buttonText={"다음"}
+              onClick={nextHandler}
+              styleExist={style}
+              brandExist={brand}
             />
           </BtnCont>
         </OrderRequestModalLayout>
@@ -89,7 +127,6 @@ const Overlay = styled.div`
 `;
 
 const OrderRequestModalLayout = styled.div`
-  /* margin: 64px 0; */
   width: 700px;
   height: 565px;
   border-radius: 2px;
@@ -169,10 +206,7 @@ const IntroInputSub = styled.p`
   margin: 0;
 `;
 
-const BrandInputBox = styled.div`
-  /* width: 100%; */
-  /* margin-bottom: 12px; */
-`;
+const BrandInputBox = styled.div``;
 
 const StyleInputBox = styled.div``;
 
@@ -188,4 +222,4 @@ const BtnCont = styled.div`
   padding: 0 32px 0 0;
 `;
 
-export default OrderRequestIntro;
+export default withRouter(OrderRequestIntro);

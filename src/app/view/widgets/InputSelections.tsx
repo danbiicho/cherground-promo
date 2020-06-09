@@ -1,5 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useCallback } from "react";
 import styled from "styled-components";
+import { OrderDispatch } from "app/view/components/order-request-view/OrderRequestView";
 
 interface InputSelectionsProps {
   placeholderTxt: string;
@@ -13,6 +14,7 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
   props
 ) => {
   const [isValid, setIsValid] = useState("default");
+  const dispatch = useContext(OrderDispatch);
   const formRef: React.RefObject<HTMLFormElement> | null | undefined = useRef();
   const onBlurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {

@@ -12,7 +12,7 @@ const reducer = (state: React.ComponentState, action) => {
     case "CONFIRM_USER_SELECTION":
       return {
         ...state,
-        isConfirmed: !action.isConfirmed,
+        isConfirmed: !state.isConfirmed,
         confirmedSelections: [
           ...state.confirmedSelections,
           { ...state.userInput },

@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useCallback } from "react";
+import React, { useReducer, useCallback } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import reducer from "app/view/reducers/signupReducers";
 import SignUpCont from "app/view/components/asset/SignupCont/SignupCont";

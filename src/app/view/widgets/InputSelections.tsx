@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 
 interface InputSelectionsProps {
   placeholderTxt: string;
   name: string;
+  onChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  isConfirmed: boolean;
   width: string;
 }
 
@@ -11,7 +13,7 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
   props
 ) => {
   const [isValid, setIsValid] = useState("default");
-
+  const formRef: React.RefObject<HTMLFormElement> | null | undefined = useRef();
   const onBlurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
       setIsValid("isNotValid");
@@ -24,10 +26,14 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
     setIsValid("isValid");
   };
 
+  if (props.isConfirmed) {
+    formRef.current.reset();
+  }
+
   return (
     <SelectionsWrapper style={{ width: props.width }}>
       <ErrorMsg isValid={isValid}>에러 메시지</ErrorMsg>
-      <FormTagInput>
+      <FormTagInput onChange={(e) => props.onChangeHandler(e)} ref={formRef}>
         <InputCont
           type="text"
           placeholder={props.placeholderTxt}

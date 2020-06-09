@@ -1,4 +1,12 @@
-const reducer = (state, action) => {
+// interface SignupAction {
+//   type: "PROCEED_STAGE" | "NAME_CHECK" | "ADD_USER_INFO" | "ADD_ERROR_MSG";
+//   inputName: string;
+//   stageIdx: number;
+//   value: string;
+//   message: string;
+// }
+
+const reducer = (state: React.ComponentState, action) => {
   switch (action.type) {
     case "PROCEED_STAGE":
       return {

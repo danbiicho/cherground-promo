@@ -6,6 +6,7 @@ interface InputSelectionsProps {
   name: string;
   onChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isConfirmed: boolean;
+  width: string;
 }
 
 const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
@@ -30,7 +31,7 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
   }
 
   return (
-    <SelectionsWrapper>
+    <SelectionsWrapper style={{ width: props.width }}>
       <ErrorMsg isValid={isValid}>에러 메시지</ErrorMsg>
       <FormTagInput onChange={(e) => props.onChangeHandler(e)} ref={formRef}>
         <InputCont
@@ -40,6 +41,8 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
           onFocus={() => onFocusHandler()}
           onBlur={(e) => onBlurHandler(e)}
           name={props.name}
+          width={props.width}
+          // style={{ width: props.width }}
         />
       </FormTagInput>
     </SelectionsWrapper>
@@ -64,8 +67,8 @@ const FormTagInput = styled.form`
   margin-bottom: 20px;
 `;
 
-const InputCont = styled.input<{ isValid: string }>`
-  width: 306px;
+const InputCont = styled.input<{ isValid: string; width: string }>`
+  width: ${(props) => props.width};
   height: 48px;
   border-radius: 2px;
   padding: 15px 7.7px 15px 16px;

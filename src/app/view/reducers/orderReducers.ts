@@ -31,6 +31,12 @@ const reducer = (state: React.ComponentState, action) => {
         isConfirmed: false,
       };
 
+    case "PAINT_SELECTION":
+      return {
+        ...state,
+        isSelectBoxOpened: !action.isSelectBoxOpened,
+      };
+
     default:
       return state;
   }

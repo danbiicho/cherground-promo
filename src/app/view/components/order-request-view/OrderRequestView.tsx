@@ -14,6 +14,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
 ) => {
   const initialState = {
     isConfirmed: false,
+    isSelectBoxOpened: false,
     userInput: {
       color: "",
       quantity: "",
@@ -22,7 +23,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { isConfirmed, confirmedSelections } = state;
+  const { isConfirmed, confirmedSelections, isSelectBoxOpened } = state;
   const { color, quantity } = state.userInput;
 
   const sendInputVal = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,10 +42,15 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   }, [color, quantity]);
 
   const cancelHandler = useCallback(() => {
-    console.log("aaaa");
+    console.log("canceled");
   }, []);
 
-  console.log(isConfirmed);
+  const arrowChangeHandler = useCallback(() => {
+    dispatch({
+      type: "PAINT_SELECTION",
+      isSelectBoxOpened,
+    });
+  }, [isSelectBoxOpened]);
 
   return (
     <>
@@ -61,7 +67,10 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
               <span style={{ marginBottom: "12px", display: "inline-block" }}>
                 카테고리*
               </span>
-              <MenuBox />
+              <MenuBox
+                arrowChangeHandler={arrowChangeHandler}
+                isSelectBoxOpened={isSelectBoxOpened}
+              />
             </CategoryInputBox>
             <DesignSelectWrapper>
               <OrderDispatch.Provider value={dispatch}>
@@ -88,14 +97,15 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                   </QuantityInputBox>
                 </DesginInputWrapper>
               </OrderDispatch.Provider>
-              {confirmedSelections &&
-                confirmedSelections.map((item: any) => {
+              <SelectedTab confirmedSelections={confirmedSelections}>
+                {confirmedSelections.map((item: any) => {
                   return (
-                    <SelectedTab>
+                    <SelectedLabel>
                       컬러:{item.color}, 수량:{item.quantity}
-                    </SelectedTab>
+                    </SelectedLabel>
                   );
                 })}
+              </SelectedTab>
               <Selections onClick={addSelectionHandler}>컬러 추가</Selections>
               <Divider />
               <FileUploadCont>
@@ -114,22 +124,22 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                 </AttachingImg>
               </FileUploadCont>
               <Divider />
-              <BtnCont>
-                <ActionButton
-                  buttonName={"SECONDARY"}
-                  isEnable={false}
-                  buttonText={"취소"}
-                  onClick={cancelHandler}
-                />
-                <ActionButton
-                  buttonName={"SECONDARY"}
-                  isEnable={false}
-                  buttonText={"접수"}
-                  onClick={cancelHandler}
-                />
-              </BtnCont>
             </DesignSelectWrapper>
           </SelectionsCont>
+          <BtnCont>
+            <ActionButton
+              buttonName={"SECONDARY"}
+              isEnable={false}
+              buttonText={"취소"}
+              onClick={cancelHandler}
+            />
+            <ActionButton
+              buttonName={"SECONDARY"}
+              isEnable={false}
+              buttonText={"접수"}
+              onClick={cancelHandler}
+            />
+          </BtnCont>
         </OrderRequestModalLayout>
       </Overlay>
     </>
@@ -154,6 +164,7 @@ const OrderRequestModalLayout = styled.div`
   background-color: #fff;
   z-index: 555;
   padding: 0 40px;
+  position: relative;
 `;
 
 const TitleBox = styled.div`
@@ -225,8 +236,21 @@ const QuantityInputBox = styled.div`
   height: auto;
 `;
 
-const SelectedTab = styled.div`
+const SelectedTab = styled.div<{ confirmedSelections: Array<Object> }>`
+  height: ${(props) => (props.confirmedSelections.length >= 1 ? "20px" : "")};
   width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-bottom: 2px;
+`;
+
+const SelectedLabel = styled.div`
+  width: 100%;
+  height: 20px;
+  border-radius: 2px;
+  font-size: 14px;
+  border: solid 1px #dfdfdf;
+  text-align: center;
 `;
 
 const Selections = styled.div`
@@ -327,10 +351,11 @@ const GuideMsg = styled.p`
 const BtnCont = styled.div`
   display: flex;
   justify-content: flex-end;
+  position: absolute;
+  //bottom: 0;
+  bottom: -10px;
+  right: 0;
+  padding-right: 40px;
 `;
-const Cancel = styled.button`
-  margin-right: 8px;
-`;
-const Apply = styled.button``;
 
 export default withRouter(OrderRequestView);

@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from "react";
+import React, { useReducer, useCallback, useState } from "react";
 import styled from "styled-components";
 import reducer from "app/view/reducers/orderReducers";
 import InputSelections from "app/view/widgets/InputSelections";
@@ -13,7 +13,13 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
   const { brand, style } = props.history.location.state;
-
+  const [filteredItems, setfilteredItems] = useState<Object[]>([
+    { title: "아우터", desc: "description" },
+    { title: "상의", desc: "description" },
+    { title: "하의", desc: "description" },
+    { title: "악세사리", desc: "description" },
+    { title: "기타", desc: "description" },
+  ]);
   const initialState = {
     isConfirmed: false,
     isSelectBoxOpened: false,
@@ -80,6 +86,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
               <MenuBox
                 arrowChangeHandler={arrowChangeHandler}
                 isSelectBoxOpened={isSelectBoxOpened}
+                filteredItems={filteredItems}
               />
             </CategoryInputBox>
             <DesignSelectWrapper>

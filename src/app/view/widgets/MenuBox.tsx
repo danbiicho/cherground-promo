@@ -1,26 +1,37 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import arrowIcon from "cg-promotion-collapsible-expand.png";
-import DropDownList from "app/view/widgets/DropDownList";
-//import ActionButton from "./ActionButton";
 
-// interface MenuBoxProps {
-//   menuText: string;
-//   selectItems: (item: string, idx: number) => void;
-// }
+interface MenuBoxProps {
+  menuText: string;
+  filteredItems: React.ComponentState;
+  selectItems: (item: string, idx: number) => void;
+}
 
-const MenuBox: React.FunctionComponent = (props) => {
-  //const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
+const MenuBox: React.FunctionComponent<MenuBoxProps> = (props) => {
+  const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
+  const [selectedTitle, setSelectedTitle] = useState<string>(
+    "제작 카테고리 선택"
+  );
+  console.log(props.filteredItems);
+  const arrowChangeHandler = () => {
+    setIsSelectBoxOpend(!isSelectBoxOpend);
+  };
 
-  // const arrowChangeHandler = () => {
+  // const closeBox = () => {
   //   setIsSelectBoxOpend(!isSelectBoxOpend);
   // };
+
+  const { filteredItems } = props;
+  const onClickHandler = (idx, title) => {
+    setSelectedTitle(title);
+  };
 
   return (
     <>
       <MenuBoxWrapper>
         <MenuBoxText>
-          <Placeholder>제작 카테고리 선택</Placeholder>
+          <Placeholder>{selectedTitle}</Placeholder>
         </MenuBoxText>
         <ArrowIcon
           src={arrowIcon}
@@ -29,10 +40,23 @@ const MenuBox: React.FunctionComponent = (props) => {
         />
       </MenuBoxWrapper>
       <DropDownWrapper isOpened={props.isSelectBoxOpened}>
-        <DropDownList />
-        <DropDownList />
+        {filteredItems.map((value, idx, arr) => {
+          console.log(value);
+          return (
+            <>
+              <DropDownListLayout
+                onClick={() => onClickHandler(idx, arr[idx].title)}
+              >
+                <ListIcon />
+                <ListContainer>
+                  <ListTitle>{value.title}</ListTitle>
+                  <ListCaption>{value.desc}</ListCaption>
+                </ListContainer>
+              </DropDownListLayout>
+            </>
+          );
+        })}
       </DropDownWrapper>
-      {/* <ActionButton /> */}
     </>
   );
 };
@@ -71,12 +95,51 @@ const ArrowIcon = styled.img<{ isOpened: boolean }>`
 
 const DropDownWrapper = styled.div<{ isOpened: boolean }>`
   width: 620px;
-  height: 158px;
+  height: 371px;
   border-radius: 4px;
   box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 8px 0;
   display: ${(props) => (props.isOpened ? "block" : "none")};
   background-color: #fff;
+`;
+
+const DropDownListLayout = styled.li`
+  list-style: none;
+  height: 71px;
+  //background-color: #f4f6f8;
+  padding: 16px 0 16px 24px;
+  display: flex;
+  align-items: center;
+`;
+
+const ListIcon = styled.div`
+  width: 32px;
+  height: 32px;
+  background-color: #535454;
+  border-radius: 50%;
+`;
+
+const ListContainer = styled.div`
+  height: 71px;
+  margin-left: 16px;
+`;
+
+const ListTitle = styled.p`
+  width: 292px;
+  height: 18px;
+  font-family: NanumSquare;
+  font-size: 16px;
+  color: #1c2542;
+  margin: 16px 0 8px 0;
+`;
+
+const ListCaption = styled.p`
+  width: 292px;
+  height: 16px;
+  font-family: NanumSquare;
+  font-size: 14px;
+  color: #7b7f8d;
+  margin: 0;
 `;
 
 export default MenuBox;

@@ -37,6 +37,12 @@ const reducer = (state: React.ComponentState, action) => {
         isSelectBoxOpened: !action.isSelectBoxOpened,
       };
 
+    case "SET_ERROR_MSG":
+      return {
+        ...state,
+        errorMsg: action.msg,
+      };
+
     default:
       return state;
   }

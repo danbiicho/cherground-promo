@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext, useCallback } from "react";
+import React, { useState, useRef, useContext } from "react";
 import styled from "styled-components";
 import { OrderDispatch } from "app/view/components/order-request-view/OrderRequestView";
 
@@ -6,9 +6,10 @@ interface InputSelectionsProps {
   placeholderTxt: string;
   name: string;
   onChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  isConfirmed: boolean;
+  isConfirmed?: boolean;
   width: string;
   NameCheckHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  errorMsg: string;
 }
 
 const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
@@ -17,9 +18,14 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
   const [isValid, setIsValid] = useState("default");
   const dispatch = useContext(OrderDispatch);
   const formRef: React.MutableRefObject<HTMLFormElement | undefined> = useRef();
+
   const onBlurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
       setIsValid("isNotValid");
+      dispatch({
+        type: "SET_ERROR_MSG",
+        msg: "필수 품목입니다",
+      });
     } else {
       setIsValid("default");
     }
@@ -35,9 +41,11 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
       type: "RESET_CONFIRM_ACTION",
     });
   }
+
+  console.log(props.errorMsg);
   return (
     <SelectionsWrapper style={{ width: props.width }}>
-      <ErrorMsg isValid={isValid}>에러 메시지</ErrorMsg>
+      <ErrorMsg isValid={isValid}>{props.errorMsg}</ErrorMsg>
       <FormTagInput onChange={(e) => props.onChangeHandler(e)} ref={formRef}>
         <InputCont
           type="text"

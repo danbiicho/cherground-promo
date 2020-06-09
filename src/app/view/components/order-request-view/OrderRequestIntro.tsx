@@ -5,8 +5,6 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import InputSelections from "app/view/widgets/InputSelections";
 import ActionButton from "app/view/widgets/ActionButton";
 
-// export const OrderDispatch = React.createContext(null);
-
 const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
@@ -61,7 +59,7 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
             <TitleBox>
               <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
               <ProgressBox>
-                <ProgressBar />
+                <ProgressBar stage={1} />
               </ProgressBox>
             </TitleBox>
             <IntroSection>
@@ -160,9 +158,9 @@ const ProgressBox = styled.div`
   position: relative;
 `;
 
-const ProgressBar = styled.span`
+const ProgressBar = styled.span<{ stage: number }>`
   position: absolute;
-  width: 50%;
+  width: ${(props) => (props.stage === 1 ? "50%" : "100%")};
   height: 2px;
   z-index: 22;
   background-color: #50b12f;

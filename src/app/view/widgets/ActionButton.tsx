@@ -8,6 +8,7 @@ interface Buttonprops {
   onClick: () => void;
   styleExist?: React.ComponentState;
   brandExist?: React.ComponentState;
+  isConfirmed?: number;
 }
 
 interface ButtonLayoutProps {
@@ -15,6 +16,7 @@ interface ButtonLayoutProps {
   isEnable: boolean;
   isStyle?: string;
   isBrand?: string;
+  isConfirmed: number;
 }
 
 const ActionButton: React.FunctionComponent<Buttonprops> = (props) => {
@@ -27,6 +29,7 @@ const ActionButton: React.FunctionComponent<Buttonprops> = (props) => {
       onClick={props.onClick}
       isStyle={style}
       isBrand={brand}
+      isConfirmed={props.isConfirmed}
     >
       {props.buttonText}
     </ActionButtonLayout>
@@ -37,22 +40,25 @@ const ActionButtonLayout = styled.button<ButtonLayoutProps>`
   width: 100px;
   height: 40px;
   border-style: none;
-  background-color: ${(props) => {
-    if (props.buttonName === "PRIMARY") {
-      if (props.isEnable === false) {
-        return "#131313";
-      }
-      if (props.isEnable === true) {
-        return "#dfdfdf";
-      }
-    }
-    if (props.buttonName === "SECONDARY") {
-      return "#ffffff";
-    }
-  }};
   ${(props) => {
     if (props.isStyle && props.isBrand) {
-      return "background-color: #131313";
+      return "background-color: #131313;color: #fff";
+    }
+    if (props.isConfirmed >= 1) {
+      return "background-color: #131313;color: #fff";
+    }
+    if (props.buttonName === "PRIMARY") {
+      if (props.isEnable) {
+        return "background-color: #dfdfdf; color: #fff;";
+      } else {
+        return "background-color: #131313; color: #535454;";
+      }
+    } else {
+      if (props.isEnable) {
+        return "background-color: #fff; color: #535454;";
+      } else {
+        return "background-color: #fff; color: #535454;";
+      }
     }
   }}
   display: flex;
@@ -64,19 +70,6 @@ const ActionButtonLayout = styled.button<ButtonLayoutProps>`
   margin: 0 8px 20px;
   font-family: NanumSquare;
   font-size: 14px;
-  color: ${(props) => {
-    if (props.buttonName === "SECONDARY") {
-      if (props.isEnable === false) {
-        return "#535454";
-      }
-      if (props.isEnable === true) {
-        return "#dfdfdf";
-      }
-    }
-    if (props.buttonName === "PRIMARY") {
-      return "#ffffff";
-    }
-  }};
 `;
 
 export default ActionButton;

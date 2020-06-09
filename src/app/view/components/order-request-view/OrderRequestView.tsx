@@ -12,6 +12,7 @@ export const OrderDispatch = React.createContext(null);
 const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
+  const { brand, style } = props.history.location.state;
   const [filteredItems, setfilteredItems] = useState<Object[]>([
     { title: "아우터", desc: "description" },
     { title: "상의", desc: "description" },
@@ -19,19 +20,26 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
     { title: "악세사리", desc: "description" },
     { title: "기타", desc: "description" },
   ]);
-
   const initialState = {
     isConfirmed: false,
     isSelectBoxOpened: false,
     userInput: {
       color: "",
       quantity: "",
+      brand: brand,
+      style: style,
     },
+    errorMsg: "Error!",
     confirmedSelections: [],
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { isConfirmed, confirmedSelections, isSelectBoxOpened } = state;
+  const {
+    isConfirmed,
+    confirmedSelections,
+    isSelectBoxOpened,
+    errorMsg,
+  } = state;
   const { color, quantity } = state.userInput;
 
   const sendInputVal = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,8 +98,8 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                       placeholderTxt={"컬러 입력"}
                       name={"color"}
                       onChangeHandler={sendInputVal}
-                      isConfirmed={isConfirmed}
                       width={"100%"}
+                      errorMsg={errorMsg}
                     />
                   </ColorInputBox>
                   <QuantityInputBox>
@@ -102,6 +110,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                       onChangeHandler={sendInputVal}
                       isConfirmed={isConfirmed}
                       width={"100%"}
+                      errorMsg={errorMsg}
                     />
                   </QuantityInputBox>
                 </DesginInputWrapper>
@@ -143,10 +152,11 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
               onClick={cancelHandler}
             />
             <ActionButton
-              buttonName={"SECONDARY"}
+              buttonName={"PRIMARY"}
               isEnable={false}
               buttonText={"접수"}
               onClick={cancelHandler}
+              isConfirmed={confirmedSelections.length}
             />
           </BtnCont>
         </OrderRequestModalLayout>

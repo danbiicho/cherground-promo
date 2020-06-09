@@ -10,11 +10,11 @@ import DropDownList from "app/view/widgets/DropDownList";
 // }
 
 const MenuBox: React.FunctionComponent = (props) => {
-  const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
+  //const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
 
-  const arrowChangeHandler = () => {
-    setIsSelectBoxOpend(!isSelectBoxOpend);
-  };
+  // const arrowChangeHandler = () => {
+  //   setIsSelectBoxOpend(!isSelectBoxOpend);
+  // };
 
   return (
     <>
@@ -24,11 +24,11 @@ const MenuBox: React.FunctionComponent = (props) => {
         </MenuBoxText>
         <ArrowIcon
           src={arrowIcon}
-          onClick={arrowChangeHandler}
-          isOpened={isSelectBoxOpend}
+          onClick={props.arrowChangeHandler}
+          isOpened={props.isSelectBoxOpened}
         />
       </MenuBoxWrapper>
-      <DropDownWrapper isOpened={isSelectBoxOpend}>
+      <DropDownWrapper isOpened={props.isSelectBoxOpened}>
         <DropDownList />
         <DropDownList />
       </DropDownWrapper>

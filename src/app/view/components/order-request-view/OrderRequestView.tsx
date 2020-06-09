@@ -6,6 +6,8 @@ import InputSelections from "app/view/widgets/InputSelections";
 import MenuBox from "app/view/widgets/MenuBox";
 import ClipImgPng from "cg-promotion-attach@2x.png";
 
+export const OrderDispatch = React.createContext(null);
+
 const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
@@ -34,7 +36,6 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   const addSelectionHandler = useCallback(() => {
     dispatch({
       type: "CONFIRM_USER_SELECTION",
-      isConfirmed,
     });
   }, [color, quantity]);
 
@@ -58,26 +59,30 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
               <MenuBox />
             </CategoryInputBox>
             <DesignSelectWrapper>
-              <DesginInputWrapper>
-                <ColorInputBox>
-                  <span style={{ position: "absolute" }}>컬러*</span>
-                  <InputSelections
-                    placeholderTxt={"컬러 입력"}
-                    name={"color"}
-                    onChangeHandler={sendInputVal}
-                    isConfirmed={isConfirmed}
-                  />
-                </ColorInputBox>
-                <QuantityInputBox>
-                  <span style={{ position: "absolute" }}>희망수량*</span>
-                  <InputSelections
-                    placeholderTxt={"희망 수량 입력"}
-                    name={"quantity"}
-                    onChangeHandler={sendInputVal}
-                    isConfirmed={isConfirmed}
-                  />
-                </QuantityInputBox>
-              </DesginInputWrapper>
+              <OrderDispatch.Provider value={dispatch}>
+                <DesginInputWrapper>
+                  <ColorInputBox>
+                    <span style={{ position: "absolute" }}>컬러*</span>
+                    <InputSelections
+                      placeholderTxt={"컬러 입력"}
+                      name={"color"}
+                      onChangeHandler={sendInputVal}
+                      isConfirmed={isConfirmed}
+                      width={"100%"}
+                    />
+                  </ColorInputBox>
+                  <QuantityInputBox>
+                    <span style={{ position: "absolute" }}>희망수량*</span>
+                    <InputSelections
+                      placeholderTxt={"희망 수량 입력"}
+                      name={"quantity"}
+                      onChangeHandler={sendInputVal}
+                      isConfirmed={isConfirmed}
+                      width={"100%"}
+                    />
+                  </QuantityInputBox>
+                </DesginInputWrapper>
+              </OrderDispatch.Provider>
               {isConfirmed &&
                 confirmedSelections.map((item: any) => {
                   return (
@@ -182,6 +187,7 @@ const DesignSelectWrapper = styled.div`
   position: absolute;
   top: 96px;
   z-index: 444;
+  width: 100%;
 `;
 
 const DesginInputWrapper = styled.div`

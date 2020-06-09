@@ -1,26 +1,76 @@
 import React from "react";
 import styled from "styled-components";
+import { RouteComponentProps } from "react-router-dom";
 import InputSelections from "app/view/widgets/InputSelections";
+import ActionButton from "app/view/widgets/ActionButton";
 
-const OrderRequestIntro = () => {
+const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
+  props
+) => {
+  console.log(props.location.pathname);
+
+  // let introStyle = {
+  //   width: "100%",
+  //   height: "2px",
+  // };
+
+  // if (props.location.pathname === "/intro") {
+  //   introStyle = {
+  //     width: "50%",
+  //     height: "3px",
+  //   };
+  // }
+
   return (
     <>
       <Overlay>
         <OrderRequestModalLayout>
-          <TitleBox>
-            <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
-            <ProgressBox>
-              <ProgressBar />
-            </ProgressBox>
-          </TitleBox>
-          <IntroSection>
-            <IntroBox></IntroBox>
-            <IntroInputCont></IntroInputCont>
-          </IntroSection>
+          <TopLayout>
+            <TitleBox>
+              <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
+              <ProgressBox>
+                <ProgressBar />
+              </ProgressBox>
+            </TitleBox>
+            <IntroSection>
+              <IntroIcon />
+              <IntroBox>
+                <IntroInputCont>Cher Ground Promotion</IntroInputCont>
+                <IntroInputSub>
+                  Cher Ground로 통한 프로모션은 원하는 상품 설명과 희망 수량을
+                  입력하면 제작이 가능합니다!
+                </IntroInputSub>
+              </IntroBox>
+            </IntroSection>
+            <BrandInputBox>
+              <span style={{ fontSize: "14px" }}>브랜드명*</span>
+              <InputSelections
+                placeholderTxt={"브랜드명 입력"}
+                name={"brand"}
+                width={"100%"}
+              />
+            </BrandInputBox>
+            <StyleInputBox>
+              <span style={{ fontSize: "14px" }}>스타일명*</span>
+              <InputSelections
+                placeholderTxt={"스타일명 입력"}
+                name={"style"}
+                width={"100%"}
+              />
+            </StyleInputBox>
+          </TopLayout>
           <Divider />
           <BtnCont>
-            <Cancel>취소</Cancel>
-            <Apply>접수</Apply>
+            <ActionButton
+              buttonName={"SECONDARY"}
+              isEnable={false}
+              buttonText={"취소"}
+            />
+            <ActionButton
+              buttonName={"PRIMARY"}
+              isEnable={false}
+              buttonText={"다음"}
+            />
           </BtnCont>
         </OrderRequestModalLayout>
       </Overlay>
@@ -39,12 +89,15 @@ const Overlay = styled.div`
 `;
 
 const OrderRequestModalLayout = styled.div`
-  margin: 64px 0;
+  /* margin: 64px 0; */
   width: 700px;
-  height: 825px;
+  height: 565px;
   border-radius: 2px;
   background-color: #fff;
   z-index: 555;
+`;
+
+const TopLayout = styled.div`
   padding: 0 40px;
 `;
 
@@ -58,7 +111,7 @@ const TitleBox = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-top: 40px;
+  padding-top: 40px;
 `;
 
 const ProgressBox = styled.div`
@@ -82,24 +135,57 @@ const IntroSection = styled.div`
   height: 68px;
   border-radius: 2px;
   background-color: #f4f6f8;
+  display: flex;
+  align-items: center;
+  margin: 16px 0 28px 0;
 `;
 
-const IntroBox = styled.div``;
-const IntroInputCont = styled.div``;
+const IntroIcon = styled.div`
+  width: 32px;
+  height: 32px;
+  background-color: #68768d;
+  border-radius: 50%;
+  margin-left: 16px;
+`;
+
+const IntroBox = styled.div`
+  margin-left: 16px;
+  align-items: center;
+`;
+
+const IntroInputCont = styled.p`
+  height: 16px;
+  font-family: NanumSquare;
+  font-size: 14px;
+  color: #1e2640;
+  margin: 0 0 4px 0;
+`;
+
+const IntroInputSub = styled.p`
+  height: 16px;
+  font-family: NanumSquare;
+  font-size: 14px;
+  color: #1e2640;
+  margin: 0;
+`;
+
+const BrandInputBox = styled.div`
+  /* width: 100%; */
+  /* margin-bottom: 12px; */
+`;
+
+const StyleInputBox = styled.div``;
 
 const Divider = styled.div`
   width: 100%;
   border-bottom: 1px solid #d8d8d8;
-  margin: 30px 0;
+  margin: 50px 0 20px 0;
 `;
 
 const BtnCont = styled.div`
   display: flex;
   justify-content: flex-end;
+  padding: 0 32px 0 0;
 `;
-const Cancel = styled.button`
-  margin-right: 8px;
-`;
-const Apply = styled.button``;
 
 export default OrderRequestIntro;

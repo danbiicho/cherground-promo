@@ -4,6 +4,7 @@ import styled from "styled-components";
 interface InputSelectionsProps {
   placeholderTxt: string;
   name: string;
+  width: string;
 }
 
 const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
@@ -24,7 +25,7 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
   };
 
   return (
-    <SelectionsWrapper>
+    <SelectionsWrapper style={{ width: props.width }}>
       <ErrorMsg isValid={isValid}>에러 메시지</ErrorMsg>
       <FormTagInput>
         <InputCont
@@ -34,6 +35,8 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
           onFocus={() => onFocusHandler()}
           onBlur={(e) => onBlurHandler(e)}
           name={props.name}
+          width={props.width}
+          // style={{ width: props.width }}
         />
       </FormTagInput>
     </SelectionsWrapper>
@@ -58,8 +61,8 @@ const FormTagInput = styled.form`
   margin-bottom: 20px;
 `;
 
-const InputCont = styled.input<{ isValid: string }>`
-  width: 306px;
+const InputCont = styled.input<{ isValid: string; width: string }>`
+  width: ${(props) => props.width};
   height: 48px;
   border-radius: 2px;
   padding: 15px 7.7px 15px 16px;

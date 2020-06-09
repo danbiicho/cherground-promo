@@ -4,6 +4,7 @@ import styled from "styled-components";
 import reducer from "app/view/reducers/orderReducers";
 import InputSelections from "app/view/widgets/InputSelections";
 import MenuBox from "app/view/widgets/MenuBox";
+import ActionButton from "app/view/widgets/ActionButton";
 import ClipImgPng from "cg-promotion-attach@2x.png";
 
 export const OrderDispatch = React.createContext(null);
@@ -38,6 +39,10 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
       type: "CONFIRM_USER_SELECTION",
     });
   }, [color, quantity]);
+
+  const cancelHandler = useCallback(() => {
+    console.log("aaaa");
+  }, []);
 
   console.log(isConfirmed);
 
@@ -83,7 +88,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                   </QuantityInputBox>
                 </DesginInputWrapper>
               </OrderDispatch.Provider>
-              {isConfirmed &&
+              {confirmedSelections &&
                 confirmedSelections.map((item: any) => {
                   return (
                     <SelectedTab>
@@ -110,8 +115,18 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
               </FileUploadCont>
               <Divider />
               <BtnCont>
-                <Cancel>취소</Cancel>
-                <Apply>접수</Apply>
+                <ActionButton
+                  buttonName={"SECONDARY"}
+                  isEnable={false}
+                  buttonText={"취소"}
+                  onClick={cancelHandler}
+                />
+                <ActionButton
+                  buttonName={"SECONDARY"}
+                  isEnable={false}
+                  buttonText={"접수"}
+                  onClick={cancelHandler}
+                />
               </BtnCont>
             </DesignSelectWrapper>
           </SelectionsCont>

@@ -5,7 +5,7 @@ interface Buttonprops {
   buttonName: "PRIMARY" | "SECONDARY";
   isEnable: boolean;
   buttonText: string;
-  // onClick: () => void;
+  onClick: () => void;
 }
 
 interface ButtonLayoutProps {

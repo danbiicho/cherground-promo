@@ -30,8 +30,10 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
 
   if (props.isConfirmed) {
     formRef.current.reset();
+    dispatch({
+      type: "RESET_CONFIRM_ACTION",
+    });
   }
-
   return (
     <SelectionsWrapper style={{ width: props.width }}>
       <ErrorMsg isValid={isValid}>에러 메시지</ErrorMsg>

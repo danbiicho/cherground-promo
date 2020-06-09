@@ -5,6 +5,7 @@ interface InputSelectionsProps {
   placeholderTxt: string;
   name: string;
   width: string;
+  NameCheckHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
@@ -36,6 +37,9 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
           onBlur={(e) => onBlurHandler(e)}
           name={props.name}
           width={props.width}
+          onChange={(e) => {
+            props.NameCheckHandler(e);
+          }}
           // style={{ width: props.width }}
         />
       </FormTagInput>

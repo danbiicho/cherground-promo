@@ -5,20 +5,28 @@ interface Buttonprops {
   buttonName: "PRIMARY" | "SECONDARY";
   isEnable: boolean;
   buttonText: string;
-  // onClick: () => void;
+  onClick: () => void;
+  styleExist?: React.ComponentState;
+  brandExist?: React.ComponentState;
 }
 
 interface ButtonLayoutProps {
   buttonName: string;
   isEnable: boolean;
+  isStyle?: string;
+  isBrand?: string;
 }
 
 const ActionButton: React.FunctionComponent<Buttonprops> = (props) => {
+  const style = props.styleExist;
+  const brand = props.brandExist;
   return (
     <ActionButtonLayout
       isEnable
       buttonName={props.buttonName}
-      // onClick={props.onClick}
+      onClick={props.onClick}
+      isStyle={style}
+      isBrand={brand}
     >
       {props.buttonText}
     </ActionButtonLayout>
@@ -33,7 +41,8 @@ const ActionButtonLayout = styled.button<ButtonLayoutProps>`
     if (props.buttonName === "PRIMARY") {
       if (props.isEnable === false) {
         return "#131313";
-      } else if (props.isEnable === false) {
+      }
+      if (props.isEnable === true) {
         return "#dfdfdf";
       }
     }
@@ -41,6 +50,11 @@ const ActionButtonLayout = styled.button<ButtonLayoutProps>`
       return "#ffffff";
     }
   }};
+  ${(props) => {
+    if (props.isStyle && props.isBrand) {
+      return "background-color: #131313";
+    }
+  }}
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,12 +64,19 @@ const ActionButtonLayout = styled.button<ButtonLayoutProps>`
   margin: 0 8px 20px;
   font-family: NanumSquare;
   font-size: 14px;
-  color: ${(props) =>
-    props.buttonName === "SECONDARY"
-      ? props.isEnable
-        ? "#535454"
-        : "#dfdfdf"
-      : "#ffffff"};
+  color: ${(props) => {
+    if (props.buttonName === "SECONDARY") {
+      if (props.isEnable === false) {
+        return "#535454";
+      }
+      if (props.isEnable === true) {
+        return "#dfdfdf";
+      }
+    }
+    if (props.buttonName === "PRIMARY") {
+      return "#ffffff";
+    }
+  }};
 `;
 
 export default ActionButton;

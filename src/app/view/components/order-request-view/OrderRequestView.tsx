@@ -3,8 +3,12 @@ import styled from "styled-components";
 import InputSelections from "app/view/widgets/InputSelections";
 import MenuBox from "app/view/widgets/MenuBox";
 import ClipImgPng from "cg-promotion-attach@2x.png";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
-const OrderRequestView = () => {
+const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
+  props
+) => {
+  console.log("sended ", props.location);
   return (
     <>
       <Overlay>
@@ -265,4 +269,4 @@ const Cancel = styled.button`
 `;
 const Apply = styled.button``;
 
-export default OrderRequestView;
+export default withRouter(OrderRequestView);

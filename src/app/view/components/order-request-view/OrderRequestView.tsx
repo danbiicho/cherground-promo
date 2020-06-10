@@ -186,6 +186,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                                   fontSize: "12px",
                                   paddingLeft: "3px",
                                   width: "max-content",
+                                  color: "#68768d",
                                 }}
                               >
                                 {item.fileName}
@@ -437,7 +438,7 @@ const ImgPreview = styled.div<{ lastThumb: number }>`
   align-items: center;
 `;
 
-const DeleteBtn = styled.div`
+const DeleteBtn = styled.div<{ img: string }>`
   width: 20px;
   height: 20px;
   background-image: ${(props) => `url(${props.img})`};

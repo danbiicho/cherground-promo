@@ -3,10 +3,12 @@ import styled from "styled-components";
 import arrowIcon from "cg-promotion-collapsible-expand.png";
 
 interface MenuBoxProps {
-  menuText: string;
+  menuText?: string;
   filteredItems: React.ComponentState;
-  selected: string;
-  isValid: string;
+  selected?: string;
+  isValid?: string;
+  arrowChangeHandler: () => void;
+  isSelectBoxOpened: boolean;
 }
 
 const MenuBox: React.FunctionComponent<MenuBoxProps> = (props) => {

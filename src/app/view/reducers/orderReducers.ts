@@ -49,6 +49,12 @@ const reducer = (state: React.ComponentState, action) => {
         imgPreview: [...state.imgPreview, { ...action.PreviewFile }],
       };
 
+    case "DELETE_IMG_PREVIEW":
+      return {
+        ...state,
+        imgPreview: [...action.filteredFileList],
+      };
+
     default:
       return state;
   }

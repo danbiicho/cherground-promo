@@ -4,8 +4,9 @@ import reducer from "app/view/reducers/orderReducers";
 import InputSelections from "app/view/widgets/InputSelections";
 import MenuBox from "app/view/widgets/MenuBox";
 import ActionButton from "app/view/widgets/ActionButton";
-import ClipImgPng from "cg-promotion-attach@2x.png";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import ClipImgPng from "cg-promotion-attach@2x.png";
+import DeleteBtnImg from "cg-promotion-delete-image-idle@2x.png";
 
 export const OrderDispatch = React.createContext(null);
 
@@ -75,7 +76,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
 
     let url = "";
 
-    reader.addEventListener("load", (e) => {
+    reader.addEventListener("load", (e: React.ChangeEvent<FileList>) => {
       url = e.target.result;
       dispatch({
         type: "SAVE_IMG_PREVIEW",
@@ -86,6 +87,15 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
       });
     });
     reader.readAsDataURL(file[0]);
+  };
+
+  const deleteLoadedImgHandler = (index: number) => {
+    const filteredFiles = imgPreview.filter((file, idx) => idx !== index);
+
+    dispatch({
+      type: "DELETE_IMG_PREVIEW",
+      filteredFileList: [...filteredFiles],
+    });
   };
 
   return (
@@ -180,6 +190,10 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                               >
                                 {item.fileName}
                               </p>
+                              <DeleteBtn
+                                img={DeleteBtnImg}
+                                onClick={() => deleteLoadedImgHandler(idx)}
+                              />
                             </ImgPreview>
                           );
                         })
@@ -423,14 +437,24 @@ const ImgPreview = styled.div<{ lastThumb: number }>`
   align-items: center;
 `;
 
+const DeleteBtn = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: ${(props) => `url(${props.img})`};
+  object-fit: contain;
+  object-fit: cover;
+  background-position: center;
+  background-size: 100%;
+  margin-left: auto;
+`;
+
 const ImgThumb = styled.div<{ img: string }>`
   width: 32px;
   height: 32px;
   background-image: ${(props) => `url(${props.img})`};
-  //background-color: #68768d;
   background-position: center;
-  object-fit: cover;
-  background-size: contain;
+  background-size: 100%;
+  background-repeat: no-repeat;
 `;
 
 const ClipImg = styled.img`

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import styled from "styled-components";
 import arrowIcon from "cg-promotion-collapsible-expand.png";
 
 interface MenuBoxProps {
   menuText: string;
   filteredItems: React.ComponentState;
-  selectItems: (item: string, idx: number) => void;
+  selected: string;
+  isValid: string;
 }
 
 const MenuBox: React.FunctionComponent<MenuBoxProps> = (props) => {
@@ -13,38 +14,53 @@ const MenuBox: React.FunctionComponent<MenuBoxProps> = (props) => {
   const [selectedTitle, setSelectedTitle] = useState<string>(
     "제작 카테고리 선택"
   );
-  console.log(props.filteredItems);
+  const [errorMsg, setErrorMsg] = useState<boolean>(false);
+
   const arrowChangeHandler = () => {
     setIsSelectBoxOpend(!isSelectBoxOpend);
+    if (isSelectBoxOpend === true) {
+      if (selectedTitle === "제작 카테고리 선택") {
+        setErrorMsg(true);
+      }
+    }
   };
-
-  // const closeBox = () => {
-  //   setIsSelectBoxOpend(!isSelectBoxOpend);
-  // };
 
   const { filteredItems } = props;
-  const onClickHandler = (idx, title) => {
-    setSelectedTitle(title);
-  };
+
+  const onClickHandler = useCallback(
+    (idx, title) => {
+      setSelectedTitle(title);
+      setErrorMsg(false);
+      setIsSelectBoxOpend(false);
+    },
+    [selectedTitle]
+  );
 
   return (
     <>
-      <MenuBoxWrapper>
+      <BoxLabel
+        isValid={errorMsg}
+        style={{ marginBottom: "12px", display: "inline-block" }}
+      >
+        카테고리*
+      </BoxLabel>
+      <ErrorMsg isValid={errorMsg}>필수 품목입니다</ErrorMsg>
+      <MenuBoxWrapper isValid={errorMsg}>
         <MenuBoxText>
-          <Placeholder>{selectedTitle}</Placeholder>
+          <Placeholder selected={selectedTitle}>{selectedTitle}</Placeholder>
         </MenuBoxText>
         <ArrowIcon
           src={arrowIcon}
-          onClick={props.arrowChangeHandler}
-          isOpened={props.isSelectBoxOpened}
+          onClick={arrowChangeHandler}
+          isOpened={isSelectBoxOpend}
         />
       </MenuBoxWrapper>
-      <DropDownWrapper isOpened={props.isSelectBoxOpened}>
+      <DropDownWrapper isOpened={isSelectBoxOpend}>
         {filteredItems.map((value, idx, arr) => {
-          console.log(value);
           return (
             <>
               <DropDownListLayout
+                key={idx}
                 onClick={() => onClickHandler(idx, arr[idx].title)}
               >
                 <ListIcon />
@@ -61,11 +77,27 @@ const MenuBox: React.FunctionComponent<MenuBoxProps> = (props) => {
   );
 };
 
+const BoxLabel = styled.div`
+  color: ${(props) => (props.isValid ? "#d50000" : "#1e2640")};
+`;
+
+const ErrorMsg = styled.div`
+  margin-left: auto;
+  font-size: 12px;
+  color: #d50000;
+  margin-bottom: 13px;
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  visibility: ${(props) => (props.isValid ? "visible" : "hidden")};
+`;
+
 const MenuBoxWrapper = styled.div`
   width: 620px;
   height: 48px;
   border-radius: 2px;
-  border: solid 1px #dfdfdf;
+  border: ${(props) =>
+    props.isValid ? "solid 1px #d50000" : "solid 1px #dfdfdf"};
   position: relative;
 `;
 
@@ -81,7 +113,11 @@ const MenuBoxText = styled.p`
 
 const Placeholder = styled.span`
   font-size: 16px;
-  color: #b9bbc1;
+  color: ${(props) => {
+    if (props.selected === "제작 카테고리 선택") {
+      return "#b9bbc1";
+    } else return "#131313";
+  }};
 `;
 
 const ArrowIcon = styled.img<{ isOpened: boolean }>`
@@ -106,10 +142,12 @@ const DropDownWrapper = styled.div<{ isOpened: boolean }>`
 const DropDownListLayout = styled.li`
   list-style: none;
   height: 71px;
-  //background-color: #f4f6f8;
   padding: 16px 0 16px 24px;
   display: flex;
   align-items: center;
+  &:hover {
+    background-color: #f4f6f8;
+  }
 `;
 
 const ListIcon = styled.div`

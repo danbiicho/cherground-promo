@@ -14,13 +14,15 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
   const { brand, style } = props.history.location.state;
+  const [ModalOpen, setModalOpen] = useState<boolean>(true);
   const [filteredItems, setfilteredItems] = useState<Object[]>([
-    { title: "아우터", desc: "description" },
-    { title: "상의", desc: "description" },
-    { title: "하의", desc: "description" },
-    { title: "악세사리", desc: "description" },
-    { title: "기타", desc: "description" },
+    { title: "아우터", desc: "코트, 자켓, 패딩 등" },
+    { title: "상의", desc: "티셔츠, 나시, 맨투맨, 후드티 등" },
+    { title: "하의", desc: "티셔츠, 나시, 맨투맨, 후드티 등" },
+    { title: "악세사리", desc: "모자, 양말, 가방 등" },
+    { title: "기타", desc: "신발, 기타 요청, 부자재 등" },
   ]);
+
   const initialState = {
     isConfirmed: false,
     isSelectBoxOpened: false,
@@ -61,7 +63,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   }, [color, quantity]);
 
   const cancelHandler = useCallback(() => {
-    console.log("canceled");
+    setModalOpen(false);
   }, []);
 
   const arrowChangeHandler = useCallback(() => {
@@ -100,112 +102,111 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
 
   return (
     <>
-      <Overlay>
+      <Overlay isModalOpen={ModalOpen}>
         <OrderRequestModalLayout>
-          <TitleBox>
-            <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
-            <ProgressBox>
-              <ProgressBar stage={2} />
-            </ProgressBox>
-          </TitleBox>
-          <SelectionsCont>
-            <CategoryInputBox>
-              <span style={{ marginBottom: "12px", display: "inline-block" }}>
-                카테고리*
-              </span>
-              <MenuBox
-                arrowChangeHandler={arrowChangeHandler}
-                isSelectBoxOpened={isSelectBoxOpened}
-                filteredItems={filteredItems}
-              />
-            </CategoryInputBox>
-            <DesignSelectWrapper>
-              <OrderDispatch.Provider value={dispatch}>
-                <DesginInputWrapper>
-                  <ColorInputBox>
-                    <span style={{ position: "absolute" }}>컬러*</span>
-                    <InputSelections
-                      placeholderTxt={"컬러 입력"}
-                      name={"color"}
-                      onChangeHandler={sendInputVal}
-                      isConfirmed={isConfirmed}
-                      width={"100%"}
-                      errorMsg={errorMsg}
-                    />
-                  </ColorInputBox>
-                  <QuantityInputBox>
-                    <span style={{ position: "absolute" }}>희망수량*</span>
-                    <InputSelections
-                      placeholderTxt={"희망 수량 입력"}
-                      name={"quantity"}
-                      onChangeHandler={sendInputVal}
-                      isConfirmed={isConfirmed}
-                      width={"100%"}
-                      errorMsg={errorMsg}
-                    />
-                  </QuantityInputBox>
-                </DesginInputWrapper>
-              </OrderDispatch.Provider>
-              <SelectedTab confirmedSelections={confirmedSelections}>
-                {confirmedSelections.map((item: any) => {
-                  return (
-                    <SelectedLabel>
-                      컬러:{item.color}, 수량:{item.quantity}
-                    </SelectedLabel>
-                  );
-                })}
-              </SelectedTab>
-              <Selections onClick={addSelectionHandler}>컬러 추가</Selections>
-              <Divider />
-              <FileUploadCont>
-                <TextBoxInput>
-                  <span>비고</span>
-                  <TextBox type="textarea" placeholder="비고 입력" />
-                </TextBoxInput>
-                <AttachingImg>
-                  <span>첨부이미지</span>
-                  <AttachingImgBox>
-                    <ImgCont>
-                      <ClipImg src={ClipImgPng} />
-                      <GuideMsg>Drop files here or</GuideMsg>
-                      <Label for="upload">Browse...</Label>
-                    </ImgCont>
-                    <Img
-                      type="file"
-                      id="upload"
-                      onChange={(e) => imgUploader(e.target.files)}
-                    />
-                    <ImgPreviewList>
-                      {imgPreview
-                        .map((item, idx) => {
-                          return (
-                            <ImgPreview lastThumb={8}>
-                              <ImgThumb img={item.imgThumb} />
-                              <p
-                                style={{
-                                  fontSize: "12px",
-                                  paddingLeft: "3px",
-                                  width: "max-content",
-                                  color: "#68768d",
-                                }}
-                              >
-                                {item.fileName}
-                              </p>
-                              <DeleteBtn
-                                img={DeleteBtnImg}
-                                onClick={() => deleteLoadedImgHandler(idx)}
-                              />
-                            </ImgPreview>
-                          );
-                        })
-                        .filter((item, idx) => idx <= 2)}
-                    </ImgPreviewList>
-                  </AttachingImgBox>
-                </AttachingImg>
-              </FileUploadCont>
-              <Divider />
-            </DesignSelectWrapper>
-          </SelectionsCont>
+          <Container>
+            <TitleBox>
+              <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
+              <ProgressBox>
+                <ProgressBar stage={2} />
+              </ProgressBox>
+            </TitleBox>
+            <SelectionsCont>
+              <CategoryInputBox>
+                <MenuBox
+                  arrowChangeHandler={arrowChangeHandler}
+                  isSelectBoxOpened={isSelectBoxOpened}
+                  filteredItems={filteredItems}
+                />
+              </CategoryInputBox>
+              <DesignSelectWrapper>
+                <OrderDispatch.Provider value={dispatch}>
+                  <DesginInputWrapper>
+                    <ColorInputBox>
+                      <span style={{ position: "absolute" }}>컬러*</span>
+                      <InputSelections
+                        placeholderTxt={"컬러 입력"}
+                        name={"color"}
+                        onChangeHandler={sendInputVal}
+                        isConfirmed={isConfirmed}
+                        width={"100%"}
+                        errorMsg={errorMsg}
+                      />
+                    </ColorInputBox>
+                    <QuantityInputBox>
+                      <span style={{ position: "absolute" }}>희망수량*</span>
+                      <InputSelections
+                        placeholderTxt={"희망 수량 입력"}
+                        name={"quantity"}
+                        onChangeHandler={sendInputVal}
+                        isConfirmed={isConfirmed}
+                        width={"100%"}
+                        errorMsg={errorMsg}
+                      />
+                    </QuantityInputBox>
+                  </DesginInputWrapper>
+                </OrderDispatch.Provider>
+                <SelectedTab confirmedSelections={confirmedSelections}>
+                  {confirmedSelections.map((item: any) => {
+                    return (
+                      <SelectedLabel>
+                        컬러:{item.color}, 수량:{item.quantity}
+                      </SelectedLabel>
+                    );
+                  })}
+                </SelectedTab>
+                <Selections onClick={addSelectionHandler}>컬러 추가</Selections>
+                <TopDivider />
+                <FileUploadCont>
+                  <TextBoxInput>
+                    <span>비고</span>
+                    <TextBox type="textarea" placeholder="비고 입력" />
+                  </TextBoxInput>
+                  <AttachingImg>
+                    <span>첨부이미지</span>
+                    <AttachingImgBox>
+                      <ImgCont>
+                        <ClipImg src={ClipImgPng} />
+                        <GuideMsg>Drop files here or</GuideMsg>
+                        <Label for="upload">Browse...</Label>
+                      </ImgCont>
+                      <Img
+                        type="file"
+                        id="upload"
+                        onChange={(e) => imgUploader(e.target.files)}
+                      />
+                      <ImgPreviewList>
+                        {imgPreview
+                          .map((item, idx) => {
+                            return (
+                              <ImgPreview lastThumb={8}>
+                                <ImgThumb img={item.imgThumb} />
+                                <p
+                                  style={{
+                                    fontSize: "12px",
+                                    paddingLeft: "3px",
+                                    width: "max-content",
+                                  }}
+                                >
+                                  {item.fileName}
+                                </p>
+                                <DeleteBtn
+                                  img={DeleteBtnImg}
+                                  onClick={() => deleteLoadedImgHandler(idx)}
+                                />
+                              </ImgPreview>
+                            );
+                          })
+                          .filter((item, idx) => idx <= 2)}
+                      </ImgPreviewList>
+                    </AttachingImgBox>
+                  </AttachingImg>
+                </FileUploadCont>
+                <Divider />
+              </DesignSelectWrapper>
+            </SelectionsCont>
+          </Container>
+          <Divider />
           <BtnCont>
             <ActionButton
               buttonName={"SECONDARY"}
@@ -227,7 +228,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   );
 };
 
-const Overlay = styled.div`
+const Overlay = styled.div<{ isModalOpen: boolean }>`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
@@ -235,17 +236,22 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  visibility: ${(props) => (props.isModalOpen ? "visible" : "hidden")};
 `;
 
 const OrderRequestModalLayout = styled.div`
-  margin: 64px 0;
   width: 700px;
   height: 825px;
   border-radius: 2px;
   background-color: #fff;
   z-index: 555;
-  padding: 0 40px;
   position: relative;
+`;
+
+const Container = styled.div`
+  padding: 0 40px;
+  width: 700px;
+  height: 705px;
 `;
 
 const TitleBox = styled.div`
@@ -344,11 +350,12 @@ const Selections = styled.div`
   text-align: center;
 `;
 
-const Divider = styled.div`
+const TopDivider = styled.div`
   width: 100%;
   border-bottom: 1px solid #d8d8d8;
   margin: 30px 0;
 `;
+
 const FileUploadCont = styled.div`
   //width: inherit;
   display: flex;
@@ -470,14 +477,19 @@ const GuideMsg = styled.p`
   text-align: center;
   color: #68768d;
 `;
+
+const Divider = styled.div`
+  width: 100%;
+  border-bottom: 1px solid #d8d8d8;
+`;
+
 const BtnCont = styled.div`
   display: flex;
   justify-content: flex-end;
   position: absolute;
-  //bottom: 0;
-  bottom: -10px;
+  bottom: 0;
   right: 0;
-  padding-right: 40px;
+  padding-right: 32px;
 `;
 
 export default withRouter(OrderRequestView);

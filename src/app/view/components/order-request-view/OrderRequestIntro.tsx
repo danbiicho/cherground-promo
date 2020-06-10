@@ -49,8 +49,6 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   //   };
   // }
 
-  console.log("currentState   :", state);
-
   return (
     <>
       <Overlay>

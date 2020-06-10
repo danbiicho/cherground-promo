@@ -88,10 +88,6 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
     reader.readAsDataURL(file[0]);
   };
 
-  const newName = imgPreview.map((item) => item.fileName);
-  const newUrl = imgPreview.map((item) => item.imgThumb);
-  console.log(imgPreview);
-
   return (
     <>
       <Overlay>

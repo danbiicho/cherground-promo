@@ -43,6 +43,18 @@ const reducer = (state: React.ComponentState, action) => {
         errorMsg: action.msg,
       };
 
+    case "SAVE_IMG_PREVIEW":
+      return {
+        ...state,
+        imgPreview: [...state.imgPreview, { ...action.PreviewFile }],
+      };
+
+    case "DELETE_IMG_PREVIEW":
+      return {
+        ...state,
+        imgPreview: [...action.filteredFileList],
+      };
+
     default:
       return state;
   }

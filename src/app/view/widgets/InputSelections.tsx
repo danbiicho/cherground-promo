@@ -1,11 +1,12 @@
 import React, { useState, useRef, useContext } from "react";
 import styled from "styled-components";
 import { OrderDispatch } from "app/view/components/order-request-view/OrderRequestView";
+import { RouteComponentProps } from "react-router-dom";
 
 interface InputSelectionsProps {
   placeholderTxt: string;
   name: string;
-  onChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isConfirmed?: boolean;
   width: string;
   NameCheckHandler?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -58,7 +59,7 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
           onChange={(e) => {
             props.NameCheckHandler(e);
           }}
-          // style={{ width: props.width }}
+          style={{ width: props.width }}
         />
       </FormTagInput>
     </SelectionsWrapper>

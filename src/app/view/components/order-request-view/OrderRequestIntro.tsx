@@ -136,7 +136,6 @@ const TopLayout = styled.div`
 
 const TitleBox = styled.div`
   font-family: NanumSquare;
-  height: 99px;
   font-weight: 700;
   font-size: 28px;
   color: #1e2640;

@@ -4,8 +4,9 @@ import reducer from "app/view/reducers/orderReducers";
 import InputSelections from "app/view/widgets/InputSelections";
 import MenuBox from "app/view/widgets/MenuBox";
 import ActionButton from "app/view/widgets/ActionButton";
-import ClipImgPng from "cg-promotion-attach@2x.png";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import ClipImgPng from "cg-promotion-attach@2x.png";
+import DeleteBtnImg from "cg-promotion-delete-image-idle@2x.png";
 
 export const OrderDispatch = React.createContext(null);
 
@@ -31,6 +32,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
       brand: brand,
       style: style,
     },
+    imgPreview: [],
     errorMsg: "Error!",
     confirmedSelections: [],
   };
@@ -41,6 +43,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
     confirmedSelections,
     isSelectBoxOpened,
     errorMsg,
+    imgPreview,
   } = state;
   const { color, quantity } = state.userInput;
 
@@ -70,6 +73,33 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
     });
   }, [isSelectBoxOpened]);
 
+  const imgUploader = (file: File) => {
+    const reader = new FileReader();
+
+    let url = "";
+
+    reader.addEventListener("load", (e: React.ChangeEvent<FileList>) => {
+      url = e.target.result;
+      dispatch({
+        type: "SAVE_IMG_PREVIEW",
+        PreviewFile: {
+          imgThumb: url,
+          fileName: `${file[0].name}`,
+        },
+      });
+    });
+    reader.readAsDataURL(file[0]);
+  };
+
+  const deleteLoadedImgHandler = (index: number) => {
+    const filteredFiles = imgPreview.filter((file, idx) => idx !== index);
+
+    dispatch({
+      type: "DELETE_IMG_PREVIEW",
+      filteredFileList: [...filteredFiles],
+    });
+  };
+
   return (
     <>
       <Overlay isModalOpen={ModalOpen}>
@@ -83,6 +113,9 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
             </TitleBox>
             <SelectionsCont>
               <CategoryInputBox>
+                <span style={{ marginBottom: "12px", display: "inline-block" }}>
+                  카테고리*
+                </span>
                 <MenuBox
                   arrowChangeHandler={arrowChangeHandler}
                   isSelectBoxOpened={isSelectBoxOpened}
@@ -133,14 +166,45 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                   </TextBoxInput>
                   <AttachingImg>
                     <span>첨부이미지</span>
-                    <ImgCont>
-                      <ClipImg src={ClipImgPng} />
-                      <GuideMsg>Drop files here or</GuideMsg>
-                      <Label for="upload">Browse...</Label>
-                    </ImgCont>
-                    <Img type="file" id="upload" />
+                    <AttachingImgBox>
+                      <ImgCont>
+                        <ClipImg src={ClipImgPng} />
+                        <GuideMsg>Drop files here or</GuideMsg>
+                        <Label for="upload">Browse...</Label>
+                      </ImgCont>
+                      <Img
+                        type="file"
+                        id="upload"
+                        onChange={(e) => imgUploader(e.target.files)}
+                      />
+                      <ImgPreviewList>
+                        {imgPreview
+                          .map((item, idx) => {
+                            return (
+                              <ImgPreview lastThumb={8}>
+                                <ImgThumb img={item.imgThumb} />
+                                <p
+                                  style={{
+                                    fontSize: "12px",
+                                    paddingLeft: "3px",
+                                    width: "max-content",
+                                  }}
+                                >
+                                  {item.fileName}
+                                </p>
+                                <DeleteBtn
+                                  img={DeleteBtnImg}
+                                  onClick={() => deleteLoadedImgHandler(idx)}
+                                />
+                              </ImgPreview>
+                            );
+                          })
+                          .filter((item, idx) => idx <= 2)}
+                      </ImgPreviewList>
+                    </AttachingImgBox>
                   </AttachingImg>
                 </FileUploadCont>
+                <Divider />
               </DesignSelectWrapper>
             </SelectionsCont>
           </Container>
@@ -329,6 +393,12 @@ const AttachingImg = styled.div`
   margin-left: 24px;
 `;
 
+const AttachingImgBox = styled.div`
+  height: 254px;
+  display: flex;
+  flex-direction: column;
+`;
+
 const Label = styled.label`
   width: 100px;
   height: 32px;
@@ -355,11 +425,46 @@ const Img = styled.input`
 const ImgCont = styled.div`
   border: dashed 3px #dfdfdf;
   width: auto;
+  height: 120px;
   margin-top: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const ImgPreviewList = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 20px;
+`;
+
+const ImgPreview = styled.div<{ lastThumb: number }>`
+  height: 32px;
+  margin-bottom: ${(props) => `${props.lastThumb}px`};
+  display: flex;
+  align-items: center;
+`;
+
+const DeleteBtn = styled.div`
+  width: 20px;
+  height: 20px;
+  background-image: ${(props) => `url(${props.img})`};
+  object-fit: contain;
+  object-fit: cover;
+  background-position: center;
+  background-size: 100%;
+  margin-left: auto;
+`;
+
+const ImgThumb = styled.div<{ img: string }>`
+  width: 32px;
+  height: 32px;
+  background-image: ${(props) => `url(${props.img})`};
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
 `;
 
 const ClipImg = styled.img`

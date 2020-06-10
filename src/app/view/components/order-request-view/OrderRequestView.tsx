@@ -128,6 +128,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                         placeholderTxt={"컬러 입력"}
                         name={"color"}
                         onChangeHandler={sendInputVal}
+                        isConfirmed={isConfirmed}
                         width={"100%"}
                         errorMsg={errorMsg}
                       />
@@ -444,7 +445,7 @@ const ImgPreview = styled.div<{ lastThumb: number }>`
   align-items: center;
 `;
 
-const DeleteBtn = styled.div`
+const DeleteBtn = styled.div<{ img: string }>`
   width: 20px;
   height: 20px;
   background-image: ${(props) => `url(${props.img})`};

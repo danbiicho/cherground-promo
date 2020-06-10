@@ -113,9 +113,6 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
             </TitleBox>
             <SelectionsCont>
               <CategoryInputBox>
-                <span style={{ marginBottom: "12px", display: "inline-block" }}>
-                  카테고리*
-                </span>
                 <MenuBox
                   arrowChangeHandler={arrowChangeHandler}
                   isSelectBoxOpened={isSelectBoxOpened}

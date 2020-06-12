@@ -17,7 +17,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
   const [pwErrorMsg, setPwErrorMsg] = useState<string>("");
 
   const user = viewModel.displayUser();
-  //console.log(viewModel.displayUser());
+  console.log(viewModel.displayUser());
 
   const goSignUpView = () => {
     props.history.push(`/signup`);

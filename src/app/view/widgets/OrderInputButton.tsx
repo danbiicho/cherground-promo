@@ -6,13 +6,9 @@ const OrderInputButton: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
   const [ModalOpen, setModalOpen] = useState<boolean>(true);
-  const openModalCheck = () => {
-    setModalOpen(true);
-    console.log(ModalOpen);
-  };
 
   return (
-    <OrderInputButtonLayout onClick={openModalCheck}>
+    <OrderInputButtonLayout onClick={() => props.onClick()}>
       주문 입력 +
     </OrderInputButtonLayout>
   );

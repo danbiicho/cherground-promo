@@ -55,10 +55,10 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
       type: "PROCEED_STAGE",
       stageIdx,
     });
-    if (stageIdx >= 3) {
-      props.history.push("/");
+    if (stageIdx === 2) {
+      props.history.push("/intro");
     }
-  }, []);
+  }, [stageIdx]);
 
   const userValidateHandler = useCallback(
     (e) => {
@@ -109,7 +109,7 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
             email,
             "적합하지 않은 이메일 형식입니다."
           );
-          return false;
+          //return false;
         }
 
         if (password) {
@@ -118,7 +118,6 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
             password,
             "패스워드는 4~12자의 영문 대소문자와 숫자로만 입력"
           );
-          return false;
         }
       }
       if (password !== passwordCheck) {

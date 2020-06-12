@@ -10,6 +10,7 @@ import SelectionBox from "app/view/components/orderstatus-view/SelectionBox";
 import StatusContLayout from "app/view/components/orderstatus-view/StatusContLayout";
 import ListBox from "app/view/components/asset/listBox/ListBox";
 import ListViewWrapper from "app/view/components/orderstatus-view/ListViewWrapper";
+import OrderRequestIntro from "app/view/components/order-request-view/OrderRequestIntro";
 import Tab from "app/view/widgets/Tab";
 import TabContainerLayout from "app/view/components/orderstatus-view/TabContainerLayout";
 import OrderInputButton from "app/view/widgets/OrderInputButton";
@@ -21,7 +22,7 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
   const [tabIdxChanged, setTabIdxChanged] = useState(false);
-  // const [ModalOpen, setModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [filteringText, setfilteringText] = useState<string[]>(["상태"]);
   const [filteredItems, setfilteredItems] = useState<string[]>([
     "모두1",
@@ -58,7 +59,6 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   };
 
   const [state, dispatch] = useReducer(reducer, orderState);
-  const [ModalOpen, setModalOpen] = useState<boolean>(true);
   const { brand, style } = state;
 
   const NameCheckHandler = useCallback((e) => {
@@ -82,10 +82,20 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
     });
   };
 
+  const modalOpenHandler = () => {
+    setModalOpen(true);
+  };
+
   const arr = labelText.filter((item, idx) => idx <= 4);
 
   return (
     <>
+      {
+        <OrderRequestIntro
+          isModalOpen={isModalOpen}
+          close={() => setModalOpen(false)}
+        />
+      }
       <PromotionHeader />
       {/* <Overlay isModalOpen={ModalOpen}>
         <OrderRequestModalLayout>
@@ -165,7 +175,7 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
               filteringText={filteringText}
               filteredItems={filteredItems}
             />
-            <OrderInputButton />
+            <OrderInputButton onClick={modalOpenHandler} />
           </SelectionBox>
           <ListViewWrapper>
             {!tabIdxChanged &&

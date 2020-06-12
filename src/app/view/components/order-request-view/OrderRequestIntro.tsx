@@ -4,8 +4,13 @@ import reducer from "app/view/reducers/orderReducers";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import InputSelections from "app/view/widgets/InputSelections";
 import ActionButton from "app/view/widgets/ActionButton";
+import OrderRequestView from "./OrderRequestView";
 
-const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
+interface OrderRequestIntroProps {
+  close: () => void;
+}
+
+const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
   props
 ) => {
   const orderState = {
@@ -13,9 +18,10 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
     style: "",
   };
 
+  const [stage, setStage] = useState(1);
+
   const [state, dispatch] = useReducer(reducer, orderState);
-  const [ModalOpen, setModalOpen] = useState<boolean>(true);
-  const { brand, style } = state;
+  const { brand, style } = orderState;
 
   const NameCheckHandler = useCallback((e) => {
     const { value, name } = e.target;
@@ -28,14 +34,15 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   }, []);
 
   const cancelHandler = useCallback(() => {
-    setModalOpen(false);
+    props.close();
   }, []);
 
   const nextHandler = () => {
-    props.history.push({
-      pathname: "/request",
-      state: { ...state },
-    });
+    // props.history.push({
+    //   pathname: "/request",
+    //   state: { ...state },
+    // });
+    setStage(2);
   };
 
   // let introStyle = {
@@ -52,62 +59,72 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
 
   return (
     <>
-      <Overlay isModalOpen={ModalOpen}>
-        <OrderRequestModalLayout>
-          <TopLayout>
-            <TitleBox>
-              <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
-              <ProgressBox>
-                <ProgressBar stage={1} />
-              </ProgressBox>
-            </TitleBox>
-            <IntroSection>
-              <IntroIcon />
-              <IntroBox>
-                <IntroInputCont>Cher Ground Promotion</IntroInputCont>
-                <IntroInputSub>
-                  Cher Ground로 통한 프로모션은 원하는 상품 설명과 희망 수량을
-                  입력하면 제작이 가능합니다!
-                </IntroInputSub>
-              </IntroBox>
-            </IntroSection>
-            <BrandInputBox>
-              <span style={{ fontSize: "14px" }}>브랜드명*</span>
-              <InputSelections
-                placeholderTxt={"브랜드명 입력"}
-                name={"brand"}
-                width={"100%"}
-                NameCheckHandler={NameCheckHandler}
+      <Overlay isModalOpen={props.isModalOpen}>
+        {stage === 1 && (
+          <OrderRequestModalLayout>
+            <TopLayout>
+              <TitleBox>
+                <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
+                <ProgressBox>
+                  <ProgressBar stage={1} />
+                </ProgressBox>
+              </TitleBox>
+              <IntroSection>
+                <IntroIcon />
+                <IntroBox>
+                  <IntroInputCont>Cher Ground Promotion</IntroInputCont>
+                  <IntroInputSub>
+                    Cher Ground로 통한 프로모션은 원하는 상품 설명과 희망 수량을
+                    입력하면 제작이 가능합니다!
+                  </IntroInputSub>
+                </IntroBox>
+              </IntroSection>
+              <BrandInputBox>
+                <span style={{ fontSize: "14px" }}>브랜드명*</span>
+                <InputSelections
+                  placeholderTxt={"브랜드명 입력"}
+                  name={"brand"}
+                  width={"100%"}
+                  NameCheckHandler={NameCheckHandler}
+                />
+              </BrandInputBox>
+              <StyleInputBox>
+                <span style={{ fontSize: "14px" }}>스타일명*</span>
+                <InputSelections
+                  placeholderTxt={"스타일명 입력"}
+                  name={"style"}
+                  width={"100%"}
+                  NameCheckHandler={NameCheckHandler}
+                />
+              </StyleInputBox>
+            </TopLayout>
+
+            <Divider />
+            <BtnCont>
+              <ActionButton
+                buttonName={"SECONDARY"}
+                isEnables
+                buttonText={"취소"}
+                onClick={cancelHandler}
               />
-            </BrandInputBox>
-            <StyleInputBox>
-              <span style={{ fontSize: "14px" }}>스타일명*</span>
-              <InputSelections
-                placeholderTxt={"스타일명 입력"}
-                name={"style"}
-                width={"100%"}
-                NameCheckHandler={NameCheckHandler}
+              <ActionButton
+                buttonName={"PRIMARY"}
+                isEnable={false}
+                buttonText={"다음"}
+                onClick={nextHandler}
+                styleExist={style}
+                brandExist={brand}
               />
-            </StyleInputBox>
-          </TopLayout>
-          <Divider />
-          <BtnCont>
-            <ActionButton
-              buttonName={"SECONDARY"}
-              isEnable
-              buttonText={"취소"}
-              onClick={cancelHandler}
-            />
-            <ActionButton
-              buttonName={"PRIMARY"}
-              isEnable={false}
-              buttonText={"다음"}
-              onClick={nextHandler}
-              styleExist={style}
-              brandExist={brand}
-            />
-          </BtnCont>
-        </OrderRequestModalLayout>
+            </BtnCont>
+          </OrderRequestModalLayout>
+        )}
+        {stage === 2 && (
+          <OrderRequestView
+            brand={brand}
+            style={style}
+            onClick={cancelHandler}
+          />
+        )}
       </Overlay>
     </>
   );
@@ -117,11 +134,13 @@ const Overlay = styled.div<{ isModalOpen: boolean }>`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
-  z-index: 0;
+  z-index: 666;
   display: flex;
   justify-content: center;
   align-items: center;
-  visibility: ${(props) => (props.isModalOpen ? "visible" : "hidden")};
+  position: fixed;
+  display: ${(props) => (props.isModalOpen ? "block" : "none")};
+  //visibility: ${(props) => (props.isModalOpen ? "visible" : "hidden")};
 `;
 
 const OrderRequestModalLayout = styled.div`
@@ -130,6 +149,9 @@ const OrderRequestModalLayout = styled.div`
   border-radius: 2px;
   background-color: #fff;
   z-index: 555;
+  margin: 130px auto;
+  justify-content: center;
+  align-items: center;
 `;
 
 const TopLayout = styled.div`

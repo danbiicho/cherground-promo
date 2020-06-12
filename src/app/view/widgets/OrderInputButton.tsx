@@ -5,10 +5,10 @@ import { RouteComponentProps } from "react-router-dom";
 const OrderInputButton: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
-  const [ModalOpen, setModalOpen] = useState<boolean>(false);
+  const [ModalOpen, setModalOpen] = useState<boolean>(true);
   const openModalCheck = () => {
     setModalOpen(true);
-    console.log(seModalOpen);
+    console.log(ModalOpen);
   };
 
   return (

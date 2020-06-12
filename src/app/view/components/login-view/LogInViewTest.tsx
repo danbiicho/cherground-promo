@@ -24,7 +24,6 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
   const { userName, userPw, idErrorMsg, pwErrorMsg } = state;
 
   const user = viewModel.displayUser();
-  //console.log(viewModel.displayUser());
 
   const goSignUpView = () => {
     props.history.push(`/signup`);
@@ -55,7 +54,7 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
     });
   }, []);
 
-  const loginHandler = useCallback(() => {
+  const loginHandler = () => {
     if (userName !== user[0].id) {
       dispatch({
         type: "ADD_ID_ERROR_MSG",
@@ -71,11 +70,11 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
     }
 
     if (userName === user[0].id && userPw === user[0].password) {
-      props.history.push(`/`);
+      props.history.push("/order");
     } else {
       console.log("아이디와 비밀번호를 확인해주세요");
     }
-  }, []);
+  };
 
   return (
     <LogInViewWrapper>

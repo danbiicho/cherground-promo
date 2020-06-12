@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import DropDownBox from "app/view/widgets/DropDownBox";
 import SearchBox from "app/view/widgets/SearchBox";
@@ -17,6 +17,7 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
   const [tabIdxChanged, setTabIdxChanged] = useState(false);
+  // const [ModalOpen, setModalOpen] = useState<boolean>(false);
   const [filteringText, setfilteringText] = useState<string[]>(["상태"]);
   const [filteredItems, setfilteredItems] = useState<string[]>([
     "모두1",
@@ -46,6 +47,11 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
     setTabIdxChanged(!tabIdxChanged);
     setactiveTab(!activeTab);
   };
+
+  // const openModal = useCallback(() => {
+  //   console.log("asdf");
+  //   //setModalOpen(true);
+  // }, []);
 
   const arr = labelText.filter((item, idx) => idx <= 4);
 

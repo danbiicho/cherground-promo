@@ -50,7 +50,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     }
 
     if (userNameVal === user[0].id && password === user[0].password) {
-      props.history.push(`/`);
+      props.history.push(`/order`);
     } else {
       console.log("아이디와 비밀번호를 확인해주세요");
     }

@@ -14,6 +14,7 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   };
 
   const [state, dispatch] = useReducer(reducer, orderState);
+  const [ModalOpen, setModalOpen] = useState<boolean>(true);
   const { brand, style } = state;
 
   const NameCheckHandler = useCallback((e) => {
@@ -27,7 +28,7 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   }, []);
 
   const cancelHandler = useCallback(() => {
-    console.log(state.style);
+    setModalOpen(false);
   }, []);
 
   const nextHandler = () => {
@@ -51,7 +52,7 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
 
   return (
     <>
-      <Overlay>
+      <Overlay isModalOpen={ModalOpen}>
         <OrderRequestModalLayout>
           <TopLayout>
             <TitleBox>
@@ -112,7 +113,7 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   );
 };
 
-const Overlay = styled.div`
+const Overlay = styled.div<{ isModalOpen: boolean }>`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
@@ -120,6 +121,7 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  visibility: ${(props) => (props.isModalOpen ? "visible" : "hidden")};
 `;
 
 const OrderRequestModalLayout = styled.div`

@@ -4,6 +4,7 @@ import styled from "styled-components";
 interface InputBoxProps {
   placeholderTxt: string;
   userPwCheckHandler?: (parameter: any) => void;
+  userNameCheckHandler?: (parameter: any) => void;
   name:
     | "userNameVal"
     | "phone"
@@ -39,9 +40,9 @@ const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
         onFocus={() => onFocusHandler()}
         onBlur={(e) => onBlurHandler(e)}
         onChange={(e) => {
-          // if (props.userNameCheckHandler) {
-          //   props.userNameCheckHandler(e);
-          // }
+          if (props.userNameCheckHandler) {
+            props.userNameCheckHandler(e);
+          }
           if (props.userPwCheckHandler) {
             props.userPwCheckHandler(e);
           } else {

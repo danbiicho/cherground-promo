@@ -11,8 +11,8 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     "UserViewModel"
   );
 
-  const [userName, setUserName] = useState<string>("");
-  const [userPw, setUserPw] = useState<string>("");
+  const [userNameVal, setUserName] = useState<string>("");
+  const [password, setUserPw] = useState<string>("");
   const [idErrorMsg, setIdErrorMsg] = useState<string>("");
   const [pwErrorMsg, setPwErrorMsg] = useState<string>("");
 
@@ -32,24 +32,24 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
 
   const userNameCheckHandler = (e: any) => {
     setUserName(e.target.value);
-    console.log("UserName", userName);
+    console.log("UserName", userNameVal);
   };
 
   const userPwCheckHandler = (e: any) => {
     setUserPw(e.target.value);
-    console.log("bbb", userPw);
+    console.log("bbb", password);
   };
 
   const loginHandler = () => {
-    if (userName !== user[0].id) {
+    if (userNameVal !== user[0].id) {
       setIdErrorMsg("아이디가 일치하지 않습니다.");
     }
 
-    if (userPw !== user[0].password) {
+    if (password !== user[0].password) {
       setPwErrorMsg("비밀번호가 일치하지 않습니다.");
     }
 
-    if (userName === user[0].id && userPw === user[0].password) {
+    if (userNameVal === user[0].id && password === user[0].password) {
       props.history.push(`/`);
     } else {
       console.log("아이디와 비밀번호를 확인해주세요");
@@ -63,7 +63,8 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
         <InputBox
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
-          name={"userId"}
+          userNameCheckHandler={userNameCheckHandler}
+          name={"userNameVal"}
         />
 
         <IdErrorMsg hasError={idErrorMsg}>{idErrorMsg}</IdErrorMsg>
@@ -71,7 +72,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
           userPwCheckHandler={userPwCheckHandler}
-          name={"userPw"}
+          name={"password"}
         />
         <PwErrorMsg hasError={pwErrorMsg}>{pwErrorMsg}</PwErrorMsg>
         <PasswordFind>비밀번호 찾기</PasswordFind>

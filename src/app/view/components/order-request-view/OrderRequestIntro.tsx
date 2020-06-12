@@ -98,7 +98,6 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
                 />
               </StyleInputBox>
             </TopLayout>
-
             <Divider />
             <BtnCont>
               <ActionButton

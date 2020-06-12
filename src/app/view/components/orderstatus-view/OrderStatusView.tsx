@@ -40,46 +40,31 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
     "제작",
     "완료",
   ];
-  // 이 경우 배열 대신 객체 형태로 받는 것이 좋다.
-  // 실제 데이터 호출을 할 때는 완료인 것과 완료 아닌 것 구분 해서 온다.
-  // 완료 아닌 것 map을 돌리면서 label의 text만 들어가서 렌더링 되도록.
-
-  const selectItems = (item: string, idx: number) => {
-    setfilteredItems([...filteredItems], filteredItems[idx]);
-  };
-
-  const tabChangeHandler = (status: string) => {
-    setTabIdxChanged(!tabIdxChanged);
-    setactiveTab(!activeTab);
-  };
-
   const orderState = {
     brand: "",
     style: "",
   };
 
+  const [selectedIdx, setSelectedIdx] = useState(0);
   const [state, dispatch] = useReducer(reducer, orderState);
-  const { brand, style } = state;
+  const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
 
-  const NameCheckHandler = useCallback((e) => {
-    const { value, name } = e.target;
+  const arrowChangeHandler = () => {
+    setIsSelectBoxOpend(!isSelectBoxOpend);
+  };
+  // 이 경우 배열 대신 객체 형태로 받는 것이 좋다.
+  // 실제 데이터 호출을 할 때는 완료인 것과 완료 아닌 것 구분 해서 온다.
+  // 완료 아닌 것 map을 돌리면서 label의 text만 들어가서 렌더링 되도록.
 
-    dispatch({
-      type: "NAME_INFO",
-      name,
-      value,
-    });
-  }, []);
+  const selectItems = (item: string, idx: number) => {
+    console.log(idx);
+    setSelectedIdx(idx);
+    setIsSelectBoxOpend(false);
+  };
 
-  const cancelHandler = useCallback(() => {
-    setModalOpen(false);
-  }, []);
-
-  const nextHandler = () => {
-    props.history.push({
-      pathname: "/request",
-      state: { ...state },
-    });
+  const tabChangeHandler = (status: string) => {
+    setTabIdxChanged(!tabIdxChanged);
+    setactiveTab(!activeTab);
   };
 
   const modalOpenHandler = () => {
@@ -97,63 +82,6 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
         />
       }
       <PromotionHeader />
-      {/* <Overlay isModalOpen={ModalOpen}>
-        <OrderRequestModalLayout>
-          <TopLayout>
-            <TitleBox>
-              <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
-              <ProgressBox>
-                <ProgressBar stage={1} />
-              </ProgressBox>
-            </TitleBox>
-            <IntroSection>
-              <IntroIcon />
-              <IntroBox>
-                <IntroInputCont>Cher Ground Promotion</IntroInputCont>
-                <IntroInputSub>
-                  Cher Ground로 통한 프로모션은 원하는 상품 설명과 희망 수량을
-                  입력하면 제작이 가능합니다!
-                </IntroInputSub>
-              </IntroBox>
-            </IntroSection>
-            <BrandInputBox>
-              <span style={{ fontSize: "14px" }}>브랜드명*</span>
-              <InputSelections
-                placeholderTxt={"브랜드명 입력"}
-                name={"brand"}
-                width={"100%"}
-                NameCheckHandler={NameCheckHandler}
-              />
-            </BrandInputBox>
-            <StyleInputBox>
-              <span style={{ fontSize: "14px" }}>스타일명*</span>
-              <InputSelections
-                placeholderTxt={"스타일명 입력"}
-                name={"style"}
-                width={"100%"}
-                NameCheckHandler={NameCheckHandler}
-              />
-            </StyleInputBox>
-          </TopLayout>
-          <Divider />
-          <BtnCont>
-            <ActionButton
-              buttonName={"SECONDARY"}
-              isEnable
-              buttonText={"취소"}
-              onClick={cancelHandler}
-            />
-            <ActionButton
-              buttonName={"PRIMARY"}
-              isEnable={false}
-              buttonText={"다음"}
-              onClick={nextHandler}
-              styleExist={style}
-              brandExist={brand}
-            />
-          </BtnCont>
-        </OrderRequestModalLayout> */}
-
       <OrderStatusViewLayout>
         <TitleContLayout>제작 주문</TitleContLayout>
         <TabContainerLayout>
@@ -171,9 +99,12 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
         <StatusContLayout>
           <SelectionBox>
             <DropDownBox
+              selectedIdx={selectedIdx}
               selectItems={selectItems}
               filteringText={filteringText}
               filteredItems={filteredItems}
+              isSelectBoxOpend={isSelectBoxOpend}
+              arrowChangeHandler={arrowChangeHandler}
             />
             <OrderInputButton onClick={modalOpenHandler} />
           </SelectionBox>

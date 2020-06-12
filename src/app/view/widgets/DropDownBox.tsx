@@ -5,35 +5,30 @@ import { IndexAttachmentList } from "aws-sdk/clients/clouddirectory";
 interface DropDownBoxProps {
   filteringText: any;
   filteredItems: any;
+  selectedIdx: number;
   selectItems: (item: string, idx: number) => void;
+  isSelectBoxOpend: boolean;
+  arrowChangeHandler: () => void;
 }
 
 const DropDownBox: React.FunctionComponent<DropDownBoxProps> = (props) => {
   // prop box에 나오는 값들을 부모에서부터 정의하기. 그럼 재사용성이 높아진다.
-  const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
-
-  const itemSelectHandler = () => {
-    //setfilteringIdx((filteringIdx) => (filteringIdx += 1));
-  };
-
-  const arrowChangeHandler = () => {
-    setIsSelectBoxOpend(!isSelectBoxOpend);
-  };
 
   const closeBox = () => {
     alert("closing box");
   };
 
+  const { isSelectBoxOpend, arrowChangeHandler } = props;
+
   return (
     <TotalCont isChanged={isSelectBoxOpend}>
       <DropDownBoxWrapper onClick={arrowChangeHandler}>
-        <DropDownBoxCont
-          onClick={itemSelectHandler}
-          isChanged={isSelectBoxOpend}
-        >
+        <DropDownBoxCont isChanged={isSelectBoxOpend}>
           <DropDownSelectors>
             {props.filteringText[0]}:
-            <FilteredItems>{props.filteredItems[0]}</FilteredItems>
+            <FilteredItems>
+              {props.filteredItems[props.selectedIdx]}
+            </FilteredItems>
           </DropDownSelectors>
         </DropDownBoxCont>
         <ArrowCont onClick={arrowChangeHandler} isChanged={isSelectBoxOpend}>

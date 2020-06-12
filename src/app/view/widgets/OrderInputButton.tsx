@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { RouteComponentProps } from "react-router-dom";
 
-const OrderInputButton = () => {
-  return <OrderInputButtonLayout>주문 입력 +</OrderInputButtonLayout>;
+const OrderInputButton: React.FunctionComponent<RouteComponentProps> = (
+  props
+) => {
+  const [ModalOpen, setModalOpen] = useState<boolean>(false);
+  const openModalCheck = () => {
+    setModalOpen(true);
+    console.log(seModalOpen);
+  };
+
+  return (
+    <OrderInputButtonLayout onClick={openModalCheck}>
+      주문 입력 +
+    </OrderInputButtonLayout>
+  );
 };
 
 const OrderInputButtonLayout = styled.button`

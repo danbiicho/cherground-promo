@@ -15,7 +15,7 @@ const App: React.FunctionComponent = () => {
     <BrowserRouter>
       <GlobalStyle />
       <Switch>
-        <Route exact path="/" component={SignUpViewPr} />
+        <Route exact path="/" component={LogInView} />
         <Route exact path="/intro" component={OrderRequestIntro} />
         <Route exact path="/request" component={OrderRequestView} />
         <Route path="/login" exact component={LogInView} />

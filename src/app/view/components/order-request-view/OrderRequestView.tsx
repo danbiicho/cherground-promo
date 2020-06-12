@@ -73,12 +73,12 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
     });
   }, [isSelectBoxOpened]);
 
-  const imgUploader = (file: File) => {
+  const imgUploader = (file: FileList) => {
     const reader = new FileReader();
 
-    let url = "";
+    let url: string = "";
 
-    reader.addEventListener("load", (e: React.ChangeEvent<FileList>) => {
+    reader.addEventListener("load", (e: ProgressEvent<FileReader>) => {
       url = e.target.result;
       dispatch({
         type: "SAVE_IMG_PREVIEW",
@@ -92,7 +92,9 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   };
 
   const deleteLoadedImgHandler = (index: number) => {
-    const filteredFiles = imgPreview.filter((file, idx) => idx !== index);
+    const filteredFiles = imgPreview.filter(
+      (file: any, idx: number) => idx !== index
+    );
 
     dispatch({
       type: "DELETE_IMG_PREVIEW",
@@ -177,7 +179,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                       />
                       <ImgPreviewList>
                         {imgPreview
-                          .map((item, idx) => {
+                          .map((item: any, idx: number) => {
                             return (
                               <ImgPreview lastThumb={8}>
                                 <ImgThumb img={item.imgThumb} />
@@ -197,7 +199,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                               </ImgPreview>
                             );
                           })
-                          .filter((item, idx) => idx <= 2)}
+                          .filter((item: any, idx: number) => idx <= 2)}
                       </ImgPreviewList>
                     </AttachingImgBox>
                   </AttachingImg>

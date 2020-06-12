@@ -4,6 +4,7 @@ import reducer from "app/view/reducers/orderReducers";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import InputSelections from "app/view/widgets/InputSelections";
 import ActionButton from "app/view/widgets/ActionButton";
+import OrderRequestView from "./OrderRequestView";
 
 const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   props
@@ -12,6 +13,8 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
     brand: "",
     style: "",
   };
+
+  const [stage, setStage] = useState(1);
 
   const [state, dispatch] = useReducer(reducer, orderState);
   const [ModalOpen, setModalOpen] = useState<boolean>(true);
@@ -32,10 +35,11 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   }, []);
 
   const nextHandler = () => {
-    props.history.push({
-      pathname: "/request",
-      state: { ...state },
-    });
+    // props.history.push({
+    //   pathname: "/request",
+    //   state: { ...state },
+    // });
+    setStage(2);
   };
 
   // let introStyle = {
@@ -54,47 +58,50 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
     <>
       <Overlay isModalOpen={ModalOpen}>
         <OrderRequestModalLayout>
-          <TopLayout>
-            <TitleBox>
-              <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
-              <ProgressBox>
-                <ProgressBar stage={1} />
-              </ProgressBox>
-            </TitleBox>
-            <IntroSection>
-              <IntroIcon />
-              <IntroBox>
-                <IntroInputCont>Cher Ground Promotion</IntroInputCont>
-                <IntroInputSub>
-                  Cher Ground로 통한 프로모션은 원하는 상품 설명과 희망 수량을
-                  입력하면 제작이 가능합니다!
-                </IntroInputSub>
-              </IntroBox>
-            </IntroSection>
-            <BrandInputBox>
-              <span style={{ fontSize: "14px" }}>브랜드명*</span>
-              <InputSelections
-                placeholderTxt={"브랜드명 입력"}
-                name={"brand"}
-                width={"100%"}
-                NameCheckHandler={NameCheckHandler}
-              />
-            </BrandInputBox>
-            <StyleInputBox>
-              <span style={{ fontSize: "14px" }}>스타일명*</span>
-              <InputSelections
-                placeholderTxt={"스타일명 입력"}
-                name={"style"}
-                width={"100%"}
-                NameCheckHandler={NameCheckHandler}
-              />
-            </StyleInputBox>
-          </TopLayout>
+          {stage === 1 && (
+            <TopLayout>
+              <TitleBox>
+                <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
+                <ProgressBox>
+                  <ProgressBar stage={1} />
+                </ProgressBox>
+              </TitleBox>
+              <IntroSection>
+                <IntroIcon />
+                <IntroBox>
+                  <IntroInputCont>Cher Ground Promotion</IntroInputCont>
+                  <IntroInputSub>
+                    Cher Ground로 통한 프로모션은 원하는 상품 설명과 희망 수량을
+                    입력하면 제작이 가능합니다!
+                  </IntroInputSub>
+                </IntroBox>
+              </IntroSection>
+              <BrandInputBox>
+                <span style={{ fontSize: "14px" }}>브랜드명*</span>
+                <InputSelections
+                  placeholderTxt={"브랜드명 입력"}
+                  name={"brand"}
+                  width={"100%"}
+                  NameCheckHandler={NameCheckHandler}
+                />
+              </BrandInputBox>
+              <StyleInputBox>
+                <span style={{ fontSize: "14px" }}>스타일명*</span>
+                <InputSelections
+                  placeholderTxt={"스타일명 입력"}
+                  name={"style"}
+                  width={"100%"}
+                  NameCheckHandler={NameCheckHandler}
+                />
+              </StyleInputBox>
+            </TopLayout>
+          )}
+          {stage === 2 && <OrderRequestView brand={brand} style={style} />}
           <Divider />
           <BtnCont>
             <ActionButton
               buttonName={"SECONDARY"}
-              isEnable
+              isEnables
               buttonText={"취소"}
               onClick={cancelHandler}
             />

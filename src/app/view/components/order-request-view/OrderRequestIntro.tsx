@@ -6,7 +6,11 @@ import InputSelections from "app/view/widgets/InputSelections";
 import ActionButton from "app/view/widgets/ActionButton";
 import OrderRequestView from "./OrderRequestView";
 
-const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
+interface OrderRequestIntroProps {
+  close: () => void;
+}
+
+const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
   props
 ) => {
   const orderState = {
@@ -17,8 +21,7 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   const [stage, setStage] = useState(1);
 
   const [state, dispatch] = useReducer(reducer, orderState);
-  const [ModalOpen, setModalOpen] = useState<boolean>(true);
-  const { brand, style } = state;
+  const { brand, style } = orderState;
 
   const NameCheckHandler = useCallback((e) => {
     const { value, name } = e.target;
@@ -31,7 +34,7 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
   }, []);
 
   const cancelHandler = useCallback(() => {
-    setModalOpen(false);
+    props.close();
   }, []);
 
   const nextHandler = () => {
@@ -56,9 +59,9 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
 
   return (
     <>
-      <Overlay isModalOpen={ModalOpen}>
-        <OrderRequestModalLayout>
-          {stage === 1 && (
+      <Overlay isModalOpen={props.isModalOpen}>
+        {stage === 1 && (
+          <OrderRequestModalLayout>
             <TopLayout>
               <TitleBox>
                 <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
@@ -95,26 +98,33 @@ const OrderRequestIntro: React.FunctionComponent<RouteComponentProps> = (
                 />
               </StyleInputBox>
             </TopLayout>
-          )}
-          {stage === 2 && <OrderRequestView brand={brand} style={style} />}
-          <Divider />
-          <BtnCont>
-            <ActionButton
-              buttonName={"SECONDARY"}
-              isEnables
-              buttonText={"취소"}
-              onClick={cancelHandler}
-            />
-            <ActionButton
-              buttonName={"PRIMARY"}
-              isEnable={false}
-              buttonText={"다음"}
-              onClick={nextHandler}
-              styleExist={style}
-              brandExist={brand}
-            />
-          </BtnCont>
-        </OrderRequestModalLayout>
+
+            <Divider />
+            <BtnCont>
+              <ActionButton
+                buttonName={"SECONDARY"}
+                isEnables
+                buttonText={"취소"}
+                onClick={cancelHandler}
+              />
+              <ActionButton
+                buttonName={"PRIMARY"}
+                isEnable={false}
+                buttonText={"다음"}
+                onClick={nextHandler}
+                styleExist={style}
+                brandExist={brand}
+              />
+            </BtnCont>
+          </OrderRequestModalLayout>
+        )}
+        {stage === 2 && (
+          <OrderRequestView
+            brand={brand}
+            style={style}
+            onClick={cancelHandler}
+          />
+        )}
       </Overlay>
     </>
   );
@@ -124,11 +134,13 @@ const Overlay = styled.div<{ isModalOpen: boolean }>`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
-  z-index: 0;
+  z-index: 666;
   display: flex;
   justify-content: center;
   align-items: center;
-  visibility: ${(props) => (props.isModalOpen ? "visible" : "hidden")};
+  position: fixed;
+  display: ${(props) => (props.isModalOpen ? "block" : "none")};
+  //visibility: ${(props) => (props.isModalOpen ? "visible" : "hidden")};
 `;
 
 const OrderRequestModalLayout = styled.div`
@@ -137,6 +149,9 @@ const OrderRequestModalLayout = styled.div`
   border-radius: 2px;
   background-color: #fff;
   z-index: 555;
+  margin: 130px auto;
+  justify-content: center;
+  align-items: center;
 `;
 
 const TopLayout = styled.div`

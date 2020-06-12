@@ -45,7 +45,7 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   // 완료 아닌 것 map을 돌리면서 label의 text만 들어가서 렌더링 되도록.
 
   const selectItems = (item: string, idx: number) => {
-    alert(`${item} ${idx + 1} is selected!`);
+    setfilteredItems([...filteredItems], filteredItems[idx]);
   };
 
   const tabChangeHandler = (status: string) => {

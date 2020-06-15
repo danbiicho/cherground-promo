@@ -201,10 +201,10 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
                   </AttachingImgBox>
                 </AttachingImg>
               </FileUploadCont>
-              <Divider />
             </DesignSelectWrapper>
           </SelectionsCont>
         </Container>
+        <Divider />
         <BtnCont>
           <ActionButton
             buttonName={"SECONDARY"}
@@ -470,7 +470,7 @@ const GuideMsg = styled.p`
 const Divider = styled.div`
   width: 100%;
   border-bottom: 1px solid #d8d8d8;
-  margin-top: 20px;
+  margin-top: 40px;
 `;
 
 const BtnCont = styled.div`

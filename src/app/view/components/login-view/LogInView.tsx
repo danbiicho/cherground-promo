@@ -11,13 +11,13 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     "UserViewModel"
   );
 
-  const [userNameVal, setUserName] = useState<string>("");
-  const [password, setUserPw] = useState<string>("");
+  const [userIdVal, setUserId] = useState<string>("");
+  const [userPwVal, setUserPw] = useState<string>("");
   const [idErrorMsg, setIdErrorMsg] = useState<string>("");
   const [pwErrorMsg, setPwErrorMsg] = useState<string>("");
 
-  const user = viewModel.displayUser();
-  console.log(viewModel.displayUser());
+  //const user = viewModel.displayUser();
+  //console.log(viewModel.displayUser());
 
   const goSignUpView = () => {
     props.history.push(`/signup`);
@@ -30,30 +30,40 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     return false;
   };
 
+<<<<<<< HEAD
   const userNameCheckHandler = (e: any) => {
     setUserName(e.target.value);
     console.log("UserIdval", userNameVal);
+=======
+  const userIdCheckHandler = (e: any) => {
+    setUserId(e.target.value);
+    console.log("Email:  ", userIdVal);
+>>>>>>> master
   };
 
-  const userPwCheckHandler = (e: any) => {
+  const userPwValCheckHandler = (e: any) => {
     setUserPw(e.target.value);
+<<<<<<< HEAD
     console.log("UserPwVal", password);
+=======
+    console.log("Password:  ", userPwVal);
+>>>>>>> master
   };
 
   const loginHandler = () => {
-    if (userNameVal !== user[0].id) {
-      setIdErrorMsg("아이디가 일치하지 않습니다.");
-    }
-
-    if (password !== user[0].password) {
-      setPwErrorMsg("비밀번호가 일치하지 않습니다.");
-    }
-
-    if (userNameVal === user[0].id && password === user[0].password) {
-      props.history.push(`/order`);
-    } else {
-      console.log("아이디와 비밀번호를 확인해주세요");
-    }
+    console.log(viewModel.displayUser());
+    //console.log(response.data)
+    // if (userIdVal !== response.email) {
+    //   setIdErrorMsg("아이디가 일치하지 않습니다.");
+    // }
+    // if (userPwVal !== user[0].password) {
+    //   setPwErrorMsg("비밀번호가 일치하지 않습니다.");
+    // }
+    // if (userIdVal === user[0].id && userPwVal === user[0].password) {
+    //   props.history.push(`/order`);
+    // } else {
+    //   console.log("아이디와 비밀번호를 확인해주세요");
+    // }
   };
 
   return (
@@ -63,16 +73,26 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
         <InputBox
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
+<<<<<<< HEAD
           userNameCheckHandler={userNameCheckHandler}
           name={"userIdval"}
+=======
+          userIdCheckHandler={userIdCheckHandler}
+          user={"userIdVal"}
+>>>>>>> master
         />
 
         <IdErrorMsg hasError={idErrorMsg}>{idErrorMsg}</IdErrorMsg>
         <InputBox
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
+<<<<<<< HEAD
           userPwCheckHandler={userPwCheckHandler}
           name={"userPwVal"}
+=======
+          userPwValCheckHandler={userPwValCheckHandler}
+          user={"userPwVal"}
+>>>>>>> master
         />
         <PwErrorMsg hasError={pwErrorMsg}>{pwErrorMsg}</PwErrorMsg>
         <PasswordFind>비밀번호 찾기</PasswordFind>

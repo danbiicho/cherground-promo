@@ -11,7 +11,7 @@ export default class UserViewModelImpl implements UserViewModel {
     this.ucGetUser = ucGetUser;
   }
 
-  displayUser(): User[] {
+  displayUser() {
     return this.ucGetUser.execute();
   }
 }

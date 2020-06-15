@@ -1,12 +1,12 @@
 const reducer = (state, action) => {
   switch (action.type) {
-    case "NAME_CHECK":
+    case "ID_CHECK":
       return {
         ...state,
         userName: action.value,
       };
 
-    case "PASSWORD_CHECK":
+    case "PASSWORDVALUE_CHECK":
       return {
         ...state,
         userPw: action.value,

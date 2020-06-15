@@ -36,20 +36,20 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
     return false;
   }, []);
 
-  const userNameCheckHandler = useCallback((e) => {
+  const userIdCheckHandler = useCallback((e) => {
     const { value } = e.target;
 
     dispatch({
-      type: "NAME_CHECK",
+      type: "ID_CHECK",
       value,
     });
   }, []);
 
-  const userPwCheckHandler = useCallback((e) => {
+  const userPwValCheckHandler = useCallback((e) => {
     const { value } = e.target;
 
     dispatch({
-      type: "PASSWORD_CHECK",
+      type: "PASSWORDVALUE_CHECK",
       value,
     });
   }, []);
@@ -83,7 +83,7 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
         <InputBox
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
-          userNameCheckHandler={userNameCheckHandler}
+          userIdCheckHandler={userIdCheckHandler}
           name={"userNameVal"}
         />
 
@@ -91,7 +91,7 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
         <InputBox
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
-          userPwCheckHandler={userPwCheckHandler}
+          userPwValCheckHandler={userPwValCheckHandler}
           name={"password"}
         />
         <PwErrorMsg hasError={pwErrorMsg}>{pwErrorMsg}</PwErrorMsg>

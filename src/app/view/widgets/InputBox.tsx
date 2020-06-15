@@ -19,6 +19,7 @@ interface InputBoxProps {
   user?: "userIdVal" | "userPwVal";
   userIdCheckHandler?: (parameter: any) => void;
   userPwValCheckHandler?: (parameter: any) => void;
+  onBlurRemoveErrorMsg: () => void;
 }
 
 const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {

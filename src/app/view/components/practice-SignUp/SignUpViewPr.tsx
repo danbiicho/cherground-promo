@@ -17,6 +17,7 @@ export const UserDispatch = React.createContext(null);
 const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
   const initialState = {
     stageIdx: 1,
+    isError: false,
     errorMsg: "",
     userInput: {
       userNameVal: "",
@@ -31,7 +32,7 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
   //여기서의 state는 전역이다.
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { stageIdx, errorMsg } = state;
+  const { stageIdx, isError, errorMsg } = state;
   const {
     userNameVal,
     phone,
@@ -62,18 +63,17 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
         if (!userNameVal && !phone && !password) {
           dispatch({
             type: "ADD_ERROR_MSG",
+            isError: true,
             message: "필수 입력 정보입니다.",
           });
         }
-
-        if (!password) {
-          console.log("비밀번호를 입력해주세요");
-        }
-
-        //return false;
       } else {
         let inputName = e.target.name;
         const { value } = e.target;
+        dispatch({
+          type: "ADD_ERROR_MSG",
+          isError: false,
+        });
 
         dispatch({
           type: "ADD_USER_INFO",
@@ -89,22 +89,30 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
           );
         }
 
-        if (password) {
+        if (password || passwordCheck) {
           !validationCheckHandler(
             IDPWCheck,
             password,
             "패스워드는 4~12자의 영문 대소문자와 숫자로만 입력"
           );
-          if (password !== passwordCheck) {
-            dispatch({
-              type: "ADD_ERROR_MSG",
-              message: "비밀번호가 일치하지 않습니다.",
-            });
+          if (password && passwordCheck) {
+            if (password !== passwordCheck) {
+              dispatch({
+                type: "ADD_ERROR_MSG",
+                isError: true,
+                message: "비밀번호가 일치하지 않습니다.",
+              });
+            } else {
+              dispatch({
+                type: "ADD_ERROR_MSG",
+                isError: false,
+              });
+            }
           }
         }
       }
     },
-    [name, email, password]
+    [name, email, password, passwordCheck]
   );
 
   const validationCheckHandler = useCallback(
@@ -114,12 +122,23 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
       } else {
         dispatch({
           type: "ADD_ERROR_MSG",
+          isError: true,
           message,
         });
       }
     },
     []
   );
+
+  const onBlurRemoveErrorMsg = () => {
+    if (errorMsg) {
+      dispatch({
+        type: "ADD_ERROR_MSG",
+        isError: true,
+        message: "",
+      });
+    }
+  };
 
   const linkToMain = () => {
     props.history.push("/order");
@@ -153,6 +172,7 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
         headerTxt={txtProps.headerTxt[stageIdx]}
         descTxt={txtProps.descTxt[stageIdx]}
         userValidateHandler={(e) => userValidateHandler(e)}
+        onBlurRemoveErrorMsg={onBlurRemoveErrorMsg}
       />
       <ErrorMsg hasError={errorMsg}>{errorMsg}</ErrorMsg>
       {stageIdx <= 2 && (

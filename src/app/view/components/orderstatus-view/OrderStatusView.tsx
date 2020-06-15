@@ -70,6 +70,9 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   const modalOpenHandler = () => {
     setModalOpen(true);
   };
+  const closeBox = () => {
+    setIsSelectBoxOpend(false);
+  };
 
   const arr = labelText.filter((item, idx) => idx <= 4);
 
@@ -99,6 +102,7 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
         <StatusContLayout>
           <SelectionBox>
             <DropDownBox
+              closeBox={closeBox}
               selectedIdx={selectedIdx}
               selectItems={selectItems}
               filteringText={filteringText}
@@ -106,6 +110,7 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
               isSelectBoxOpend={isSelectBoxOpend}
               arrowChangeHandler={arrowChangeHandler}
             />
+            <OverlayBox onClick={closeBox} />
             <OrderInputButton onClick={modalOpenHandler} />
           </SelectionBox>
           <ListViewWrapper>
@@ -227,4 +232,8 @@ const BtnCont = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 0 32px 0 0;
+`;
+
+const OverlayBox = styled.div`
+  width: 300px;
 `;

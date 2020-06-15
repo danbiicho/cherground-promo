@@ -34,13 +34,6 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
     }
   };
 
-  const userNameCheckHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(e.target.value);
-    if (!e.target.value) {
-      console.log("이름을 입력해주세요");
-    }
-  };
-
   const userValidateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const IDPWCheck = /^[a-zA-Z0-9]{4,12}$/;
     const EmailCheck = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;

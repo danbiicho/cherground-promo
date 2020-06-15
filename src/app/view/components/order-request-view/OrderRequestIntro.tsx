@@ -1,7 +1,7 @@
 import React, { useReducer, useCallback, useState } from "react";
 import styled from "styled-components";
 import reducer from "app/view/reducers/orderReducers";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+// import { RouteComponentProps, withRouter } from "react-router-dom";
 import InputSelections from "app/view/widgets/InputSelections";
 import ActionButton from "app/view/widgets/ActionButton";
 import OrderRequestView from "./OrderRequestView";
@@ -22,6 +22,7 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
 
   const [state, dispatch] = useReducer(reducer, orderState);
   const { brand, style } = orderState;
+  const { errorMsg } = state;
 
   const NameCheckHandler = useCallback((e) => {
     const { value, name } = e.target;
@@ -86,6 +87,7 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
                   name={"brand"}
                   width={"100%"}
                   NameCheckHandler={NameCheckHandler}
+                  errorMsg={errorMsg}
                 />
               </BrandInputBox>
               <StyleInputBox>
@@ -95,6 +97,7 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
                   name={"style"}
                   width={"100%"}
                   NameCheckHandler={NameCheckHandler}
+                  errorMsg={errorMsg}
                 />
               </StyleInputBox>
             </TopLayout>
@@ -240,4 +243,4 @@ const BtnCont = styled.div`
   padding: 0 32px 0 0;
 `;
 
-export default withRouter(OrderRequestIntro);
+export default OrderRequestIntro;

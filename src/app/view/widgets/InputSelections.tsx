@@ -1,7 +1,6 @@
 import React, { useState, useRef, useContext } from "react";
 import styled from "styled-components";
 import { OrderDispatch } from "app/view/components/order-request-view/OrderRequestView";
-import { RouteComponentProps } from "react-router-dom";
 
 interface InputSelectionsProps {
   placeholderTxt: string;

@@ -30,14 +30,24 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     return false;
   };
 
+<<<<<<< HEAD
+  const userNameCheckHandler = (e: any) => {
+    setUserName(e.target.value);
+    console.log("UserIdval", userNameVal);
+=======
   const userIdCheckHandler = (e: any) => {
     setUserId(e.target.value);
     console.log("Email:  ", userIdVal);
+>>>>>>> master
   };
 
   const userPwValCheckHandler = (e: any) => {
     setUserPw(e.target.value);
+<<<<<<< HEAD
+    console.log("UserPwVal", password);
+=======
     console.log("Password:  ", userPwVal);
+>>>>>>> master
   };
 
   const loginHandler = () => {
@@ -63,16 +73,26 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
         <InputBox
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
+<<<<<<< HEAD
+          userNameCheckHandler={userNameCheckHandler}
+          name={"userIdval"}
+=======
           userIdCheckHandler={userIdCheckHandler}
           user={"userIdVal"}
+>>>>>>> master
         />
 
         <IdErrorMsg hasError={idErrorMsg}>{idErrorMsg}</IdErrorMsg>
         <InputBox
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
+<<<<<<< HEAD
+          userPwCheckHandler={userPwCheckHandler}
+          name={"userPwVal"}
+=======
           userPwValCheckHandler={userPwValCheckHandler}
           user={"userPwVal"}
+>>>>>>> master
         />
         <PwErrorMsg hasError={pwErrorMsg}>{pwErrorMsg}</PwErrorMsg>
         <PasswordFind>비밀번호 찾기</PasswordFind>

@@ -9,14 +9,11 @@ interface DropDownBoxProps {
   selectItems: (item: string, idx: number) => void;
   isSelectBoxOpend: boolean;
   arrowChangeHandler: () => void;
+  closeBox: () => void;
 }
 
 const DropDownBox: React.FunctionComponent<DropDownBoxProps> = (props) => {
   // prop box에 나오는 값들을 부모에서부터 정의하기. 그럼 재사용성이 높아진다.
-
-  const closeBox = () => {
-    alert("closing box");
-  };
 
   const { isSelectBoxOpend, arrowChangeHandler } = props;
 
@@ -35,7 +32,7 @@ const DropDownBox: React.FunctionComponent<DropDownBoxProps> = (props) => {
           <Arrow isChanged={isSelectBoxOpend}></Arrow>
         </ArrowCont>
       </DropDownBoxWrapper>
-      <DropDownBoxDfWrapper isChanged={isSelectBoxOpend} onBlur={closeBox}>
+      <DropDownBoxDfWrapper isChanged={isSelectBoxOpend}>
         <DropDownBoxCont isChanged={isSelectBoxOpend}>
           {isSelectBoxOpend &&
             props.filteredItems.map((item: string, idx: number) => {
@@ -83,6 +80,7 @@ const DropDownBoxDfWrapper = styled.div<{ isChanged: boolean }>`
   padding: 12px;
   border-radius: 2px;
   border: 1px solid #dfdfdf;
+  width: 120px;
   margin-right: 8px;
   visibility: ${(props) => (props.isChanged ? "visible" : "hidden")};
   z-index: 333;

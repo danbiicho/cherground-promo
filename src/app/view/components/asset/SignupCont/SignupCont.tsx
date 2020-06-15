@@ -71,6 +71,7 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
                 <InputBox
                   placeholderTxt={title}
                   userValidateHandler={props.userValidateHandler}
+                  onBlurRemoveErrorMsg={props.onBlurRemoveErrorMsg}
                   name={inputSelector(matchId, idx)}
                 />
               );
@@ -81,6 +82,7 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
                 <InputBox
                   placeholderTxt={title}
                   userValidateHandler={props.userValidateHandler}
+                  onBlurRemoveErrorMsg={props.onBlurRemoveErrorMsg}
                   name={inputSelector(matchId, idx)}
                 />
               );

@@ -1,6 +1,7 @@
 import React, { useContext, useCallback } from "react";
 import styled from "styled-components";
 import InputBox from "../../../widgets/InputBox";
+import Button from "app/view/widgets/Button";
 import UserDispatch from "app/view/components/practice-SignUp/SignUpViewPr";
 
 //받아야하는 prop의 타입을 정해줄 땐 이렇게 해준다.
@@ -11,7 +12,7 @@ interface SignupContProps {
   matchId: any;
   headerTxt: string;
   descTxt: string;
-  userValidateHandler: (parameter: any) => boolean | undefined;
+  userValidateHandler?: (parameter: any) => boolean | undefined;
 }
 
 const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {

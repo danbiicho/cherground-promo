@@ -6,11 +6,13 @@ interface Buttonprops {
   buttonName: "PRIMARY" | "SECONDARY";
   buttonText: string;
   onClick: () => void;
+  stageIdx: number;
 }
 
 interface ButtonLayoutProps {
   isEnable: boolean;
   buttonName: string;
+  stageIdx: number;
 }
 
 const Button: React.FunctionComponent<Buttonprops> = (props) => {
@@ -26,6 +28,7 @@ const Button: React.FunctionComponent<Buttonprops> = (props) => {
 };
 
 const ButtonLayout = styled.button<ButtonLayoutProps>`
+  visibility: ${(props) => (props.stageIdx >= 3 ? "hidden" : "visible")};
   width: 420px;
   height: 48px;
   border-radius: 2px;

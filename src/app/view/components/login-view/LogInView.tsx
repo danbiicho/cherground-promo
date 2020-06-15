@@ -32,12 +32,12 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
 
   const userNameCheckHandler = (e: any) => {
     setUserName(e.target.value);
-    console.log("UserName", userNameVal);
+    console.log("UserIdval", userNameVal);
   };
 
   const userPwCheckHandler = (e: any) => {
     setUserPw(e.target.value);
-    console.log("bbb", password);
+    console.log("UserPwVal", password);
   };
 
   const loginHandler = () => {
@@ -64,7 +64,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
           userNameCheckHandler={userNameCheckHandler}
-          name={"userNameVal"}
+          name={"userIdval"}
         />
 
         <IdErrorMsg hasError={idErrorMsg}>{idErrorMsg}</IdErrorMsg>
@@ -72,7 +72,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
           userPwCheckHandler={userPwCheckHandler}
-          name={"password"}
+          name={"userPwVal"}
         />
         <PwErrorMsg hasError={pwErrorMsg}>{pwErrorMsg}</PwErrorMsg>
         <PasswordFind>비밀번호 찾기</PasswordFind>

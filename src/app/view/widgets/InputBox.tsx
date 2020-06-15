@@ -6,6 +6,8 @@ interface InputBoxProps {
   userPwCheckHandler?: (parameter: any) => void;
   userNameCheckHandler?: (parameter: any) => void;
   name:
+    | "userIdval"
+    | "userPwVal"
     | "userNameVal"
     | "phone"
     | "shippingAddress"
@@ -40,12 +42,10 @@ const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
         onFocus={() => onFocusHandler()}
         onBlur={(e) => onBlurHandler(e)}
         onChange={(e) => {
-          if (props.userNameCheckHandler) {
-            props.userNameCheckHandler(e);
-          }
           if (props.userPwCheckHandler) {
             props.userPwCheckHandler(e);
-          } else {
+          }
+          if (props.userValidateHandler) {
             props.userValidateHandler(e);
           }
         }}

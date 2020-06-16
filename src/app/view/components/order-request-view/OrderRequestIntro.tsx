@@ -8,6 +8,7 @@ import OrderRequestView from "./OrderRequestView";
 
 interface OrderRequestIntroProps {
   close: () => void;
+  isModalOpen: boolean;
 }
 
 const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (

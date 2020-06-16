@@ -41,8 +41,6 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
       type: "RESET_CONFIRM_ACTION",
     });
   }
-
-  console.log(props.errorMsg);
   return (
     <SelectionsWrapper style={{ width: props.width }}>
       <ErrorMsg isValid={isValid}>{props.errorMsg}</ErrorMsg>

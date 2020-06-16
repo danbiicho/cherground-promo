@@ -73,7 +73,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
   const imgUploader = (file: FileList) => {
     const reader = new FileReader();
 
-    let url: string = "";
+    let url: string | null = "";
 
     reader.addEventListener("load", (e: ProgressEvent<FileReader>) => {
       url = e.target.result;

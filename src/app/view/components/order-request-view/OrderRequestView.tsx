@@ -101,7 +101,6 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
 
   return (
     <>
-      {" "}
       <OrderRequestModalLayout>
         <Container>
           <TitleBox>
@@ -220,7 +219,7 @@ const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
             isConfirmed={confirmedSelections.length}
           />
         </BtnCont>
-      </OrderRequestModalLayout>{" "}
+      </OrderRequestModalLayout>
     </>
   );
 };

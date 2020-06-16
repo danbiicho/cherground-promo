@@ -24,7 +24,7 @@ const ActionButton: React.FunctionComponent<Buttonprops> = (props) => {
   const brand = props.brandExist;
   return (
     <ActionButtonLayout
-      isEnable
+      isEnable={props.isEnable}
       buttonName={props.buttonName}
       onClick={props.onClick}
       isStyle={style}
@@ -49,9 +49,9 @@ const ActionButtonLayout = styled.button<ButtonLayoutProps>`
     }
     if (props.buttonName === "PRIMARY") {
       if (props.isEnable) {
-        return "background-color: #dfdfdf; color: #fff;";
+        return "background-color: #131313; color: #fff;";
       } else {
-        return "background-color: #131313; color: #535454;";
+        return "background-color: #dfdfdf; color: #fff;";
       }
     } else {
       if (props.isEnable) {

@@ -5,7 +5,8 @@ import axios, {
   AxiosError,
 } from "axios";
 
-export const BASE_URL = "http://localhost:3000";
+export const BASE_URL =
+  "https://e60pwpq9m7.execute-api.ap-northeast-2.amazonaws.com/dev";
 export const URL_USER = "sign-in";
 
 import { RouteComponentProps } from "react-router";

@@ -58,7 +58,7 @@ const MenuBox: React.FunctionComponent<MenuBoxProps> = (props) => {
         />
       </MenuBoxWrapper>
       <DropDownWrapper isOpened={isSelectBoxOpend}>
-        {filteredItems.map((value, idx, arr) => {
+        {filteredItems.map((value: string, idx: number, arr: Array<String>) => {
           return (
             <>
               <DropDownListLayout

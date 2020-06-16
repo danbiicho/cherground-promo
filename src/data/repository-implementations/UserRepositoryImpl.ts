@@ -11,7 +11,11 @@ export default class UserRepositoryImpl implements UserRepository {
     this.userApi = userApi;
   }
 
-  getUser(): Promise<User> {
-    return this.userApi.getUser();
+  // getUser(): Promise<User> {
+  //   return this.userApi.getUser();
+  // }
+
+  signIn(email: string, password: string): Promise<User> {
+    return this.userApi.signIn(email, password);
   }
 }

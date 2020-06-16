@@ -11,8 +11,8 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     "UserViewModel"
   );
 
-  const [userIdVal, setUserId] = useState<string>("");
-  const [userPwVal, setUserPw] = useState<string>("");
+  const [email, setUserId] = useState<string>("");
+  const [password, setUserPw] = useState<string>("");
   const [idErrorMsg, setIdErrorMsg] = useState<string>("");
   const [pwErrorMsg, setPwErrorMsg] = useState<string>("");
 
@@ -32,16 +32,17 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
 
   const userIdCheckHandler = (e: any) => {
     setUserId(e.target.value);
-    console.log("Email:  ", userIdVal);
   };
 
   const userPwValCheckHandler = (e: any) => {
     setUserPw(e.target.value);
-    console.log("Password:  ", userPwVal);
   };
 
   const loginHandler = () => {
-    console.log(viewModel.displayUser());
+    viewModel
+      .displayUser(email, password)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
     //console.log(response.data)
     // if (userIdVal !== response.email) {
     //   setIdErrorMsg("아이디가 일치하지 않습니다.");
@@ -64,7 +65,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
           userIdCheckHandler={userIdCheckHandler}
-          user={"userIdVal"}
+          user={"email"}
         />
 
         <IdErrorMsg hasError={idErrorMsg}>{idErrorMsg}</IdErrorMsg>
@@ -72,7 +73,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
           userPwValCheckHandler={userPwValCheckHandler}
-          user={"userPwVal"}
+          user={"password"}
         />
         <PwErrorMsg hasError={pwErrorMsg}>{pwErrorMsg}</PwErrorMsg>
         <PasswordFind>비밀번호 찾기</PasswordFind>

@@ -124,7 +124,8 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
             </CategoryInputBox>
             <DesignSelectWrapper>
               <OrderDispatch.Provider
-                value={{ state: state, dispatch: dispatch }}
+                //value={{ state: state, dispatch: dispatch }}
+                value={dispatch}
               >
                 <DesginInputWrapper>
                   <ColorInputBox>
@@ -488,4 +489,4 @@ const BtnCont = styled.div`
   padding-right: 32px;
 `;
 
-export default withRouter(OrderRequestView);
+export default OrderRequestView;

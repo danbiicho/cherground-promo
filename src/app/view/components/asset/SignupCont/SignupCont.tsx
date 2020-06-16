@@ -2,7 +2,7 @@ import React, { useContext, useCallback } from "react";
 import styled from "styled-components";
 import InputBox from "../../../widgets/InputBox";
 import Button from "app/view/widgets/Button";
-import UserDispatch from "app/view/components/practice-SignUp/SignUpViewPr";
+import UserDispatch from "app/view/components/signup-view/SignUpView";
 
 //받아야하는 prop의 타입을 정해줄 땐 이렇게 해준다.
 //widget에 둬도 된다.
@@ -12,7 +12,7 @@ interface SignupContProps {
   matchId: any;
   headerTxt: string;
   descTxt: string;
-  userValidateHandler?: (parameter: any) => boolean | undefined;
+  userValidateHandler?: (parameter: any) => void;
 }
 
 const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
@@ -71,7 +71,6 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
                 <InputBox
                   placeholderTxt={title}
                   userValidateHandler={props.userValidateHandler}
-                  onBlurRemoveErrorMsg={props.onBlurRemoveErrorMsg}
                   name={inputSelector(matchId, idx)}
                 />
               );
@@ -82,7 +81,6 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
                 <InputBox
                   placeholderTxt={title}
                   userValidateHandler={props.userValidateHandler}
-                  onBlurRemoveErrorMsg={props.onBlurRemoveErrorMsg}
                   name={inputSelector(matchId, idx)}
                 />
               );

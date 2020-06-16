@@ -13,7 +13,8 @@ export default class GetUserImpl implements GetUser {
     this.userRepository = userRepository;
   }
 
-  execute() {
-    return this.userRepository.getUser();
+  execute(email: string, password: string) {
+    return this.userRepository.signIn(email, password);
+    //return this.userRepository.getUser();
   }
 }

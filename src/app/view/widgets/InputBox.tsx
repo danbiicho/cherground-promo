@@ -16,7 +16,7 @@ interface InputBoxProps {
     | "password"
     | "passwordCheck";
   userValidateHandler: (parameter: any) => boolean | undefined;
-  user?: "userIdVal" | "userPwVal";
+  user?: "email" | "password";
   userIdCheckHandler?: (parameter: any) => void;
   userPwValCheckHandler?: (parameter: any) => void;
   onBlurRemoveErrorMsg: () => void;

@@ -24,7 +24,7 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
       setIsValid("isNotValid");
       dispatch({
         type: "SET_ERROR_MSG",
-        msg: "필수 품목입니다",
+        errorMsg: "필수 품목입니다",
       });
     } else {
       setIsValid("default");
@@ -56,7 +56,7 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
           name={props.name}
           width={props.width}
           onChange={(e) => {
-            props.NameCheckHandler(e);
+            // props.NameCheckHandler(e);
           }}
           style={{ width: props.width }}
         />
@@ -75,6 +75,9 @@ const ErrorMsg = styled.div<{ isValid: string }>`
   font-size: 12px;
   color: #d50000;
   margin-bottom: 13px;
+  display: inline-block;
+  /* position: absolute;
+  right: 0; */
   visibility: ${(props) =>
     props.isValid === "isNotValid" ? "visible" : "hidden"};
 `;

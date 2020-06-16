@@ -19,7 +19,8 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
   };
 
   const [stage, setStage] = useState(1);
-
+  const [brandName, setBrandName] = useState<string>("");
+  const [styleName, setStyleName] = useState<string>("");
   const [state, dispatch] = useReducer(reducer, orderState);
   const { brand, style } = orderState;
   const { errorMsg } = state;
@@ -33,6 +34,14 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
       value,
     });
   }, []);
+
+  const checkNextAble = () => {
+    if (brandName.length > 0 && styleName.length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const cancelHandler = useCallback(() => {
     props.close();
@@ -85,6 +94,10 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
                 <InputSelections
                   placeholderTxt={"브랜드명 입력"}
                   name={"brand"}
+                  onChangeHandler={(e) => {
+                    setBrandName(e.target.value);
+                    console.log(e.target.value);
+                  }}
                   width={"100%"}
                   NameCheckHandler={NameCheckHandler}
                   errorMsg={errorMsg}
@@ -94,6 +107,10 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
                 <span style={{ fontSize: "14px" }}>스타일명*</span>
                 <InputSelections
                   placeholderTxt={"스타일명 입력"}
+                  onChangeHandler={(e) => {
+                    setStyleName(e.target.value);
+                    console.log(e.target.value);
+                  }}
                   name={"style"}
                   width={"100%"}
                   NameCheckHandler={NameCheckHandler}
@@ -105,13 +122,13 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
             <BtnCont>
               <ActionButton
                 buttonName={"SECONDARY"}
-                isEnables
+                isEnable
                 buttonText={"취소"}
                 onClick={cancelHandler}
               />
               <ActionButton
                 buttonName={"PRIMARY"}
-                isEnable={false}
+                isEnable={checkNextAble()}
                 buttonText={"다음"}
                 onClick={nextHandler}
                 styleExist={style}

@@ -60,6 +60,7 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
       email: email,
       password: password,
     };
+    console.log(sendUserVal);
     dispatch({
       type: "PROCEED_STAGE",
       stageIdx,

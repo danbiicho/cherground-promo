@@ -49,8 +49,8 @@ const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
           if (props.userIdCheckHandler) {
             props.userIdCheckHandler(e);
           }
-          if (props.userPwCheckHandler) {
-            props.userPwCheckHandler(e);
+          if (props.userPwValCheckHandler) {
+            props.userPwValCheckHandler(e);
           }
           if (props.userValidateHandler) {
             props.userValidateHandler(e);

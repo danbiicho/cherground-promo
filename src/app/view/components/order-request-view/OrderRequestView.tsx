@@ -10,12 +10,17 @@ import DeleteBtnImg from "cg-promotion-delete-image-idle@2x.png";
 
 export const OrderDispatch = React.createContext(null);
 
-const OrderRequestView: React.FunctionComponent<RouteComponentProps> = (
+interface OrderRequestViewProps {
+  onClick: () => void;
+  brand: string;
+  style: string;
+}
+
+const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
   props
 ) => {
   //const { brand, style } = props.history.location.state;
   const { brand, style } = props;
-  const [ModalOpen, setModalOpen] = useState<boolean>(true);
   const [filteredItems, setfilteredItems] = useState<Object[]>([
     { title: "아우터", desc: "코트, 자켓, 패딩 등" },
     { title: "상의", desc: "티셔츠, 나시, 맨투맨, 후드티 등" },

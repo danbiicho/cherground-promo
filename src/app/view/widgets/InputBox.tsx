@@ -4,7 +4,10 @@ import styled from "styled-components";
 interface InputBoxProps {
   placeholderTxt: string;
   userPwCheckHandler?: (parameter: any) => void;
-  name?:
+  userNameCheckHandler?: (parameter: any) => void;
+  name:
+    | "userIdval"
+    | "userPwVal"
     | "userNameVal"
     | "phone"
     | "shippingAddress"
@@ -16,6 +19,7 @@ interface InputBoxProps {
   user?: "email" | "password";
   userIdCheckHandler?: (parameter: any) => void;
   userPwValCheckHandler?: (parameter: any) => void;
+  onBlurRemoveErrorMsg: () => void;
 }
 
 const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
@@ -45,12 +49,10 @@ const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
           if (props.userIdCheckHandler) {
             props.userIdCheckHandler(e);
           }
-          if (props.userPwValCheckHandler) {
-            props.userPwValCheckHandler(e);
-          }
           if (props.userPwCheckHandler) {
             props.userPwCheckHandler(e);
-          } else {
+          }
+          if (props.userValidateHandler) {
             props.userValidateHandler(e);
           }
         }}

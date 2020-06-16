@@ -64,6 +64,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
         <InputBox
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
+          name={"userIdval"}
           userIdCheckHandler={userIdCheckHandler}
           user={"email"}
         />

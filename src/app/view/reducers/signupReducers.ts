@@ -6,7 +6,7 @@
 //   message: string;
 // }
 
-const reducer = (state: React.ComponentState, action) => {
+const reducer = (state: React.ComponentState, action: any) => {
   switch (action.type) {
     case "PROCEED_STAGE":
       return {
@@ -33,11 +33,19 @@ const reducer = (state: React.ComponentState, action) => {
       };
 
     case "ADD_ERROR_MSG":
-      return {
-        ...state,
-        errorMsg: action.message,
-      };
-
+      if (action.isError) {
+        return {
+          ...state,
+          isError: action.isError,
+          errorMsg: action.message,
+        };
+      } else {
+        return {
+          ...state,
+          isError: action.isError,
+          errorMsg: "",
+        };
+      }
     default:
       return state;
   }

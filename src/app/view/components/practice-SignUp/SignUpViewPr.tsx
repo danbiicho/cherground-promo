@@ -1,4 +1,4 @@
-import React, { useReducer, useCallback } from "react";
+import React, { useReducer, useCallback, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
 import reducer from "app/view/reducers/signupReducers";
 import SignUpCont from "app/view/components/asset/SignupCont/SignupCont";
@@ -17,6 +17,7 @@ export const UserDispatch = React.createContext(null);
 const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
   const initialState = {
     stageIdx: 1,
+    isError: false,
     errorMsg: "",
     userInput: {
       userNameVal: "",
@@ -31,7 +32,7 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
   //여기서의 state는 전역이다.
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { stageIdx, errorMsg } = state;
+  const { stageIdx, isError, errorMsg } = state;
   const {
     userNameVal,
     phone,
@@ -46,18 +47,11 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
     props.history.push("/login");
   };
 
-  const selectItems = (item: string, idx: number) => {
-    alert(`${item} ${idx + 1} is selected!`);
-  };
-
   const nextBtnClickHandler = useCallback(() => {
     dispatch({
       type: "PROCEED_STAGE",
       stageIdx,
     });
-    if (stageIdx === 2) {
-      props.history.push("/intro");
-    }
   }, [stageIdx]);
 
   const userValidateHandler = useCallback(
@@ -65,83 +59,90 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
       const IDPWCheck = /^[a-zA-Z0-9]{4,12}$/;
       const EmailCheck = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
-      if (e.target.name) {
+      if (!e.target.value) {
+        if (!userNameVal && !phone && !password) {
+          dispatch({
+            type: "ADD_ERROR_MSG",
+            isError: true,
+            message: "필수 입력 정보입니다.",
+          });
+        }
+      } else {
         let inputName = e.target.name;
         const { value } = e.target;
+        dispatch({
+          type: "ADD_ERROR_MSG",
+          isError: false,
+        });
+
         dispatch({
           type: "ADD_USER_INFO",
           inputName,
           value,
         });
-      }
 
-      if (!e.target.value) {
-        if (!userNameVal) {
-          dispatch({
-            type: "ADD_ERROR_MSG",
-            message: "이름을 입력해주세요",
-          });
-        }
-
-        if (!phone) {
-          dispatch({
-            type: "ADD_ERROR_MSG",
-            message: "필수 입력 정보입니다.",
-          });
-        }
-
-        if (!shippingAddress) {
-          dispatch({
-            type: "ADD_ERROR_MSG",
-            message: "필수 입력 정보입니다.",
-          });
-        }
-
-        if (!password) {
-          console.log("비밀번호를 입력해주세요");
-        }
-
-        return false;
-      } else {
         if (email) {
           !validationCheckHandler(
             EmailCheck,
             email,
             "적합하지 않은 이메일 형식입니다."
           );
-          //return false;
         }
 
-        if (password) {
+        if (password || passwordCheck) {
           !validationCheckHandler(
             IDPWCheck,
             password,
             "패스워드는 4~12자의 영문 대소문자와 숫자로만 입력"
           );
+          if (password && passwordCheck) {
+            if (password !== passwordCheck) {
+              dispatch({
+                type: "ADD_ERROR_MSG",
+                isError: true,
+                message: "비밀번호가 일치하지 않습니다.",
+              });
+            } else {
+              dispatch({
+                type: "ADD_ERROR_MSG",
+                isError: false,
+              });
+            }
+          }
         }
       }
-      if (password !== passwordCheck) {
-        dispatch({
-          type: "ADD_ERROR_MSG",
-          message: "비밀번호가 일치하지 않습니다.",
-        });
-      }
     },
-    [name, email, password]
+    [name, email, password, passwordCheck]
   );
 
   const validationCheckHandler = useCallback(
     (expression: RegExp, value: string, message: string) => {
       if (expression.test(value)) {
         return true;
+      } else {
+        dispatch({
+          type: "ADD_ERROR_MSG",
+          isError: true,
+          message,
+        });
       }
-      dispatch({
-        type: "ADD_ERROR_MSG",
-        message,
-      });
     },
     []
   );
+
+  const onBlurRemoveErrorMsg = () => {
+    if (errorMsg) {
+      dispatch({
+        type: "ADD_ERROR_MSG",
+        isError: true,
+        message: "",
+      });
+    }
+  };
+
+  const linkToMain = () => {
+    props.history.push("/order");
+  };
 
   //props를 객체로 만들어서 index에 있는 걸 꺼내쓸수있게
 
@@ -155,35 +156,46 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
       2: "아래 정보를 입력하고 회원가입을 완료하세요.",
     },
   };
-
+  console.log(userNameVal);
   return (
     //<UserDispatch.Provider value={dispatch}>
     <SignupViewWrapper>
-      {console.log(state)}
+      {stageIdx > 2 && (
+        <GreetingBox>
+          <GreetingMsg>{userNameVal}님, 환영합니다!</GreetingMsg>
+          <GoToMainBtn onClick={linkToMain}>메인 페이지로 가기</GoToMainBtn>
+        </GreetingBox>
+      )}
       <SignUpCont
         match={props.match}
         matchId={stageIdx}
         headerTxt={txtProps.headerTxt[stageIdx]}
         descTxt={txtProps.descTxt[stageIdx]}
         userValidateHandler={(e) => userValidateHandler(e)}
+        onBlurRemoveErrorMsg={onBlurRemoveErrorMsg}
       />
       <ErrorMsg hasError={errorMsg}>{errorMsg}</ErrorMsg>
-      <Button
-        isEnable={false}
-        onClick={nextBtnClickHandler}
-        buttonName={"PRIMARY"}
-        buttonText={"다음"}
-      />
-      <LoginCheckCont>
-        이미 계정이 있나요?
-        <LoginTxt
-          onClick={() => {
-            loginHandler();
-          }}
-        >
-          로그인
-        </LoginTxt>
-      </LoginCheckCont>
+      {stageIdx <= 2 && (
+        <>
+          <Button
+            isEnable={false}
+            onClick={nextBtnClickHandler}
+            buttonName={"PRIMARY"}
+            buttonText={"다음"}
+            stageIdx={stageIdx}
+          />
+          <LoginCheckCont>
+            이미 계정이 있나요?
+            <LoginTxt
+              onClick={() => {
+                loginHandler();
+              }}
+            >
+              로그인
+            </LoginTxt>
+          </LoginCheckCont>
+        </>
+      )}
       {stageIdx === 1 && (
         <CopyrightBox>
           <OwnerInfo>CherGround Inc. All rights reserved.</OwnerInfo>
@@ -200,6 +212,35 @@ const SignupViewWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const GreetingBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto 430px;
+`;
+const GreetingMsg = styled.div`
+  font-family: NanumSquare;
+  font-size: 20px;
+  color: #1f263e;
+  text-align: center;
+`;
+
+const GoToMainBtn = styled.div`
+  width: 420px;
+  height: 48px;
+  border-radius: 2px;
+  border: 1px solid #1f263e;
+  font-family: NanumSquare;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 20px;
 `;
 
 const ErrorMsg = styled.div<{ hasError: string }>`

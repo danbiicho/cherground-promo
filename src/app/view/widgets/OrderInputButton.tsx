@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { RouteComponentProps } from "react-router-dom";
 
-const OrderInputButton: React.FunctionComponent<RouteComponentProps> = (
+interface OrderInputButtonProps {
+  onClick: () => void;
+}
+
+const OrderInputButton: React.FunctionComponent<OrderInputButtonProps> = (
   props
 ) => {
   const [ModalOpen, setModalOpen] = useState<boolean>(true);

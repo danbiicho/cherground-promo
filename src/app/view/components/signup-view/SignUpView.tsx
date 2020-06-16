@@ -1,5 +1,8 @@
-import React, { useState, useRef } from "react";
-import { RouteComponentProps, withRouter, Link } from "react-router-dom";
+import React, { useReducer, useCallback, useEffect } from "react";
+import { RouteComponentProps } from "react-router-dom";
+import { UserSignupViewModel } from "app/view-model";
+import container from "injector";
+import reducer from "app/view/reducers/signupReducers";
 import SignUpCont from "app/view/components/asset/SignupCont/SignupCont";
 import styled from "styled-components";
 import Button from "app/view/widgets/Button";
@@ -9,118 +12,154 @@ import Button from "app/view/widgets/Button";
 
 //Wrapper > Cont > Box
 
+//UserDispatch는 컴포넌트 바깥에 reducer하나당 하나씩 만들어준다.
+
+export const UserDispatch = React.createContext(null);
+
 const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
-  // const [stageStatus, setStageStatus] = useState<
-  //   "usernamecheck" | "usernamecheck" | "usernamecheck"
-  // >("usernamecheck");
-  const [stageIdx, setStageIdx] = useState<any>(1);
-  const [userName, setUserName] = useState("");
-  const [errorMsg, setErrorMsg] = useState("");
-  const [userPw, setUserPw] = useState("");
-  const [userPwCheck, setUserPwCheck] = useState("");
-  const [userEmail, setUserEmail] = useState("");
+  const viewModel: UserSignupViewModel = container.get<UserSignupViewModel>(
+    "UserSignupViewModel"
+  );
+  const initialState = {
+    stageIdx: 1,
+    isError: false,
+    errorMsg: "",
+    userInput: {
+      userNameVal: "",
+      phone: "",
+      shippingAddress: "",
+      name: "",
+      password: "",
+      passwordCheck: "",
+      email: "",
+    },
+  };
+  //여기서의 state는 전역이다.
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { stageIdx, isError, errorMsg } = state;
+  const {
+    userNameVal,
+    phone,
+    shippingAddress,
+    name,
+    password,
+    passwordCheck,
+    email,
+  } = state.userInput;
 
   const loginHandler = () => {
-    props.history.push("/signin");
+    props.history.push("/login");
   };
 
   const nextBtnClickHandler = () => {
-    // if (inputBox.value) {
-    //   inputBox.value = "";
-    // }
-    setStageIdx((stageIdx: any) => (stageIdx += 1));
-    if (stageIdx >= 3) {
-      props.history.push("/");
+    const sendUserVal = {
+      name: userNameVal,
+      phone_number: phone,
+      address: shippingAddress,
+      email: email,
+      password: password,
+    };
+    dispatch({
+      type: "PROCEED_STAGE",
+      stageIdx,
+    });
+    if (stageIdx === 2) {
+      viewModel.displayUserSignup(sendUserVal);
     }
   };
 
-  const userValidateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const IDPWCheck = /^[a-zA-Z0-9]{4,12}$/;
-    const EmailCheck = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  const userValidateHandler = useCallback(
+    (e) => {
+      const IDPWCheck = /^[a-zA-Z0-9]{4,12}$/;
+      const EmailCheck = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
-    if (e.target.name) {
-      let { name } = e.target;
+      if (!e.target.value) {
+        if (!userNameVal && !phone && !password) {
+          dispatch({
+            type: "ADD_ERROR_MSG",
+            isError: true,
+            message: "필수 입력 정보입니다.",
+          });
+        }
+      } else {
+        let inputName = e.target.name;
+        const { value } = e.target;
+        dispatch({
+          type: "ADD_ERROR_MSG",
+          isError: false,
+        });
 
-      switch (name) {
-        case "userName":
-          setUserName(e.target.value);
-          break;
-        case "userPw":
-          setUserPw(e.target.value);
-          break;
-        case "userPwCheck":
-          setUserPwCheck(e.target.value);
-          break;
-        case "userEmail":
-          setUserEmail(e.target.value);
-          break;
+        dispatch({
+          type: "ADD_USER_INFO",
+          inputName,
+          value,
+        });
+
+        if (email) {
+          !validationCheckHandler(
+            EmailCheck,
+            email,
+            "적합하지 않은 이메일 형식입니다."
+          );
+        }
+
+        if (password || passwordCheck) {
+          !validationCheckHandler(
+            IDPWCheck,
+            password,
+            "패스워드는 4~12자의 영문 대소문자와 숫자로만 입력"
+          );
+        }
+
+        if (password && passwordCheck) {
+          if (password !== passwordCheck) {
+            dispatch({
+              type: "ADD_ERROR_MSG",
+              isError: true,
+              message: "비밀번호가 일치하지 않습니다.",
+            });
+          }
+        }
       }
+    },
+    [name, email, password, passwordCheck]
+  );
+
+  useEffect(() => {
+    if (password === passwordCheck) {
+      dispatch({
+        type: "ADD_ERROR_MSG",
+        isError: false,
+      });
     }
+  }, [password, passwordCheck]);
 
-    if (!e.target.value) {
-      if (!userName) {
-        setErrorMsg("이름을 입력해주세요");
-      }
-
-      if (!userEmail) {
-        setErrorMsg("이메일을 입력해주세요");
-      }
-
-      if (!userPw) {
-        setErrorMsg("비밀번호를 입력해주세요");
-      }
-
-      return false;
-    } else {
-      if (
-        !validationCheckHandler(
-          EmailCheck,
-          userEmail,
-          "적합하지 않은 이메일 형식입니다."
-        )
-      ) {
-        return false;
+  const validationCheckHandler = useCallback(
+    (expression: RegExp, value: string, message: string) => {
+      if (expression.test(value)) {
+        return true;
       } else {
-        setErrorMsg("");
+        dispatch({
+          type: "ADD_ERROR_MSG",
+          isError: true,
+          message,
+        });
       }
+    },
+    []
+  );
 
-      if (
-        !validationCheckHandler(
-          IDPWCheck,
-          userPw,
-          "패스워드는 4~12자의 영문 대소문자와 숫자로만 입력"
-        )
-      ) {
-        return false;
-      } else {
-        setErrorMsg("");
-      }
-
-      if (userPw !== userPwCheck) {
-        setErrorMsg("비밀번호가 일치하지 않습니다.");
-        return false;
-      } else {
-        setErrorMsg("");
-      }
-    }
+  const linkToMain = () => {
+    props.history.push("/order");
   };
 
-  const validationCheckHandler = (
-    expression: RegExp,
-    value: string,
-    message: string
-  ) => {
-    if (expression.test(value)) {
-      return true;
-    }
-    setErrorMsg(message);
-    console.log(message);
-  };
+  //props를 객체로 만들어서 index에 있는 걸 꺼내쓸수있게
 
   const txtProps: any = {
     headerTxt: {
       1: "회원가입",
-      2: `${name}님 환영합니다.`,
+      2: `${userNameVal}님 환영합니다.`,
     },
     descTxt: {
       1: "아래 정보를 입력하고 회원가입을 진행하세요.",
@@ -128,8 +167,16 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
     },
   };
 
+  const { userInput } = state;
+
   return (
     <SignupViewWrapper>
+      {stageIdx > 2 && (
+        <GreetingBox>
+          <GreetingMsg>{userNameVal}님, 환영합니다!</GreetingMsg>
+          <GoToMainBtn onClick={linkToMain}>메인 페이지로 가기</GoToMainBtn>
+        </GreetingBox>
+      )}
       <SignUpCont
         match={props.match}
         matchId={stageIdx}
@@ -137,24 +184,28 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
         descTxt={txtProps.descTxt[stageIdx]}
         userValidateHandler={(e) => userValidateHandler(e)}
       />
-
       <ErrorMsg hasError={errorMsg}>{errorMsg}</ErrorMsg>
-      <Button
-        isEnable={false}
-        onClick={nextBtnClickHandler}
-        buttonName={"PRIMARY"}
-        buttonText={"다음"}
-      />
-      <LoginCheckCont>
-        이미 계정이 있나요?
-        <LoginTxt
-          onClick={() => {
-            loginHandler();
-          }}
-        >
-          로그인
-        </LoginTxt>
-      </LoginCheckCont>
+      {stageIdx <= 2 && (
+        <>
+          <Button
+            isEnable={false}
+            onClick={nextBtnClickHandler}
+            buttonName={"PRIMARY"}
+            buttonText={"다음"}
+            stageIdx={stageIdx}
+          />
+          <LoginCheckCont>
+            이미 계정이 있나요?
+            <LoginTxt
+              onClick={() => {
+                loginHandler();
+              }}
+            >
+              로그인
+            </LoginTxt>
+          </LoginCheckCont>
+        </>
+      )}
       {stageIdx === 1 && (
         <CopyrightBox>
           <OwnerInfo>CherGround Inc. All rights reserved.</OwnerInfo>
@@ -171,6 +222,36 @@ const SignupViewWrapper = styled.div`
   flex-direction: column;
   align-items: center;
 `;
+
+const GreetingBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto 430px;
+`;
+const GreetingMsg = styled.div`
+  font-family: NanumSquare;
+  font-size: 20px;
+  color: #1f263e;
+  text-align: center;
+`;
+
+const GoToMainBtn = styled.div`
+  width: 420px;
+  height: 48px;
+  border-radius: 2px;
+  border: 1px solid #1f263e;
+  font-family: NanumSquare;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 20px;
+`;
+
 const ErrorMsg = styled.div<{ hasError: string }>`
   display: ${(props) => (props.hasError ? "block" : "none")};
   width: 420px;
@@ -182,6 +263,7 @@ const ErrorMsg = styled.div<{ hasError: string }>`
   margin-top: 12px;
   margin-bottom: 33px;
 `;
+
 const LoginCheckCont = styled.div`
   width: 420px;
   height: fit-content;
@@ -212,4 +294,4 @@ const OwnerInfo = styled.p`
   margin: 20px 0 19px 128px;
 `;
 
-export default withRouter(SignUpView);
+export default SignUpView;

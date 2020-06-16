@@ -15,11 +15,10 @@ interface InputBoxProps {
     | "name"
     | "password"
     | "passwordCheck";
-  userValidateHandler: (parameter: any) => boolean | undefined;
+  userValidateHandler?: (parameter: any) => void;
   user?: "email" | "password";
   userIdCheckHandler?: (parameter: any) => void;
   userPwValCheckHandler?: (parameter: any) => void;
-  onBlurRemoveErrorMsg: () => void;
 }
 
 const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {

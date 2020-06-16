@@ -64,7 +64,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
         <InputBox
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
-          name={"userIdval"}
+          name={"email"}
           userIdCheckHandler={userIdCheckHandler}
           user={"email"}
         />
@@ -73,6 +73,7 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
         <InputBox
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
+          name={"password"}
           userPwValCheckHandler={userPwValCheckHandler}
           user={"password"}
         />

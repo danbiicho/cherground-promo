@@ -1,5 +1,7 @@
 import React, { useReducer, useCallback, useEffect } from "react";
 import { RouteComponentProps } from "react-router-dom";
+import { UserSignupViewModel } from "app/view-model";
+import container from "injector";
 import reducer from "app/view/reducers/signupReducers";
 import SignUpCont from "app/view/components/asset/SignupCont/SignupCont";
 import styled from "styled-components";
@@ -15,6 +17,9 @@ import Button from "app/view/widgets/Button";
 export const UserDispatch = React.createContext(null);
 
 const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
+  const viewModel: UserSignupViewModel = container.get<UserSignupViewModel>(
+    "UserSignupViewModel"
+  );
   const initialState = {
     stageIdx: 1,
     isError: false,
@@ -47,12 +52,20 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
     props.history.push("/login");
   };
 
-  const nextBtnClickHandler = useCallback(() => {
+  const nextBtnClickHandler = () => {
+    const sendUserVal = {
+      name: userNameVal,
+      phone_number: phone,
+      address: shippingAddress,
+      email: email,
+      password: password,
+    };
     dispatch({
       type: "PROCEED_STAGE",
       stageIdx,
     });
-  }, [stageIdx]);
+    viewModel.displayUserSignup(sendUserVal);
+  };
 
   const userValidateHandler = useCallback(
     (e) => {
@@ -95,25 +108,30 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
             password,
             "패스워드는 4~12자의 영문 대소문자와 숫자로만 입력"
           );
-          if (password && passwordCheck) {
-            if (password !== passwordCheck) {
-              dispatch({
-                type: "ADD_ERROR_MSG",
-                isError: true,
-                message: "비밀번호가 일치하지 않습니다.",
-              });
-            } else {
-              dispatch({
-                type: "ADD_ERROR_MSG",
-                isError: false,
-              });
-            }
+        }
+
+        if (password && passwordCheck) {
+          if (password !== passwordCheck) {
+            dispatch({
+              type: "ADD_ERROR_MSG",
+              isError: true,
+              message: "비밀번호가 일치하지 않습니다.",
+            });
           }
         }
       }
     },
     [name, email, password, passwordCheck]
   );
+
+  useEffect(() => {
+    if (password === passwordCheck) {
+      dispatch({
+        type: "ADD_ERROR_MSG",
+        isError: false,
+      });
+    }
+  }, [password, passwordCheck]);
 
   const validationCheckHandler = useCallback(
     (expression: RegExp, value: string, message: string) => {
@@ -156,9 +174,10 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
       2: "아래 정보를 입력하고 회원가입을 완료하세요.",
     },
   };
-  console.log(userNameVal);
+
+  const { userInput } = state;
+
   return (
-    //<UserDispatch.Provider value={dispatch}>
     <SignupViewWrapper>
       {stageIdx > 2 && (
         <GreetingBox>
@@ -202,7 +221,6 @@ const SignUpViewPr: React.FunctionComponent<RouteComponentProps> = (props) => {
         </CopyrightBox>
       )}
     </SignupViewWrapper>
-    //</UserDispatch.Provider>
   );
 };
 

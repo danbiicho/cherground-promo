@@ -8,7 +8,7 @@ interface Buttonprops {
   onClick: () => void;
   styleExist?: React.ComponentState;
   brandExist?: React.ComponentState;
-  isConfirmed?: number;
+  isConfirmed?: number | undefined;
 }
 
 interface ButtonLayoutProps {
@@ -16,7 +16,7 @@ interface ButtonLayoutProps {
   isEnable: boolean;
   isStyle?: string;
   isBrand?: string;
-  isConfirmed: number;
+  isConfirmed?: number | undefined;
 }
 
 const ActionButton: React.FunctionComponent<Buttonprops> = (props) => {

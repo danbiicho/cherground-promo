@@ -1,4 +1,4 @@
-const reducer = (state, action) => {
+const reducer = (state: React.ComponentState, action: any) => {
   switch (action.type) {
     case "ID_CHECK":
       return {

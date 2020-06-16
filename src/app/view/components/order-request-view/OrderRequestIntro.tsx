@@ -142,7 +142,7 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
           <OrderRequestView
             brand={brand}
             style={style}
-            onClick={cancelHandler}
+            onClick={() => props.close()}
           />
         )}
       </Overlay>

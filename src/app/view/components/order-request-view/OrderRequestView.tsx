@@ -8,7 +8,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import ClipImgPng from "cg-promotion-attach@2x.png";
 import DeleteBtnImg from "cg-promotion-delete-image-idle@2x.png";
 
-export const OrderDispatch = React.createContext(null);
+export const OrderDispatch = React.createContext<any>(null);
 
 interface OrderRequestViewProps {
   onClick: () => void;
@@ -75,12 +75,12 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
     });
   }, [isSelectBoxOpened]);
 
-  const imgUploader = (file: FileList) => {
+  const imgUploader = (file: any) => {
     const reader = new FileReader();
 
-    let url: string | null = "";
+    let url: string | ArrayBuffer | null = "";
 
-    reader.addEventListener("load", (e: ProgressEvent<FileReader>) => {
+    reader.addEventListener("load", (e: any) => {
       url = e.target.result;
       dispatch({
         type: "SAVE_IMG_PREVIEW",
@@ -123,7 +123,9 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
               />
             </CategoryInputBox>
             <DesignSelectWrapper>
-              <OrderDispatch.Provider value={dispatch}>
+              <OrderDispatch.Provider
+                value={{ state: state, dispatch: dispatch }}
+              >
                 <DesginInputWrapper>
                   <ColorInputBox>
                     <span style={{ position: "absolute" }}>컬러*</span>
@@ -163,7 +165,7 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
               <FileUploadCont>
                 <TextBoxInput>
                   <span>비고</span>
-                  <TextBox type="textarea" placeholder="비고 입력" />
+                  <TextBox placeholder="비고 입력" />
                 </TextBoxInput>
                 <AttachingImg>
                   <span>첨부이미지</span>
@@ -171,7 +173,7 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
                     <ImgCont>
                       <ClipImg src={ClipImgPng} />
                       <GuideMsg>Drop files here or</GuideMsg>
-                      <Label for="upload">Browse...</Label>
+                      <Label htmlFor="upload">Browse...</Label>
                     </ImgCont>
                     <Img
                       type="file"

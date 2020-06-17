@@ -3,8 +3,9 @@ import styled from "styled-components";
 import reducer from "app/view/reducers/orderReducers";
 import InputSelections from "app/view/widgets/InputSelections";
 import MenuBox from "app/view/widgets/MenuBox";
+import container from "injector";
 import ActionButton from "app/view/widgets/ActionButton";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { OrderViewModel } from "app/view-model";
 import ClipImgPng from "cg-promotion-attach@2x.png";
 import DeleteBtnImg from "cg-promotion-delete-image-idle@2x.png";
 
@@ -19,6 +20,9 @@ interface OrderRequestViewProps {
 const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
   props
 ) => {
+  const viewModel: OrderViewModel = container.get<OrderViewModel>(
+    "OrderViewModel"
+  );
   //const { brand, style } = props.history.location.state;
   const { brand, style } = props;
   const [filteredItems, setfilteredItems] = useState<Object[]>([
@@ -29,14 +33,25 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
     { title: "기타", desc: "신발, 기타 요청, 부자재 등" },
   ]);
 
+  //menu box state
+  const [selectedTitle, setSelectedTitle] = useState<string>(
+    "제작 카테고리 선택"
+  );
+  const [isErrorMsg, setIsErrorMsg] = useState<boolean>(false);
+  const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
+
   const initialState = {
     isConfirmed: false,
-    isSelectBoxOpened: false,
+    // isSelectBoxOpened: false,
     userInput: {
       color: "",
       quantity: "",
       brand: brand,
       style: style,
+      memo: "",
+      image: [],
+      categoryName: "",
+      requestStatusName: "",
     },
     imgPreview: [],
     errorMsg: "Error!",
@@ -44,36 +59,28 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {
-    isConfirmed,
-    confirmedSelections,
-    isSelectBoxOpened,
-    errorMsg,
-    imgPreview,
-  } = state;
-  const { color, quantity } = state.userInput;
+  const { isConfirmed, confirmedSelections, errorMsg, imgPreview } = state;
+  const { color, quantity, memo } = state.userInput;
 
-  const sendInputVal = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, name } = e.target;
-    dispatch({
-      type: "ADD_USER_SELECTION",
-      name,
-      value,
-    });
-  }, []);
+  const sendInputVal = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { value, name } = e.target;
+      dispatch({
+        type: "ADD_USER_SELECTION",
+        name,
+        value,
+      });
+    },
+    []
+  );
 
   const addSelectionHandler = useCallback(() => {
     dispatch({
       type: "CONFIRM_USER_SELECTION",
+      color,
+      quantity,
     });
   }, [color, quantity]);
-
-  const arrowChangeHandler = useCallback(() => {
-    dispatch({
-      type: "PAINT_SELECTION",
-      isSelectBoxOpened,
-    });
-  }, [isSelectBoxOpened]);
 
   const imgUploader = (file: any) => {
     const reader = new FileReader();
@@ -104,6 +111,47 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
     });
   };
 
+  const onClickHandler = useCallback(
+    (idx: number, title: string) => {
+      setSelectedTitle(title);
+      setIsErrorMsg(false);
+      setIsSelectBoxOpend(false);
+    },
+    [selectedTitle]
+  );
+
+  const selectTitleTextHandler = () => {
+    setIsSelectBoxOpend(!isSelectBoxOpend);
+    if (isSelectBoxOpend === true) {
+      if (selectedTitle === "제작 카테고리 선택") {
+        setIsErrorMsg(true);
+      }
+    }
+  };
+
+  const SendOrderRequestHandler = () => {
+    const colorAndQuantity = confirmedSelections.map((item: any) => item);
+    const convertEnumTitle: any = {
+      아우터: "OUTER",
+      상의: "TOP",
+      하의: "BOTTOM",
+      악세사리: "ACCESSORIES",
+      기타: "OTHERS",
+    };
+    const orderRequestObj = {
+      userEmail: "default@naver.com",
+      ordinal: null,
+      brandName: brand,
+      styleName: style,
+      colorAndQuantities: colorAndQuantity,
+      memo: memo,
+      //image: "image",
+      categoryName: convertEnumTitle[`${selectedTitle}`],
+      requestStatusName: "PENDING",
+    };
+    viewModel.displayOrderView(orderRequestObj);
+  };
+
   return (
     <>
       <OrderRequestModalLayout>
@@ -117,10 +165,15 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
           <SelectionsCont>
             <CategoryInputBox>
               <MenuBox
-                arrowChangeHandler={arrowChangeHandler}
-                isSelectBoxOpened={isSelectBoxOpened}
+                //arrowChangeHandler={arrowChangeHandler}
+                isSelectBoxOpened={isSelectBoxOpend}
                 filteredItems={filteredItems}
+                selectTitleTextHandler={selectTitleTextHandler}
+                isErrorMsg={isErrorMsg}
+                selectedTitle={selectedTitle}
+                onClickHandler={onClickHandler}
               />
+              {console.log(state.userInput)}
             </CategoryInputBox>
             <DesignSelectWrapper>
               <OrderDispatch.Provider
@@ -166,7 +219,13 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
               <FileUploadCont>
                 <TextBoxInput>
                   <span>비고</span>
-                  <TextBox placeholder="비고 입력" />
+                  <TextBox
+                    placeholder="비고 입력"
+                    name="memo"
+                    onChange={(e) => {
+                      sendInputVal(e);
+                    }}
+                  />
                 </TextBoxInput>
                 <AttachingImg>
                   <span>첨부이미지</span>
@@ -184,6 +243,7 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
                     <ImgPreviewList>
                       {imgPreview
                         .map((item: any, idx: number) => {
+                          console.log(ImgThumb);
                           return (
                             <ImgPreview lastThumb={8}>
                               <ImgThumb img={item.imgThumb} />
@@ -223,7 +283,7 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
             buttonName={"PRIMARY"}
             isEnable={false}
             buttonText={"접수"}
-            onClick={props.onClick}
+            onClick={SendOrderRequestHandler}
             isConfirmed={confirmedSelections.length}
           />
         </BtnCont>

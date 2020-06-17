@@ -6,6 +6,15 @@ const reducer = (state: React.ComponentState, action) => {
         [action.name]: action.value,
       };
 
+    case "ADD_COLOR_SELECTION":
+      return {
+        ...state,
+        userInput: {
+          ...state.userInput,
+          name: [...state.userInput.color, action.value],
+        },
+      };
+
     case "ADD_USER_SELECTION":
       return {
         ...state,
@@ -21,7 +30,7 @@ const reducer = (state: React.ComponentState, action) => {
         isConfirmed: true,
         confirmedSelections: [
           ...state.confirmedSelections,
-          { ...state.userInput },
+          { color: action.color, quantity: action.quantity },
         ],
       };
 
@@ -31,11 +40,11 @@ const reducer = (state: React.ComponentState, action) => {
         isConfirmed: false,
       };
 
-    case "PAINT_SELECTION":
-      return {
-        ...state,
-        isSelectBoxOpened: !action.isSelectBoxOpened,
-      };
+    // case "PAINT_SELECTION":
+    //   return {
+    //     ...state,
+    //     isSelectBoxOpened: !action.isSelectBoxOpened,
+    //   };
 
     case "SET_ERROR_MSG":
       return {

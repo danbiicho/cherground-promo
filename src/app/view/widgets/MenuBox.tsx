@@ -7,63 +7,70 @@ interface MenuBoxProps {
   filteredItems: React.ComponentState;
   selected?: string;
   isValid?: string;
-  arrowChangeHandler: () => void;
+  onClickHandler: (idx: number, title: string) => void;
   isSelectBoxOpened: boolean;
+  selectTitleTextHandler: () => void;
+  isErrorMsg: boolean;
+  selectedTitle: string;
 }
 
 const MenuBox: React.FunctionComponent<MenuBoxProps> = (props) => {
-  const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
-  const [selectedTitle, setSelectedTitle] = useState<string>(
-    "제작 카테고리 선택"
-  );
-  const [errorMsg, setErrorMsg] = useState<boolean>(false);
+  // const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
+  // const [selectedTitle, setSelectedTitle] = useState<string>(
+  //   "제작 카테고리 선택"
+  // );
+  // const [errorMsg, setErrorMsg] = useState<boolean>(false);
 
-  const arrowChangeHandler = () => {
-    setIsSelectBoxOpend(!isSelectBoxOpend);
-    if (isSelectBoxOpend === true) {
-      if (selectedTitle === "제작 카테고리 선택") {
-        setErrorMsg(true);
-      }
-    }
-  };
+  // const arrowChangeHandler = () => {
+  //   setIsSelectBoxOpend(!isSelectBoxOpend);
+  //   if (isSelectBoxOpend === true) {
+  //     if (selectedTitle === "제작 카테고리 선택") {
+  //       setErrorMsg(true);
+  //     }
+  //   }
+  // };
 
   const { filteredItems } = props;
 
-  const onClickHandler = useCallback(
-    (idx, title) => {
-      setSelectedTitle(title);
-      setErrorMsg(false);
-      setIsSelectBoxOpend(false);
-    },
-    [selectedTitle]
-  );
+  // const onClickHandler = useCallback(
+  //   (idx, title) => {
+  //     setSelectedTitle(title);
+  //     setErrorMsg(false);
+  //     setIsSelectBoxOpend(false);
+  //   },
+  //   [selectedTitle]
+  // );
+
+  console.log("selected Title      :", props.selectedTitle);
 
   return (
     <>
       <BoxLabel
-        isValid={errorMsg}
+        isValid={props.isErrorMsg}
         style={{ marginBottom: "12px", display: "inline-block" }}
       >
         카테고리*
       </BoxLabel>
-      <ErrorMsg isValid={errorMsg}>필수 품목입니다</ErrorMsg>
-      <MenuBoxWrapper isValid={errorMsg}>
+      <ErrorMsg isValid={props.isErrorMsg}>필수 품목입니다</ErrorMsg>
+      <MenuBoxWrapper isValid={props.isErrorMsg}>
         <MenuBoxText>
-          <Placeholder selected={selectedTitle}>{selectedTitle}</Placeholder>
+          <Placeholder selected={props.selectedTitle}>
+            {props.selectedTitle}
+          </Placeholder>
         </MenuBoxText>
         <ArrowIcon
           src={arrowIcon}
-          onClick={arrowChangeHandler}
-          isOpened={isSelectBoxOpend}
+          onClick={props.selectTitleTextHandler}
+          isOpened={props.isSelectBoxOpened}
         />
       </MenuBoxWrapper>
-      <DropDownWrapper isOpened={isSelectBoxOpend}>
+      <DropDownWrapper isOpened={props.isSelectBoxOpened}>
         {filteredItems.map((value: string, idx: number, arr: Array<String>) => {
           return (
             <>
               <DropDownListLayout
                 key={idx}
-                onClick={() => onClickHandler(idx, arr[idx].title)}
+                onClick={() => props.onClickHandler(idx, arr[idx].title)}
               >
                 <ListIcon />
                 <ListContainer>

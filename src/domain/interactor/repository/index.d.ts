@@ -1,5 +1,6 @@
 import { User } from "domain/entity";
 import { UserSignup } from "domain/entity";
+import { Order } from "domain/entity";
 
 export interface UserRepository {
   // getUser(): Promise<User>;
@@ -9,4 +10,8 @@ export interface UserRepository {
 
 export interface UserSignupRepository {
   enrollUser(userInput: object): Promise<UserSignup>;
+}
+
+export interface OrderRepository {
+  requestOrder(userInput: object): Promise<Order>;
 }

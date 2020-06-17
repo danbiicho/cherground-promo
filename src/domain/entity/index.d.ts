@@ -12,3 +12,18 @@ export interface UserSignup {
     password: string;
   };
 }
+
+export interface Order {
+  request: {
+    userEmail: string;
+    ordinal: null;
+    brandName: string;
+    styleName: string;
+    color: string;
+    quantity: 1;
+    memo: string;
+    image: string;
+    categoryName: string;
+    requestStatusName: string;
+  };
+}

@@ -97,7 +97,6 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
                   name={"brand"}
                   onChangeHandler={(e) => {
                     setBrandName(e.target.value);
-                    console.log(e.target.value);
                   }}
                   width={"100%"}
                   NameCheckHandler={NameCheckHandler}
@@ -110,7 +109,6 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
                   placeholderTxt={"스타일명 입력"}
                   onChangeHandler={(e) => {
                     setStyleName(e.target.value);
-                    console.log(e.target.value);
                   }}
                   name={"style"}
                   width={"100%"}
@@ -140,8 +138,8 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
         )}
         {stage === 2 && (
           <OrderRequestView
-            brand={brand}
-            style={style}
+            brand={brandName}
+            style={styleName}
             onClick={() => props.close()}
           />
         )}

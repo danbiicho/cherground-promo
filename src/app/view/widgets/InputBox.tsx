@@ -5,7 +5,7 @@ interface InputBoxProps {
   placeholderTxt: string;
   userPwCheckHandler?: (parameter: any) => void;
   userNameCheckHandler?: (parameter: any) => void;
-  name:
+  name?:
     | "userIdval"
     | "userPwVal"
     | "userNameVal"

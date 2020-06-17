@@ -14,16 +14,16 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
 
   // useReducer 사용할 때 먼저 initialize
   const initiallUserState = {
-    userName: "",
-    userPw: "",
-    idErrorMsg: "",
-    pwErrorMsg: "",
+    email: "",
+    password: "",
+    isError: false,
+    errorMsg: "",
   };
 
   const [state, dispatch] = useReducer(reducer, initiallUserState);
-  const { userName, userPw, idErrorMsg, pwErrorMsg } = state;
+  const { email, password, errorMsg } = state;
 
-  const user = viewModel.displayUser();
+  //const user = viewModel.displayUser();
 
   const goSignUpView = () => {
     props.history.push(`/signup`);
@@ -32,12 +32,21 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
   const userValidateHandler = useCallback((e) => {
     if (!e.target.value) {
       console.log("아이디와 비밀번호를 입력 해주세요");
+      //   if (!email && password) {
+      //     dispatch({
+      //       type: "ID_CHECK",
+      //       idErrorMsg: true,
+      //       message: "필수 입력 정보입니다.",
+      //     });
+      //   }
     }
     return false;
   }, []);
 
   const userIdCheckHandler = useCallback((e) => {
     const { value } = e.target;
+    //email: value;
+    //console.log("email", email);
 
     dispatch({
       type: "ID_CHECK",
@@ -47,33 +56,42 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
 
   const userPwValCheckHandler = useCallback((e) => {
     const { value } = e.target;
+    //password: value;
+    // console.log("password", value);
 
     dispatch({
-      type: "PASSWORDVALUE_CHECK",
+      type: "PASSWORD_CHECK",
       value,
     });
   }, []);
 
   const loginHandler = () => {
-    if (userName !== user[0].id) {
+    viewModel
+      .displayUser(email, password)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+
+    if (!email && !password) {
+      console.log("입력 해주세요");
       dispatch({
         type: "ADD_ID_ERROR_MSG",
-        message: "아이디가 일치하지 않습니다.",
+        isError: true,
+        message: "필수 입력 정보입니다.",
       });
     }
 
-    if (userPw !== user[0].password) {
-      dispatch({
-        type: "ADD_PW_ERROR_MSG",
-        message: "비밀번호가 일치하지 않습니다.",
-      });
-    }
+    // if (userPw !== user[0].password) {
+    //   dispatch({
+    //     type: "ADD_PW_ERROR_MSG",
+    //     message: "비밀번호가 일치하지 않습니다.",
+    //   });
+    // }
 
-    if (userName === user[0].id && userPw === user[0].password) {
-      props.history.push("/order");
-    } else {
-      console.log("아이디와 비밀번호를 확인해주세요");
-    }
+    // if (userName === user[0].id && userPw === user[0].password) {
+    //   props.history.push("/order");
+    // } else {
+    //   console.log("아이디와 비밀번호를 확인해주세요");
+    // }
   };
 
   return (
@@ -84,17 +102,17 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
           placeholderTxt={"아이디"}
           userValidateHandler={userValidateHandler}
           userIdCheckHandler={userIdCheckHandler}
-          name={"userNameVal"}
+          user={"email"}
         />
 
-        <IdErrorMsg hasError={idErrorMsg}>{idErrorMsg}</IdErrorMsg>
+        <ErrorMsg hasError={errorMsg}>{errorMsg}</ErrorMsg>
         <InputBox
           placeholderTxt={"비밀번호"}
           userValidateHandler={userValidateHandler}
           userPwValCheckHandler={userPwValCheckHandler}
-          name={"password"}
+          user={"password"}
         />
-        <PwErrorMsg hasError={pwErrorMsg}>{pwErrorMsg}</PwErrorMsg>
+        <ErrorMsg hasError={errorMsg}>{errorMsg}</ErrorMsg>
         <PasswordFind>비밀번호 찾기</PasswordFind>
         <Button
           isEnable
@@ -140,7 +158,8 @@ const HeaderTxt = styled.p`
   margin: 0 0 40px 0;
 `;
 
-const IdErrorMsg = styled.div`
+const ErrorMsg = styled.div<{ hasError: string }>`
+  display: ${(props) => (props.hasError ? "block" : "none")};
   width: 420px;
   height: 16px;
   font-size: 14px;
@@ -151,16 +170,17 @@ const IdErrorMsg = styled.div`
   margin-bottom: 16px;
 `;
 
-const PwErrorMsg = styled.div`
-  width: 420px;
-  height: 16px;
-  font-size: 14px;
-  color: #fd0000;
-  font-family: NanumSquare;
-  font-weight: 400;
-  margin-top: 13px;
-  margin-bottom: 16px;
-`;
+// const PwErrorMsg = styled.div<{ hasError: string }>`
+//   display: ${(props) => (props.hasError ? "block" : "none")};
+//   width: 420px;
+//   height: 16px;
+//   font-size: 14px;
+//   color: #fd0000;
+//   font-family: NanumSquare;
+//   font-weight: 400;
+//   margin-top: 13px;
+//   margin-bottom: 16px;
+// `;
 
 const PasswordFind = styled.p`
   margin: 12px 0 32px 0;

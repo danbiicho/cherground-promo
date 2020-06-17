@@ -6,13 +6,13 @@ interface Buttonprops {
   buttonName: "PRIMARY" | "SECONDARY";
   buttonText: string;
   onClick: () => void;
-  stageIdx: number;
+  stageIdx?: number | undefined;
 }
 
 interface ButtonLayoutProps {
   isEnable: boolean;
   buttonName: string;
-  stageIdx: number;
+  stageIdx?: number | undefined;
 }
 
 const Button: React.FunctionComponent<Buttonprops> = (props) => {

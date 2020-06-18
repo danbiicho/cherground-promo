@@ -151,7 +151,7 @@ const SignUpView: React.FunctionComponent<RouteComponentProps> = (props) => {
   );
 
   const linkToMain = () => {
-    props.history.push("/order");
+    props.history.push({ pathname: "/order", state: email });
   };
 
   //props를 객체로 만들어서 index에 있는 걸 꺼내쓸수있게

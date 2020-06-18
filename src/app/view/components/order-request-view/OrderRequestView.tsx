@@ -112,7 +112,7 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
   };
 
   const onClickHandler = useCallback(
-    (idx: number, title: string) => {
+    (idx: number, title: any) => {
       setSelectedTitle(title);
       setIsErrorMsg(false);
       setIsSelectBoxOpend(false);
@@ -165,7 +165,6 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
           <SelectionsCont>
             <CategoryInputBox>
               <MenuBox
-                //arrowChangeHandler={arrowChangeHandler}
                 isSelectBoxOpened={isSelectBoxOpend}
                 filteredItems={filteredItems}
                 selectTitleTextHandler={selectTitleTextHandler}
@@ -173,7 +172,6 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
                 selectedTitle={selectedTitle}
                 onClickHandler={onClickHandler}
               />
-              {console.log(state.userInput)}
             </CategoryInputBox>
             <DesignSelectWrapper>
               <OrderDispatch.Provider

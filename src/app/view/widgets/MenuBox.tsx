@@ -6,7 +6,7 @@ interface MenuBoxProps {
   menuText?: string;
   filteredItems: React.ComponentState;
   selected?: string;
-  isValid?: string;
+  //isValid?: string;
   onClickHandler: (idx: number, title: string) => void;
   isSelectBoxOpened: boolean;
   selectTitleTextHandler: () => void;
@@ -41,8 +41,6 @@ const MenuBox: React.FunctionComponent<MenuBoxProps> = (props) => {
   //   [selectedTitle]
   // );
 
-  console.log("selected Title      :", props.selectedTitle);
-
   return (
     <>
       <BoxLabel
@@ -65,7 +63,7 @@ const MenuBox: React.FunctionComponent<MenuBoxProps> = (props) => {
         />
       </MenuBoxWrapper>
       <DropDownWrapper isOpened={props.isSelectBoxOpened}>
-        {filteredItems.map((value: string, idx: number, arr: Array<String>) => {
+        {filteredItems.map((value: any, idx: number, arr: any) => {
           return (
             <>
               <DropDownListLayout
@@ -86,11 +84,11 @@ const MenuBox: React.FunctionComponent<MenuBoxProps> = (props) => {
   );
 };
 
-const BoxLabel = styled.div`
+const BoxLabel = styled.div<{ isValid: boolean }>`
   color: ${(props) => (props.isValid ? "#d50000" : "#1e2640")};
 `;
 
-const ErrorMsg = styled.div`
+const ErrorMsg = styled.div<{ isValid: boolean }>`
   margin-left: auto;
   font-size: 12px;
   color: #d50000;
@@ -101,7 +99,7 @@ const ErrorMsg = styled.div`
   visibility: ${(props) => (props.isValid ? "visible" : "hidden")};
 `;
 
-const MenuBoxWrapper = styled.div`
+const MenuBoxWrapper = styled.div<{ isValid: boolean }>`
   width: 620px;
   height: 48px;
   border-radius: 2px;
@@ -120,7 +118,7 @@ const MenuBoxText = styled.p`
   padding: 15px 78px 15px 16px;
 `;
 
-const Placeholder = styled.span`
+const Placeholder = styled.span<{ selected: string }>`
   font-size: 16px;
   color: ${(props) => {
     if (props.selected === "제작 카테고리 선택") {

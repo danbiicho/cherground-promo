@@ -102,7 +102,6 @@ const NameInfo = styled.p`
   height: 18px;
   font-family: NanumSquare;
   font-size: 16px;
-  //text-align: right;
   color: #68768d;
 `;
 
@@ -119,7 +118,6 @@ const DateInfo = styled.p`
   height: 18px;
   font-family: NanumSquare;
   font-size: 16px;
-  //text-align: right;
   color: #68768d;
 `;
 

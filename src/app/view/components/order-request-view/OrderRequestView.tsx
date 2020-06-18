@@ -15,6 +15,7 @@ interface OrderRequestViewProps {
   onClick: () => void;
   brand: string;
   style: string;
+  email: string;
 }
 
 const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
@@ -139,7 +140,7 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
       기타: "OTHERS",
     };
     const orderRequestObj = {
-      userEmail: "default@naver.com",
+      userEmail: props.email,
       ordinal: null,
       brandName: brand,
       styleName: style,

@@ -93,6 +93,7 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
         <OrderRequestIntro
           isModalOpen={isModalOpen}
           close={() => setModalOpen(false)}
+          email={loggedInEmail}
         />
       }
       <PromotionHeader />

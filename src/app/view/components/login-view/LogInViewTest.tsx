@@ -23,8 +23,6 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
   const [state, dispatch] = useReducer(reducer, initiallUserState);
   const { email, password, errorMsg } = state;
 
-  //const user = viewModel.displayUser();
-
   const goSignUpView = () => {
     props.history.push(`/signup`);
   };
@@ -68,7 +66,10 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
   const loginHandler = () => {
     viewModel
       .displayUser(email, password)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log("response  :", res);
+        props.history.push({ pathname: "/order", state: email });
+      })
       .catch((err) => console.log(err));
 
     if (!email && !password) {

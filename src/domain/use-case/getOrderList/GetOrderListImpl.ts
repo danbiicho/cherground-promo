@@ -13,7 +13,7 @@ export default class GetOrderListImple implements GetOrderList {
     this.orderListRepository = orderListRepository;
   }
 
-  execute() {
+  execute(email: string) {
     return this.orderListRepository.getOrderList(email);
   }
 }

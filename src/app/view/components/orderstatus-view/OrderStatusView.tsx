@@ -23,14 +23,11 @@ import container from "injector";
 const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
-<<<<<<< HEAD
   const viewModel: OrderListViewModel = container.get<OrderListViewModel>(
     "OrderListViewModel"
   );
 
-=======
   const loggedInEmail = props.history.location.state;
->>>>>>> master
   const [tabIdxChanged, setTabIdxChanged] = useState(false);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [filteringText, setfilteringText] = useState<string[]>(["상태"]);
@@ -61,10 +58,10 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
 
   const arrowChangeHandler = () => {
     setIsSelectBoxOpend(!isSelectBoxOpend);
-    // viewModel
-    //   .displayOrderListView(orderList)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
+    viewModel
+      .displayOrderListView(loggedInEmail)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
   // 이 경우 배열 대신 객체 형태로 받는 것이 좋다.
   // 실제 데이터 호출을 할 때는 완료인 것과 완료 아닌 것 구분 해서 온다.

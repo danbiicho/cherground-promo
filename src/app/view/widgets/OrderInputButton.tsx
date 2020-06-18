@@ -9,7 +9,7 @@ interface OrderInputButtonProps {
 const OrderInputButton: React.FunctionComponent<OrderInputButtonProps> = (
   props
 ) => {
-  const [ModalOpen, setModalOpen] = useState<boolean>(true);
+  // const [ModalOpen, setModalOpen] = useState<boolean>(true);
 
   return (
     <OrderInputButtonLayout onClick={() => props.onClick()}>

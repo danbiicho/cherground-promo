@@ -17,10 +17,16 @@ import OrderInputButton from "app/view/widgets/OrderInputButton";
 import InputSelections from "app/view/widgets/InputSelections";
 import ActionButton from "app/view/widgets/ActionButton";
 import reducer from "app/view/reducers/orderReducers";
+import { OrderListViewModel } from "app/view-model";
+import container from "injector";
 
 const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
+  const viewModel: OrderListViewModel = container.get<OrderListViewModel>(
+    "OrderListViewModel"
+  );
+
   const loggedInEmail = props.history.location.state;
   const [tabIdxChanged, setTabIdxChanged] = useState(false);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
@@ -52,6 +58,10 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
 
   const arrowChangeHandler = () => {
     setIsSelectBoxOpend(!isSelectBoxOpend);
+    viewModel
+      .displayOrderListView(loggedInEmail)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
   // 이 경우 배열 대신 객체 형태로 받는 것이 좋다.
   // 실제 데이터 호출을 할 때는 완료인 것과 완료 아닌 것 구분 해서 온다.

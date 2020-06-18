@@ -38,10 +38,18 @@ const LogInView: React.FunctionComponent<RouteComponentProps> = (props) => {
     setUserPw(e.target.value);
   };
 
+  // props.history.push({
+  //   pathname: "/request",
+  //   state: { ...state },
+  // });
+
   const loginHandler = () => {
     viewModel
       .displayUser(email, password)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log("response  :", res);
+        props.history.push({ pathname: "/order", state: email });
+      })
       .catch((err) => console.log(err));
     //console.log(response.data)
     // if (userIdVal !== response.email) {

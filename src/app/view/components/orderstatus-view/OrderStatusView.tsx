@@ -21,6 +21,7 @@ import reducer from "app/view/reducers/orderReducers";
 const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
+  const loggedInEmail = props.history.location.state;
   const [tabIdxChanged, setTabIdxChanged] = useState(false);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [filteringText, setfilteringText] = useState<string[]>(["상태"]);

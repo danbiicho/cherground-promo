@@ -23,10 +23,14 @@ import container from "injector";
 const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   props
 ) => {
+<<<<<<< HEAD
   const viewModel: OrderListViewModel = container.get<OrderListViewModel>(
     "OrderListViewModel"
   );
 
+=======
+  const loggedInEmail = props.history.location.state;
+>>>>>>> master
   const [tabIdxChanged, setTabIdxChanged] = useState(false);
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
   const [filteringText, setfilteringText] = useState<string[]>(["상태"]);

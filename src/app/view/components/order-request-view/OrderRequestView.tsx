@@ -282,7 +282,7 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
             isEnable={false}
             buttonText={"접수"}
             onClick={SendOrderRequestHandler}
-            isConfirmed={confirmedSelections.length}
+            isConfirmedValues={confirmedSelections.length}
           />
         </BtnCont>
       </OrderRequestModalLayout>

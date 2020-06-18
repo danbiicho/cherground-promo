@@ -8,7 +8,8 @@ interface Buttonprops {
   onClick: () => void;
   styleExist?: React.ComponentState;
   brandExist?: React.ComponentState;
-  isConfirmed?: number | undefined;
+  isConfirmed?: boolean;
+  isConfirmedValues?: number | undefined;
 }
 
 interface ButtonLayoutProps {
@@ -16,7 +17,8 @@ interface ButtonLayoutProps {
   isEnable: boolean;
   isStyle?: string;
   isBrand?: string;
-  isConfirmed?: number | undefined;
+  isConfirmed?: boolean;
+  isConfirmedValues?: number | undefined;
 }
 
 const ActionButton: React.FunctionComponent<Buttonprops> = (props) => {
@@ -30,6 +32,7 @@ const ActionButton: React.FunctionComponent<Buttonprops> = (props) => {
       isStyle={style}
       isBrand={brand}
       isConfirmed={props.isConfirmed}
+      isConfirmedValues={props.isConfirmedValues}
     >
       {props.buttonText}
     </ActionButtonLayout>
@@ -44,7 +47,7 @@ const ActionButtonLayout = styled.button<ButtonLayoutProps>`
     if (props.isStyle && props.isBrand) {
       return "background-color: #131313;color: #fff";
     }
-    if (props.isConfirmed >= 1) {
+    if (props.isConfirmedValues) {
       return "background-color: #131313;color: #fff";
     }
     if (props.buttonName === "PRIMARY") {

@@ -27,3 +27,7 @@ export interface Order {
     requestStatusName: string;
   };
 }
+
+export interface OrderList {
+  list: Promise<OrderList>;
+}

@@ -1,4 +1,4 @@
-import { User, UserSignup, Order } from "domain/entity";
+import { User, UserSignup, Order, OrderList } from "domain/entity";
 
 export interface GetUser {
   execute(email: string, password: string): Promise<User>;
@@ -10,4 +10,8 @@ export interface EnrollUser {
 
 export interface RequestOrder {
   execute(order: object): Promise<Order>;
+}
+
+export interface GetOrderList {
+  execute(email: string): Promise<OrderList>;
 }

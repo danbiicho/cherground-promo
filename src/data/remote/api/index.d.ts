@@ -1,4 +1,4 @@
-import { User, UserSignup, Order } from "domain/entity";
+import { User, UserSignup, Order, OrderList } from "domain/entity";
 
 export interface UserApi {
   // getUser(): Promise<User>;
@@ -11,4 +11,8 @@ export interface SignUpApi {
 
 export interface OrderApi {
   sendOrderRequest(userInfo: object): Promise<Order>;
+}
+
+export interface OrderListApi {
+  getOrderList(email: string): Promise<OrderList>;
 }

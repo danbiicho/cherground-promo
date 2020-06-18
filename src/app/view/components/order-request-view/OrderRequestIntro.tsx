@@ -9,6 +9,7 @@ import OrderRequestView from "./OrderRequestView";
 interface OrderRequestIntroProps {
   close: () => void;
   isModalOpen: boolean;
+  email: string;
 }
 
 const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
@@ -141,6 +142,7 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
             brand={brandName}
             style={styleName}
             onClick={() => props.close()}
+            email={props.email}
           />
         )}
       </Overlay>

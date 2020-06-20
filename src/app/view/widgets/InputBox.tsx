@@ -6,15 +6,15 @@ interface InputBoxProps {
   userPwCheckHandler?: (parameter: any) => void;
   userNameCheckHandler?: (parameter: any) => void;
   name?:
-    | "userIdval"
-    | "userPwVal"
     | "userNameVal"
     | "phone"
     | "shippingAddress"
     | "email"
     | "name"
     | "password"
-    | "passwordCheck";
+    | "passwordCheck"
+    | "userIdval"
+    | "userPwVal";
   userValidateHandler?: (parameter: any) => void;
   user?: "email" | "password";
   userIdCheckHandler?: (parameter: any) => void;

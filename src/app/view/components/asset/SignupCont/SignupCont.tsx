@@ -30,7 +30,10 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
     return boxIndexes;
   };
 
-  const inputBoxNameChecker = [
+  //타입 지정을 안하게되면 자동적으로 타입추론을 하기때문에,
+  //타입추론을 한 것과 InputBox에서 받아오는 prop데이터타입 속성이랑 일치하지않아 에러가 생긴다.
+
+  const inputBoxNameChecker: InputBoxNameCheckerEnum[] = [
     "userNameVal",
     "phone",
     "shippingAddress",
@@ -40,13 +43,26 @@ const SignupCont: React.FunctionComponent<SignupContProps> = (props) => {
     "passwordCheck",
   ];
 
-  const inputSelector = (matchId: number, idx: number) => {
-    let inputBoxNames = [];
+  type InputBoxNameCheckerEnum =
+    | "userNameVal"
+    | "phone"
+    | "shippingAddress"
+    | "name"
+    | "email"
+    | "password"
+    | "passwordCheck";
+
+  const inputSelector = (
+    matchId: number,
+    idx: number
+  ): InputBoxNameCheckerEnum => {
+    let inputBoxNames: InputBoxNameCheckerEnum[] = [];
     if (matchId === 1) {
       inputBoxNames = inputBoxNameChecker.filter((inputName, idx) => idx <= 2);
     } else {
       inputBoxNames = inputBoxNameChecker.filter((inputName, idx) => idx >= 3);
     }
+    console.log(inputBoxNames);
     return inputBoxNames[idx];
   };
 

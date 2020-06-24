@@ -6,15 +6,15 @@ interface InputBoxProps {
   userPwCheckHandler?: (parameter: any) => void;
   userNameCheckHandler?: (parameter: any) => void;
   name?:
-    | "userIdval"
-    | "userPwVal"
     | "userNameVal"
     | "phone"
     | "shippingAddress"
     | "email"
     | "name"
     | "password"
-    | "passwordCheck";
+    | "passwordCheck"
+    | "userIdval"
+    | "userPwVal";
   userValidateHandler?: (parameter: any) => void;
   user?: "email" | "password";
   userIdCheckHandler?: (parameter: any) => void;
@@ -23,6 +23,7 @@ interface InputBoxProps {
 
 const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
   const [isValid, setIsValid] = useState("default");
+  const { name } = props;
 
   const onBlurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
@@ -36,10 +37,18 @@ const InputBox: React.FunctionComponent<InputBoxProps> = (props) => {
     setIsValid("isValid");
   };
 
+  const passwordStyler = (propName: any) => {
+    if (propName === "password" || propName === "passwordCheck") {
+      return "password";
+    } else {
+      return "text";
+    }
+  };
+
   return (
     <FormTagInput>
       <InputCont
-        type="text"
+        type={passwordStyler(name)}
         placeholder={props.placeholderTxt}
         isValid={isValid}
         onFocus={() => onFocusHandler()}
@@ -86,6 +95,10 @@ const InputCont = styled.input<{ isValid: string }>`
       return;
     }
   }};
+
+  &[type="password"] {
+    font-family: caption;
+  }
 
   &::placeholder {
     font-family: NanumSquare;

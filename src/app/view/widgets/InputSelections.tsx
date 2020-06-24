@@ -16,7 +16,8 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
   props
 ) => {
   const [isValid, setIsValid] = useState("default");
-  const dispatch = useContext(OrderDispatch);
+  // const { dispatch } = useContext(OrderDispatch);
+  console.log(useContext(OrderDispatch));
   const formRef: React.MutableRefObject<HTMLFormElement | undefined> = useRef();
 
   const onBlurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

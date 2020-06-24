@@ -1,4 +1,4 @@
-import React, { useReducer, useState, useCallback } from "react";
+import React, { useReducer, useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { RouteComponentProps } from "react-router-dom";
 import DropDownBox from "app/view/widgets/DropDownBox";
@@ -56,12 +56,15 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   const [state, dispatch] = useReducer(reducer, orderState);
   const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
 
-  const arrowChangeHandler = () => {
-    setIsSelectBoxOpend(!isSelectBoxOpend);
+  useEffect(() => {
     viewModel
       .displayOrderListView(loggedInEmail)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
+  }, []);
+
+  const arrowChangeHandler = () => {
+    setIsSelectBoxOpend(!isSelectBoxOpend);
   };
   // 이 경우 배열 대신 객체 형태로 받는 것이 좋다.
   // 실제 데이터 호출을 할 때는 완료인 것과 완료 아닌 것 구분 해서 온다.

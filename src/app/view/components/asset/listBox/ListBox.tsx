@@ -1,12 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 import Label from "app/view/widgets/Label";
+import { RouteComponentProps } from "react-router-dom";
+import { UserViewModel } from "app/view-model";
+import container from "injector";
 
-interface Labelprops {
-  labelStatus: string;
-}
+// interface Labelprops {
+//   labelStatus: string;
+// }
 
-const ListBox: React.FunctionComponent<Labelprops> = (props) => {
+const ListBox: React.FunctionComponent<RouteComponentProps> = (props) => {
+  //   const viewModel: UserViewModel = container.get<UserViewModel>(
+  //   "UserViewModel"
+  // );
+
+  // const { email, password, errorMsg } = state;
+
+  //   viewModel
+  //       .displayUser(email, password)
+  //       .then((res) => {
+  //         console.log("response  :", res);
+  //         console.log(state);
+  //         props.history.push({ pathname: "/order", state: email });
+  //       })
+  //       .catch((err) => console.log(err));
+
   return (
     <ListBoxWrapper>
       <Icon />

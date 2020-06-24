@@ -157,7 +157,10 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
   };
 
   return (
-    <>
+    <OrderDispatch.Provider
+      //value={{ state: state, dispatch: dispatch }}
+      value={dispatch}
+    >
       <OrderRequestModalLayout>
         {isSubmitted && (
           <ConfirmMsgBox>
@@ -184,35 +187,35 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
                 />
               </CategoryInputBox>
               <DesignSelectWrapper>
-                <OrderDispatch.Provider
+                {/* <OrderDispatch.Provider
                   //value={{ state: state, dispatch: dispatch }}
                   value={dispatch}
-                >
-                  <DesginInputWrapper>
-                    <ColorInputBox>
-                      <span style={{ position: "absolute" }}>컬러*</span>
-                      <InputSelections
-                        placeholderTxt={"컬러 입력"}
-                        name={"color"}
-                        onChangeHandler={sendInputVal}
-                        isConfirmed={isConfirmed}
-                        width={"100%"}
-                        errorMsg={errorMsg}
-                      />
-                    </ColorInputBox>
-                    <QuantityInputBox>
-                      <span style={{ position: "absolute" }}>희망수량*</span>
-                      <InputSelections
-                        placeholderTxt={"희망 수량 입력"}
-                        name={"quantity"}
-                        onChangeHandler={sendInputVal}
-                        isConfirmed={isConfirmed}
-                        width={"100%"}
-                        errorMsg={errorMsg}
-                      />
-                    </QuantityInputBox>
-                  </DesginInputWrapper>
-                </OrderDispatch.Provider>
+                > */}
+                <DesginInputWrapper>
+                  <ColorInputBox>
+                    <span style={{ position: "absolute" }}>컬러*</span>
+                    <InputSelections
+                      placeholderTxt={"컬러 입력"}
+                      name={"color"}
+                      onChangeHandler={sendInputVal}
+                      isConfirmed={isConfirmed}
+                      width={"100%"}
+                      errorMsg={errorMsg}
+                    />
+                  </ColorInputBox>
+                  <QuantityInputBox>
+                    <span style={{ position: "absolute" }}>희망수량*</span>
+                    <InputSelections
+                      placeholderTxt={"희망 수량 입력"}
+                      name={"quantity"}
+                      onChangeHandler={sendInputVal}
+                      isConfirmed={isConfirmed}
+                      width={"100%"}
+                      errorMsg={errorMsg}
+                    />
+                  </QuantityInputBox>
+                </DesginInputWrapper>
+                {/* </OrderDispatch.Provider> */}
                 <SelectedTab confirmedSelections={confirmedSelections}>
                   {confirmedSelections.map((item: any) => {
                     return (
@@ -299,7 +302,7 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
           )}
         </BtnCont>
       </OrderRequestModalLayout>
-    </>
+    </OrderDispatch.Provider>
   );
 };
 

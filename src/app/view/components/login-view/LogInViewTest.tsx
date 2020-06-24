@@ -68,6 +68,7 @@ const LogInViewTest: React.FunctionComponent<RouteComponentProps> = (props) => {
       .displayUser(email, password)
       .then((res) => {
         console.log("response  :", res);
+        console.log(state);
         props.history.push({ pathname: "/order", state: email });
       })
       .catch((err) => console.log(err));

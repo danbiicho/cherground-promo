@@ -29,12 +29,12 @@ const OrderRequestIntro: React.FunctionComponent<OrderRequestIntroProps> = (
 
   const NameCheckHandler = useCallback((e) => {
     const { value, name } = e.target;
-
-    dispatch({
-      type: "NAME_INFO",
-      name,
-      value,
-    });
+    console.log(dispatch);
+    // dispatch({
+    //   type: "NAME_INFO",
+    //   name,
+    //   value,
+    // });
   }, []);
 
   const checkNextAble = () => {

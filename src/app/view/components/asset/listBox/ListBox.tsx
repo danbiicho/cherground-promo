@@ -5,35 +5,16 @@ import { RouteComponentProps } from "react-router-dom";
 import { UserViewModel } from "app/view-model";
 import container from "injector";
 
-// interface Labelprops {
-//   labelStatus: string;
-// }
-
 const ListBox: React.FunctionComponent<RouteComponentProps> = (props) => {
-  //   const viewModel: UserViewModel = container.get<UserViewModel>(
-  //   "UserViewModel"
-  // );
-
-  // const { email, password, errorMsg } = state;
-
-  //   viewModel
-  //       .displayUser(email, password)
-  //       .then((res) => {
-  //         console.log("response  :", res);
-  //         console.log(state);
-  //         props.history.push({ pathname: "/order", state: email });
-  //       })
-  //       .catch((err) => console.log(err));
-
   return (
     <ListBoxWrapper>
       <Icon />
       <Container>
         <NameContents>
-          <ItemName>Item Name</ItemName>
-          <BrandName>Brand Name</BrandName>
+          <ItemName>{props.styleName}</ItemName>
+          <BrandName>{props.brandName}</BrandName>
         </NameContents>
-        <Contents>김셀업님의 주문이 정상적으로 입력되었습니다.</Contents>
+        <Contents>{`${props.brandName}님의 주문이 정상적으로 입력되었습니다.`}</Contents>
       </Container>
       <SystemContents>
         <Label labelStatus={props.labelStatus} />
@@ -86,9 +67,8 @@ const ItemName = styled.p`
 const BrandName = styled.p`
   margin: 0;
   margin-left: 12px;
-  width: 68px;
   height: 13px;
-  font-family: NanumSquare_acR;
+  font-family: NanumSquare;
   font-size: 12px;
   color: #68768d;
 `;

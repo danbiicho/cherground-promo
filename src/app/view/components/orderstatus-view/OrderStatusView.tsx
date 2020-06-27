@@ -52,6 +52,8 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
     style: "",
   };
 
+  const [orderList, setOrderList] = useState<Array>([]);
+
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [state, dispatch] = useReducer(reducer, orderState);
   const [isSelectBoxOpend, setIsSelectBoxOpend] = useState<boolean>(false);
@@ -59,10 +61,10 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
   useEffect(() => {
     viewModel
       .displayOrderListView(loggedInEmail)
-      .then((res) => console.log(res))
+      .then((res) => setOrderList(res))
       .catch((err) => console.log(err));
   }, []);
-  c;
+
   const arrowChangeHandler = () => {
     setIsSelectBoxOpend(!isSelectBoxOpend);
   };
@@ -88,7 +90,20 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
     setIsSelectBoxOpend(false);
   };
 
-  const arr = labelText.filter((item, idx) => idx <= 4);
+  const ordersView = () => {
+    const notCompleteOrder = orderList.filter(
+      (order) => order.requestStatusName !== "COMPLETE"
+    );
+    const completeOrder = orderList.filter(
+      (order) => order.requestStatusName === "COMPLETE"
+    );
+
+    if (!tabIdxChanged) {
+      return notCompleteOrder;
+    } else {
+      return completeOrder;
+    }
+  };
 
   return (
     <>
@@ -130,8 +145,23 @@ const OrderStatusView: React.FunctionComponent<RouteComponentProps> = (
           </SelectionBox>
           <ListViewWrapper>
             {!tabIdxChanged &&
-              arr.map((item, idx) => <ListBox labelStatus={item} key={idx} />)}
-            {tabIdxChanged && <ListBox labelStatus={labelText[5]} />}
+              ordersView().map((item, idx) => (
+                <ListBox
+                  labelStatus={item.requestStatusName}
+                  key={idx}
+                  styleName={item.styleName}
+                  brandName={item.brandName}
+                />
+              ))}
+            {tabIdxChanged &&
+              ordersView().map((item, idx) => (
+                <ListBox
+                  labelStatus={item.requestStatusName}
+                  key={idx}
+                  styleName={item.styleName}
+                  brandName={item.brandName}
+                />
+              ))}
           </ListViewWrapper>
         </StatusContLayout>
       </OrderStatusViewLayout>

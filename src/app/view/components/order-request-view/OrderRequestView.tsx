@@ -56,7 +56,7 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
       requestStatusName: "",
     },
     imgPreview: [],
-    errorMsg: "Error!",
+    errorMsg: "필수 품목입니다",
     confirmedSelections: [],
   };
 
@@ -157,40 +157,36 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
   };
 
   return (
-    <OrderDispatch.Provider
-      //value={{ state: state, dispatch: dispatch }}
-      value={dispatch}
-    >
-      <OrderRequestModalLayout>
-        {isSubmitted && (
-          <ConfirmMsgBox>
-            <ConfirmMsg>주문 접수가 완료되었습니다!</ConfirmMsg>
-          </ConfirmMsgBox>
-        )}
-        {!isSubmitted && (
-          <Container>
-            <TitleBox>
-              <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
-              <ProgressBox>
-                <ProgressBar stage={2} />
-              </ProgressBox>
-            </TitleBox>
-            <SelectionsCont>
-              <CategoryInputBox>
-                <MenuBox
-                  isSelectBoxOpened={isSelectBoxOpend}
-                  filteredItems={filteredItems}
-                  selectTitleTextHandler={selectTitleTextHandler}
-                  isErrorMsg={isErrorMsg}
-                  selectedTitle={selectedTitle}
-                  onClickHandler={onClickHandler}
-                />
-              </CategoryInputBox>
-              <DesignSelectWrapper>
-                {/* <OrderDispatch.Provider
-                  //value={{ state: state, dispatch: dispatch }}
-                  value={dispatch}
-                > */}
+    <OrderRequestModalLayout>
+      {isSubmitted && (
+        <ConfirmMsgBox>
+          <ConfirmMsg>주문 접수가 완료되었습니다!</ConfirmMsg>
+        </ConfirmMsgBox>
+      )}
+      {!isSubmitted && (
+        <Container>
+          <TitleBox>
+            <span style={{ whiteSpace: "nowrap" }}>주문 의뢰서 접수</span>
+            <ProgressBox>
+              <ProgressBar stage={2} />
+            </ProgressBox>
+          </TitleBox>
+          <SelectionsCont>
+            <CategoryInputBox>
+              <MenuBox
+                isSelectBoxOpened={isSelectBoxOpend}
+                filteredItems={filteredItems}
+                selectTitleTextHandler={selectTitleTextHandler}
+                isErrorMsg={isErrorMsg}
+                selectedTitle={selectedTitle}
+                onClickHandler={onClickHandler}
+              />
+            </CategoryInputBox>
+            <DesignSelectWrapper>
+              <OrderDispatch.Provider
+                //value={{ state: state, dispatch: dispatch }}
+                value={dispatch}
+              >
                 <DesginInputWrapper>
                   <ColorInputBox>
                     <span style={{ position: "absolute" }}>컬러*</span>
@@ -215,94 +211,93 @@ const OrderRequestView: React.FunctionComponent<OrderRequestViewProps> = (
                     />
                   </QuantityInputBox>
                 </DesginInputWrapper>
-                {/* </OrderDispatch.Provider> */}
-                <SelectedTab confirmedSelections={confirmedSelections}>
-                  {confirmedSelections.map((item: any) => {
-                    return (
-                      <SelectedLabel>
-                        컬러:{item.color}, 수량:{item.quantity}
-                      </SelectedLabel>
-                    );
-                  })}
-                </SelectedTab>
-                <Selections onClick={addSelectionHandler}>컬러 추가</Selections>
-                <TopDivider />
-                <FileUploadCont>
-                  <TextBoxInput>
-                    <span>비고</span>
-                    <TextBox
-                      placeholder="비고 입력"
-                      name="memo"
-                      onChange={(e) => {
-                        sendInputVal(e);
-                      }}
+              </OrderDispatch.Provider>
+              <SelectedTab confirmedSelections={confirmedSelections}>
+                {confirmedSelections.map((item: any) => {
+                  return (
+                    <SelectedLabel>
+                      컬러:{item.color}, 수량:{item.quantity}
+                    </SelectedLabel>
+                  );
+                })}
+              </SelectedTab>
+              <Selections onClick={addSelectionHandler}>컬러 추가</Selections>
+              <TopDivider />
+              <FileUploadCont>
+                <TextBoxInput>
+                  <span>비고</span>
+                  <TextBox
+                    placeholder="비고 입력"
+                    name="memo"
+                    onChange={(e) => {
+                      sendInputVal(e);
+                    }}
+                  />
+                </TextBoxInput>
+                <AttachingImg>
+                  <span>첨부이미지</span>
+                  <AttachingImgBox>
+                    <ImgCont>
+                      <ClipImg src={ClipImgPng} />
+                      <GuideMsg>Drop files here or</GuideMsg>
+                      <Label htmlFor="upload">Browse...</Label>
+                    </ImgCont>
+                    <Img
+                      type="file"
+                      id="upload"
+                      onChange={(e) => imgUploader(e.target.files)}
                     />
-                  </TextBoxInput>
-                  <AttachingImg>
-                    <span>첨부이미지</span>
-                    <AttachingImgBox>
-                      <ImgCont>
-                        <ClipImg src={ClipImgPng} />
-                        <GuideMsg>Drop files here or</GuideMsg>
-                        <Label htmlFor="upload">Browse...</Label>
-                      </ImgCont>
-                      <Img
-                        type="file"
-                        id="upload"
-                        onChange={(e) => imgUploader(e.target.files)}
-                      />
-                      <ImgPreviewList>
-                        {imgPreview
-                          .map((item: any, idx: number) => {
-                            console.log(ImgThumb);
-                            return (
-                              <ImgPreview lastThumb={8}>
-                                <ImgThumb img={item.imgThumb} />
-                                <p
-                                  style={{
-                                    fontSize: "12px",
-                                    paddingLeft: "3px",
-                                    width: "max-content",
-                                  }}
-                                >
-                                  {item.fileName}
-                                </p>
-                                <DeleteBtn
-                                  img={DeleteBtnImg}
-                                  onClick={() => deleteLoadedImgHandler(idx)}
-                                />
-                              </ImgPreview>
-                            );
-                          })
-                          .filter((item: any, idx: number) => idx <= 2)}
-                      </ImgPreviewList>
-                    </AttachingImgBox>
-                  </AttachingImg>
-                </FileUploadCont>
-              </DesignSelectWrapper>
-            </SelectionsCont>
-          </Container>
-        )}
-        <Divider />
-        <BtnCont>
+                    <ImgPreviewList>
+                      {imgPreview
+                        .map((item: any, idx: number) => {
+                          console.log(ImgThumb);
+                          return (
+                            <ImgPreview lastThumb={8}>
+                              <ImgThumb img={item.imgThumb} />
+                              <p
+                                style={{
+                                  fontSize: "12px",
+                                  paddingLeft: "3px",
+                                  width: "max-content",
+                                }}
+                              >
+                                {item.fileName}
+                              </p>
+                              <DeleteBtn
+                                img={DeleteBtnImg}
+                                onClick={() => deleteLoadedImgHandler(idx)}
+                              />
+                            </ImgPreview>
+                          );
+                        })
+                        .filter((item: any, idx: number) => idx <= 2)}
+                    </ImgPreviewList>
+                  </AttachingImgBox>
+                </AttachingImg>
+              </FileUploadCont>
+            </DesignSelectWrapper>
+          </SelectionsCont>
+        </Container>
+      )}
+      <Divider />
+      <BtnCont>
+        <ActionButton
+          buttonName={"SECONDARY"}
+          isEnable={false}
+          buttonText={"취소"}
+          onClick={props.onClick}
+        />
+        {!isSubmitted && (
           <ActionButton
-            buttonName={"SECONDARY"}
+            buttonName={"PRIMARY"}
             isEnable={false}
-            buttonText={"취소"}
-            onClick={props.onClick}
+            buttonText={"접수"}
+            onClick={SendOrderRequestHandler}
+            isConfirmedValues={confirmedSelections.length}
           />
-          {!isSubmitted && (
-            <ActionButton
-              buttonName={"PRIMARY"}
-              isEnable={false}
-              buttonText={"접수"}
-              onClick={SendOrderRequestHandler}
-              isConfirmedValues={confirmedSelections.length}
-            />
-          )}
-        </BtnCont>
-      </OrderRequestModalLayout>
-    </OrderDispatch.Provider>
+        )}
+      </BtnCont>
+    </OrderRequestModalLayout>
   );
 };
 

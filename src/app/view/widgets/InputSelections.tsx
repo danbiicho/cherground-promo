@@ -16,8 +16,7 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
   props
 ) => {
   const [isValid, setIsValid] = useState("default");
-  // const { dispatch } = useContext(OrderDispatch);
-  console.log(useContext(OrderDispatch));
+  const dispatch = useContext(OrderDispatch);
   const formRef: React.MutableRefObject<HTMLFormElement | undefined> = useRef();
 
   const onBlurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +24,7 @@ const InputSelections: React.FunctionComponent<InputSelectionsProps> = (
       setIsValid("isNotValid");
       dispatch({
         type: "SET_ERROR_MSG",
-        errorMsg: "필수 품목입니다",
+        errorMsg: props.errorMsg,
       });
     } else {
       setIsValid("default");

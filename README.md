@@ -10,6 +10,7 @@
 
 - 개발 기간 : 4주 (2020.05.25 - 2020.06.18)
 - 인원 : 프론트엔드 2명, 백엔드 2명
+
 <br>
 ## 사용한 기술
 - TypeScript,  React (Hooks), Styled-Components
